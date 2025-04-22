@@ -5,7 +5,7 @@
 > La documentazione è stata riorganizzata in una struttura modulare per facilitare la gestione e l'aggiornamento.
 
 ## Punto di Ripresa del Lavoro
-**Ultimo aggiornamento**: 22 aprile 2025, 14:06
+**Ultimo aggiornamento**: 22 aprile 2025, 15:05
 
 **Stato attuale**: Completato: Definizione della struttura degli input per indicatori aggregati in OmniEA
 
