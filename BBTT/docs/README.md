@@ -5,7 +5,7 @@
 > La documentazione è stata riorganizzata in una struttura modulare per facilitare la gestione e l'aggiornamento.
 
 ## Punto di Ripresa del Lavoro
-**Ultimo aggiornamento**: 22 aprile 2025, 15:34
+**Ultimo aggiornamento**: 22 aprile 2025, 16:14
 
 **Stato attuale**: Completato: Definizione della struttura degli input per indicatori aggregati in OmniEA
 
@@ -17,6 +17,29 @@
 
 **Nota per l'AI**: Quando vedi questo file, carica immediatamente il contenuto di [Stato del Progetto](./core/stato_progetto.md) e [Regole Fondamentali](./core/regole_fondamentali.md) per avere il contesto completo. Ricorda che tutte le comunicazioni devono essere in italiano.
 
+## Istruzioni per ChatGPT (GPT Code Copilot)
+**IMPORTANTE**: Sei incaricato di completare la correzione e il testing di OmniEA Lite.
+
+### Repository e Cartelle di Lavoro
+1. È stato creato un repository dedicato per il tuo lavoro: https://github.com/Start13/OmniEA-Lite-ChatGPT
+2. Devi sviluppare i file MQL5 e salvarli sia nel repository che nelle seguenti cartelle locali:
+   - Expert Advisor: `C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5\Experts\AIChatGpt`
+   - Include files: `C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5\Include\AIChatGpt`
+
+### Compiti Specifici
+1. Analizzare i file esistenti di OmniEA Lite
+2. Completare la correzione di eventuali bug o problemi
+3. Implementare test completi per verificare la funzionalità
+4. Verificare la compatibilità con diversi timeframe e simboli
+5. Assicurarsi che il codice sia ben documentato e ottimizzato
+
+### Regole di Backup
+Devi eseguire il backup automatico:
+1. Ogni ora di lavoro continuativo
+2. Quando l'utente ti comunica che sta per terminare la chat
+3. Quando l'utente te lo richiede esplicitamente
+
+Utilizza gli script di backup disponibili in `docs/scripts/` per questa operazione.
 
 ## Backup Automatico
 Il sistema Ã¨ configurato per eseguire backup automatici:
@@ -53,4 +76,3 @@ Per informazioni su obiettivi social e community, consultare il file [BBTT_Socia
 ---
 
 *Ultimo aggiornamento: 22 aprile 2025*
-
