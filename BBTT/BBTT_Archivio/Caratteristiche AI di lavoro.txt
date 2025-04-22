@@ -1,0 +1,73 @@
+Voglio creare prodotti come expert advisor, indicatori, script in mt4/mt5/cTrader/TradingWiev. 
+Il nome del team è "BlueTrendTeam" (BTT). 
+Iniziando in mt5 e dal progetto UniversalEA OmniEA mt5 in versione Lite e successivamente Pro. 
+Ho già portato avanti un pò di lavoro e ne ho ricavato dei riepiloghi, backup di nome BBTT (BackupBlueTrendTeam). Per tenerti sempre aggiornato, devi rileggere ed aggiornare il BBTT solo con dati utili al progetto prima di ogni risposta che tu mi dai. 
+Questo lo devi fare in modo dettagliato ma sintetico in modo che se i tuoi token terminano e/o se ripartiamo da una nuova chat tu non perda nessun dettaglio. 
+Devi farlo internamente e darmi il BBTT solo quando te lo chiedo (se puoi in formato .zip). 
+Torniamo all'aspetto generale: io voglio creare questi prodotti da vendere, principalmente, sul mql5.com ed ho bisogno di avere un sistema di programmazione nei linguaggi sopra elencati professionale e fluido. 
+ 
+La struttura di lavoro che voglio è un'AI altamente preciso, che possa leggere (e possibilmente scrivere) nei files del mio pc, 
+nello specifico: 
+io ti chiedo la creazione di un ea che abbia determinate caratteristiche (es mt5) e quando tu mi fornisci l'ea e gl'include io li copio nell'metaeditor di metatrader e li compilo, a quel punto se ci sono o no errori di compilazione o modifiche di funzioni o aggiunte di funzioni tu DEVI LEGGERE I FILES di metaeditor, nelle cartelle del mio pc per avere sotto controllo la situazione attuale. 
+Prediligo gli Agent. 
+E' importante anche che i miei prodotti non possano essere ricavati, scaricati, letti da nessuno.
+Per questo, per es in chat gpt, devo avere suggerimenti precisi riguardo le impostazioni, come per es in chat gpt "Migliora il modello per tutti", o altre impostazioni che espongano i miei prodotti ad essere letti e estratti da altre persone.
+
+Questa struttura dev'essere a costi minimi, quindi escudo un'ai offline. Per quanto riguarda Caht Gpt considero assolutamente l'uso del GPT Code Copilot.
+
+Devo sapere se con l'abbonamento tu comunque perdi dati e quando, e se rallenti obbligandomi ad aprire una nuova chat. 
+
+Rispondi a tutto e dammi una proposta di organizzazione per avere un sistema di lavoro come da me richiesto.
+Nel caso in cui, come già precedentemente discusso, dovessi creare del sw per il dialogo tra il mio pc e l'ai, devi essere sicuro di potermi guidare passo passo nella creazione nel dettaglio.
+
+Aggiungo che la specializzazione dell'ai windsurf in programmazione mi piace molto.
+
+La scrittura degl'include deve concepirne il riutilizzo per i prodotti successivi.
+
+
+La scrittura degl'include deve concepirne il riutilizzo per i prodotti successivi. Per quanto riguarda "firma digitale, obfuscator, o compilatori sicuri", io caricherò il file .ex5 senza restrizioni in mql5.com. OLtre a Analizzare automaticamente i log di compilazione (.log), devi poter leggere i files nelle cartelle tipo: C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5\Experts\MyEA\AIChatGPT, dove ci sono flies .mq5 e .mqh, per poter leggere i codici che tu mi hai dato ed avere la visione d'insieme. 
+
+C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\...\MQL5\Experts\MyEA\AIChatGPT\ è un esempio, dove ci sono adesso i tuoi ea, ma ci sono altre cartelle dove ci sono include, altre con scrit. 
+
+Pensa che tu possa entrare a leggere i flies nelle cartelle utili. "disattiva ogni funzione di apprendimento automatico globale", sii più preciso con ogni apprendimento, mi devi dire tu dove e cosa. Dimmi i costi totali per una struttura così anche per gli abbonamenti. Non passarmi codici per adesso sii conciso.
+
+BBTT_Snapshot.txt continuiamo a chiamarlo BBTT.  Devo pensare a dove salvare i vari files, che non occupino troppa memoria, magari in hdd esterni collegati al pc, se fare copia in un altro hdd esterno, sarebbe meglio se tu potessi creare direttamente i files in una cartella dedicata, se utilizzare anche email, se utilizzare anche un mio telegram con cancellazione di messaggi vecchi. Voglio che sia tutto organizzato bene anche per BBTT relativi ai prossimi progetti quindi nominati specificatamente in sottocartelle anche con date. Aiutami a creare una struttura professionale, solida  senza lacune in nessun campo. Intanto io penso a cos'altro discutere con te. Ti ricordo anche che dovremo lavorare in team, io e te, anche nel marketing, inizialmente con pochi soldi e senza partita iva. Dare sempre un'immagine di professionalità, dare assistenza su un canale telegram, lo stesso dove daremo a cadenza temporale notizie dei nostri prodotti in modo pcicologicamente attraente, puntando sulle caratteristiche migliori e differenti dai competitors, basandoci sul mercato (in questo caso mql5). Dimmi se puoi creare immagini, logo e spot per il marketing.
+
+Puoi portarti avanti con le tue proposte, ma io considero che alla fine del nostro dialogo posso incorrere nella fine dei tuoi token e che mi dici di cambiare chat. Sarebbe un disastro. Cosa consigli vuoi aggiornare il BBTT e passarmelo con TUTTI i Dettagli? Io ho bisogno di riflettere su eventuali ulteriori domande, per poi effettuare l'abbonamento. Dimmi se in fase di abbonamento devo specificare che voglio che lavoriamo con Code Copilot.
+
+Raccogli dal web sempre informazioni riguardanti i codici e le classi mt5, come su https://www.mql5.com/it/docs. Ti passerò anche la mia libreria.
+
+
+
+
+OmniEA mt5 caratterisctiche: 
+
+UniversalEA (UEA).
+Caratteristica quasi unica nel mercato (Usare nel marketing) il Drag&Drop degli indicatori sul grafico.
+L'ea deve eseguire ordini buy e sell in base alle combinazioni degli indicatori scelte dall'utente.
+Ci sono tre pannelli selezionabili sul garfico: Pannello grande, utile in fase di aggregazione indicatori con drag&drop. Al di sopra il nome e la versione dell'ea e "by BTT". Sotto una visualizzazione dati del mercato e dell'account. Sotto la parte pulsanti dedicato al Drag&drop.
+
+Il pannello medio visualizza la parte di visualizzazione del pannello grande e sotto i dati di trading, come gli ordini in corso e quelli chiusi con selezione di tempo degli ordini chiusi, per es: num buy, mun sell, drow down max, profitto o perdita negli ultimi 7 giorni, o giorno corrente o ultimo mese, ecc..
+
+Il pannello piccolo riporta solo il nome dell'ea e versione e by BTT, (come il pannello medio nella parte superiore). Questo pannello non deve ingombrare il grafico ma poter passare ad uno degli altri pannelli tramite pulsante o barretta laterale.
+
+I dati raccolti tramite i drag&drop, ovvero i nomi degli indicatori aggregati, le impostazioni degli ind ed i valori utili all'apertura e chiusura ordini dell'ea, quindi l'ultimo valore dei buffer scelti. Questi dati dal pannello devono essere riportati anche come input utili per il backtest ed ottimizzazione. 
+Durante il backtest il pannello grande e/o piccolo e/o medio possono essere non visualizzato se crea problemi. 
+
+Una volta aggregati gl'indicatori devono poter essere settati per gli ordini ed i filtri.
+Esempio, per apertura ordini buy (Signal Buy) scelgo un rsi ed una media mobile, scelgo che dia un buy quando il valore ultimo rsi supera verso l'alto il valore 30 "AND" il prezzo mercato supera verso l'alto il valore della media mobile. Capisci che ci sono diverse opzioni da impostare. Come la scelta, solo per l'apertura ordine (Buy e Sell), di valutare la condizione solo quando l'ultima candela chiude (o all'apertura dell'ultima candela. 
+
+L'ea deve valutare che il mercato sia chiuso per non inviare ordini a mercato chiuso.
+
+L'ea deve avere gl'input di Lot Fix/Risk%, Magic number, comment, slippage, Tp, Sl, Trailing stop, Break even, News (importanza alta, media, bassa), Time trading, spread max, e tutti gl'input che i clienti di mql5.com richiedono dagli eau. 
+
+Tieni sempre d'occhio le recensioni ed i commenti del market di mql5.com per dettagliare la versione Lite , Pro ed eventuali successive.  
+
+
+
+
+
+
+
+
+

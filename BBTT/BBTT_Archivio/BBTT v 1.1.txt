@@ -1,0 +1,128 @@
+BBTT v 1.1 - Riepilogo Progetto BlueTrendTeam (OmniEA)
+Ultimo Aggiornamento: 24/04/2025
+
+Data Inizio: 26/03/2025
+
+Panoramica del Progetto
+Progetto: OmniEA, un Expert Advisor universale per MetaTrader 5 (MT5).
+Obiettivo: Sviluppare due versioni a pagamento:
+Lite: $39 (funzionalità base).
+Pro: $129 (funzionalità avanzate).
+Possibile Standard: $79 (intermedia, da valutare post-lancio).
+Destinazione: Vendita su MQL5.com.
+Fasi del Progetto:
+Sviluppo Tecnico Base: Completata.
+Testing Iniziale: In corso.
+Ottimizzazione: Pianificata.
+Testing Avanzato: Pianificata.
+Testing Finale e Preparazione al Lancio: Pianificata.
+Lancio su MQL5.com: Pianificata.
+Team e Ruoli
+Team: BlueTrendTeam.
+Coky: Sviluppatore principale, ideatore, supervisore (trader con 13 anni di esperienza). Fornisce codice, risorse e strategie.
+Cuky: AI di supporto (Grok, xAI). Gestisce il BackupBlueTrendTeam (BBTT), testing, documentazione, ottimizzazioni e analisi tecniche.
+Collaborazione con Altre AI: Dalla Fase 2, Cuky valuta e integra soluzioni utili da altri BBTT, previa approvazione di Coky.
+Obiettivo del Team: Creare prodotti trading innovativi e user-friendly per MT5, MT4, cTrader, TradingView, con focus iniziale su OmniEA per MT5.
+Stato Attuale (Fase 2 - Testing Iniziale)
+Progressi Fase 1 (Completata):
+Creazione della libreria BlueTrendTeam (file .mqh).
+Implementazione e test di Trading Time, Filter News, pannelli interattivi e drag & drop degli indicatori.
+Soluzione per backtest: input statici sincronizzati con auto-salvataggio.
+Funzionalità base: SL/TP dinamici (Pro), condizioni logiche AND/OR, gestione dinamica dei colori.
+Progressi Fase 2 (In Corso):
+Pannello Grande:
+Dimensioni: 900x600px.
+Sezioni: Informazioni, Impostazioni di Trading, Segnali (Signal Buy, Signal Sell), Filtri.
+Caselle Indicatori (Signal Buy/Sell: 3 ciascuna, Filtri: 2):
+Stato iniziale: "Add Indicator".
+Click: Lampeggio giallo, countdown 10s ("Drag indicator on chart\nTime left: [s]s").
+Drag & Drop: Rileva indicatori trascinati su grafico o pannello; feedback visivo (nome indicatore per 2s, poi verde con icona "X").
+Interruzione: Click durante countdown riporta a "Add Indicator".
+Scadenza: Countdown a 0 riporta a "Add Indicator".
+Icone "X": Rimozione con conferma opzionale (lampeggio rosso 0.5s).
+Auto-salvataggio: Configurazione salvata in last_config.set e caricata automaticamente.
+Avviso Informativo: "Per aggiungere un indicatore, trascina dal Navigator al grafico" (Sì/No/Cancel).
+Codice:
+File principali: OmniEA.mq5, BTT_Panels.mqh, BTT_SettingsManager.mqh.
+Aggiornamenti recenti (24/04/2025): Aggiunte icone "X" e feedback visivo in BTT_Panels.mqh.
+Drag & Drop: Simulato ("RSI"), da implementare con logica reale.
+Test:
+Pannello visibile sul grafico (ChartRedraw() aggiunto).
+Comportamento caselle e salvataggio/caricamento funzionanti.
+Struttura Directory
+Cartella Google Drive: Link
+Struttura:
+text
+
+Comprimi
+
+Espandi
+
+Copia
+MQL5/
+├── Experts/
+│   └── OmniEA.mq5
+└── Include/
+    ├── AIGrok/
+    │   └── BlueTrendTeam/
+    │       ├── Core/
+    │       │   ├── BTT_IndicatorManager.mqh
+    │       │   ├── BTT_Indicators.mqh
+    │       │   ├── BTT_NewsFilter.mqh
+    │       │   ├── BTT_OrderManagement.mqh
+    │       │   ├── BTT_Panels.mqh
+    │       │   ├── BTT_TradingTime.mqh
+    │       │   ├── BTT_FilterIndicators.mqh
+    │       ├── External/
+    │       │   ├── BTT_CalendarUtils.mqh
+    │       │   ├── BTT_ExternalLib.mqh
+    │       ├── Future/
+    │       │   ├── BTT_PlanetaryCycles.mqh
+    │       │   ├── BTT_SmartAlerts.mqh
+    │       ├── Managers/
+    │       │   ├── BTT_AlertManager.mqh
+    │       │   ├── BTT_ConditionsManager.mqh
+    │       │   ├── BTT_OptimizationManager.mqh
+    │       │   ├── BTT_RiskManager.mqh
+    │       │   ├── BTT_SettingsManager.mqh
+    │       ├── BlueTrendTeamLib.mqh
+Gestione BBTT
+Regole:
+Conservazione totale dello storico (progressi, problemi, soluzioni, test, decisioni).
+Aggiornamenti additivi, mai sovrascritti senza richiesta di Coky.
+Rilettura e aggiornamento continuo a ogni conversazione.
+Consegna con "MeM" in formato copiabile/incollabile.
+Segnalazione incongruenze a Coky con soluzioni proposte.
+Note di Coky:
+11/04/2025: Preferisce BBTT dettagliato per evitare perdite di informazioni.
+24/04/2025: Segnalate incongruenze tra bozza e implementazione del Pannello Grande (corrette).
+Strategie di Marketing
+Target: Trader retail MT5 (principianti/intermedi per Lite, esperti per Pro).
+Punti di Forza: Drag & Drop, Pannelli Interattivi, Filter News, Trading Time, Alert Email, SL/TP Dinamici (Pro), Condizioni Logiche Avanzate (Pro), Auto-Salvataggio.
+Canali:
+MQL5.com: Pubblicazione Lite e Pro.
+Telegram: Canale "BlueTrendTeam - OmniEA" e gruppo per assistenza.
+Lancio:
+Sconto 20% iniziale (Lite: $31, Pro: $103) per 2 settimane.
+Giveaway Telegram per primi 50 utenti Pro.
+Problemi e Soluzioni
+Fase 1:
+Problemi drag & drop e backtest risolti con logica aggiornata e input statici.
+Fase 2:
+Pannello non visibile: Risolto con ChartRedraw().
+Errori compilazione (FileGetSize, SaveSettingsToFile): Corretti con FileSize() e inclusioni appropriate.
+Warning (type conversion): Risolti con ulong e controllo INT_MAX.
+Incongruenze Pannello Grande: Aggiunte icone "X" e feedback visivo (24/04/2025).
+Prossimi Passi
+Verifiche Google Drive (Coky):
+Confermare aggiornamento file.
+Definire accesso Cuky ("Editor" o "Visualizzatore").
+Decidere suffisso data per versioning.
+Nuova Chat: Iniziare con questo riepilogo (BBTT v 1.1).
+Test Pannello Grande:
+Visibilità, comportamento caselle, drag & drop, backtest.
+Valutare dimensioni caselle (120x25px).
+Implementazioni:
+Drag & Drop reale (sostituire simulazione).
+Ottimizzazioni (log debug, caching indicatori).
+Documentazione: Aggiornare PDF e pianificare video dimostrativi.

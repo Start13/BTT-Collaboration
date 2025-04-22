@@ -1,0 +1,70 @@
+📌 **BBTT - Backup BlueTrendTeam**
+**Ultimo aggiornamento:** 2025-04-15
+
+🔹 **Informazioni Generali**
+- **Progetto attuale:** OmniEA Lite v1.0 (Universal Expert Advisor MT5)
+- **Team:** BlueTrendTeam (BTT)
+- **Responsabile progetto:** Corrado Bruni (Coky Trader)
+- **Supporto AI:** ChatGPT ("Cuky")
+- **Target vendita:** MQL5.com (Lite $39, Standard $79, Pro $129)
+- **Sviluppo:** Incrementale, continuo, senza date fisse
+
+📂 **Struttura File**
+- **Base Path MetaQuotes:** `C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166`
+- **File principali:**
+  - EA: `Experts/MyEA/AIChatGpt/OmniEA_Lite.mq5`
+  - Include: `Include/AIChatGpt/`
+    - `BTT_SlotLogic.mqh`
+    - `BTT_PanelDraw.mqh`
+    - `BTT_UIUtils.mqh`
+    - `OptimizerGenerator.mqh`
+    - `ExportOptimizerScript.mq5`
+
+🧩 **Caratteristiche OmniEA Lite**
+- Drag&Drop indicatori innovativo (marketing principale).
+- Tre slot interattivi: SignalBuy, SignalSell, Filter.
+- Countdown 20 secondi per assegnazione.
+- Lettura e gestione dati indicatori (nome, input, buffer).
+- Supporto multi-istanza indicatori con parametri differenti.
+
+🪟 **Interfaccia Utente**
+- **Pannello Grande:** Indicatori drag&drop, dati mercato, impostazioni trading.
+- **Pannello Medio:** Dati trading recenti.
+- **Pannello Piccolo:** Compatto, rapido cambio pannelli.
+- Compatibilità completa con backtest e ottimizzazione.
+
+🛡️ **Sicurezza**
+- Nessuna protezione speciale file `.ex5` per MQL5.com.
+- Massima attenzione a evitare diffusione accidentale codici.
+
+🚧 **Problemi aperti (in corso)**
+- Gestione errori compilazione include (eliminazione puntatori NULL).
+- Rimozione `#pragma once` e riferimenti OOP (CObject, File.mqh).
+- Validazione include sperimentale `BTT_Panels_13_04_2025.mqh`.
+
+🔧 **Prossimi Passi**
+1. Risoluzione errori compilazione MetaEditor.
+2. Integrazione completa modulo esportazione ottimizzazione.
+3. Miglioramento grafico interfaccia utente.
+4. Gestione avanzata e validazione indicatori non validi/lenti.
+5. Sincronizzazione input/pannello/indicatori.
+
+🎯 **Strategia Marketing**
+- Punto vendita chiave: Drag&Drop indicatori.
+- Canale Telegram dedicato per supporto.
+- Comunicazione professionale, psicologicamente efficace.
+
+⚙️ **Strategia AI e automazioni**
+- Uso GPT-4, compatibilità totale con GPT Code Copilot.
+- Script locale (`btt_agent.py`) per backup automatico, invio email e Telegram.
+- Consumo ottimale token con caricamento manuale BBTT aggiornato.
+
+🗃️ **Organizzazione e Backup**
+- Cartelle BBTT giornaliere (`C:\BTT_Agent\BBTT_YYYY-MM-DD\`).
+- Utilizzo HDD esterni, Telegram, email.
+- BBTT centrale per ripristino rapido della memoria tecnica.
+
+🔄 **Istruzioni per Ripartenza**
+- Avviare `Esegui_BBTT.bat` giornalmente.
+- Caricare manualmente `BBTT.txt` aggiornato a ogni nuova sessione/chat con ChatGPT.
+

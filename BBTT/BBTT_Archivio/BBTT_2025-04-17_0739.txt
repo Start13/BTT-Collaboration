@@ -1,0 +1,46 @@
+*** BBTT – Backup BlueTrendTeam ***
+🕒 DATA: 2025-04-17 07:39
+
+📚 DOCUMENTO PRINCIPALE DI RIFERIMENTO
+BackupBlueTrendTeam v 2.1.txt
+
+📌 AGGIORNAMENTI ODIERNI (17/04/2025)
+
+1. Analisi OptimizerGenerator:
+   - Localizzato in: Scripts/MyScripts/OptimizerGenerator.mq5
+   - Include in: Include/AIChatGpt/OptimizerGenerator.mqh
+   
+   Funzionalità:
+   - Generazione automatica file .set per ottimizzazione
+   - Supporto parametri numerici con range e step
+   - Compatibile con EA e Indicatori
+   
+   Utilizzi Previsti:
+   - OmniEA: 
+     • Lite: ottimizzazione base
+     • Pro: ottimizzazione avanzata
+     • Versione superiore: auto-ottimizzazione con AI
+   - Indicatori: ottimizzazione periodi e livelli
+   - Futuri prodotti: qualsiasi strumento parametrico
+
+   Punti di Forza:
+   - Codice modulare senza dipendenze complesse
+   - Facilmente estendibile
+   - Versatile per diversi strumenti MT5
+
+2. Test Comunicazione Cascade-MT5:
+   - Verificata capacità di monitorare modifiche real-time
+   - Test effettuato con creazione script CiaoCuky.mq5
+   - Confermata visibilità immediata delle modifiche
+
+📋 PROSSIMI STEP
+1. Pianificare integrazione OptimizerGenerator in OmniEA
+2. Valutare estensioni per supporto booleani e interi
+3. Sviluppare template predefiniti per casi d'uso comuni
+
+⚠️ NOTE TECNICHE
+- Mantenere compatibilità tra versioni dei prodotti
+- Prevedere sistema di logging per ottimizzazioni
+- Considerare integrazione con AI per suggerimenti parametri
+
+AUTORE: Corrado Bruni Team

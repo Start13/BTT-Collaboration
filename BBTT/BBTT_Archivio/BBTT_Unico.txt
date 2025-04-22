@@ -1,0 +1,1137 @@
+# BlueTrendTeam (BTT) - Documentazione Unificata
+
+## 1. Panoramica del Progetto
+### 1.1 Informazioni di Base
+- Nome Progetto: OmniEA (UniversalEA/UEA)
+- Team:
+  * Coky: Sviluppatore e ideatore, trader con 13 anni di esperienza
+  * Cascade: AI di supporto e sviluppo
+- Filosofia: Creazione di prodotti professionali per MT4/MT5/cTrader/TradingView
+- Focus sulla sicurezza e protezione del codice
+- Approccio economico iniziale: minimizzare i costi, no partita IVA iniziale
+
+### 1.2 Requisiti Expert Advisor
+[contenuto esistente...]
+
+### 1.3 Requisiti Expert Advisor
+[contenuto esistente...]
+
+### 1.4 Features AI
+1. Parameter Optimization
+   - Ottimizzazione automatica EA
+   - Analisi storica performance
+   - Adattamento real-time
+
+2. Strategy Analysis
+   - Valutazione trading
+   - Pattern recognition
+   - Backtesting automatico
+
+3. Market Insights
+   - Analisi sentiment
+   - Previsioni trend
+   - Correlazioni asset
+
+4. Risk Management
+   - Risk/reward automatico
+   - Position sizing
+   - Stop loss dinamici
+
+### 1.5 Regole di Documentazione Automatica
+- Cascade deve automaticamente documentare nel BBTT_Unico:
+  * Informazioni utili discusse in chat
+  * Strategie di trading definite
+  * Funzionalità dei prodotti (es. OmniEA)
+  * Decisioni tecniche rilevanti
+- La documentazione viene aggiornata in tempo reale durante le conversazioni
+- Ogni aggiornamento viene distribuito attraverso il sistema di backup
+- IMPORTANTE: Focus sui dettagli specifici
+  * Catturare e documentare ogni dettaglio tecnico rilevante
+  * Non limitarsi alle informazioni generali
+  * Documentare anche le piccole ottimizzazioni e miglioramenti
+  * Preservare il contesto specifico delle decisioni
+  * Mantenere traccia delle motivazioni dietro le scelte tecniche
+- Proattività nella documentazione:
+  * Non attendere istruzioni esplicite per documentare
+  * Identificare autonomamente informazioni degne di nota
+  * Aggiornare la documentazione durante la conversazione
+
+### 1.6 Regole di Distribuzione
+- Sequenza di distribuzione BBTT_Unico.zip:
+  1. Compressione del file BBTT_Unico.txt in BBTT_Unico.zip
+  2. In caso di errore 422 su GitHub (file già esistente):
+     * Eseguire clean_all_github.py per pulire il repository
+     * Riprovare il caricamento con send_all.py
+  3. Canali di distribuzione:
+     * Telegram (bot configurato)
+     * Email (corbruni@gmail.com)
+     * GitHub (repository BTT-Backup)
+- La distribuzione deve essere sempre completa su tutti i canali
+
+### 1.7 Politica di Distribuzione Automatica
+- Trigger di distribuzione:
+  1. Su richiesta esplicita dell'utente
+  2. Durante la fase di test di distribuzione
+  3. Come regola di avanzamento lavoro
+  4. Ogni 3 ore SE:
+     * Sono state apportate modifiche a BBTT_Unico
+     * Sono state apportate modifiche a MQL5
+
+- Gestione file precedenti (max 3 copie per canale):
+  1. Telegram:
+     * Mantenere massimo 3 file
+     * Cancellare automaticamente il più vecchio se limite raggiunto
+  2. GitHub:
+     * Mantenere massimo 3 file nel repository
+     * Cancellare il più vecchio prima del nuovo upload
+  3. Email:
+     * Tentare cancellazione email precedente se possibile
+     * Altrimenti applicare regola dei 3 file come altri canali
+
+- La pulizia dei file vecchi deve avvenire:
+  * Su Telegram: prima del nuovo invio
+  * Su GitHub: prima del nuovo upload
+  * Via Email: secondo possibilità tecniche
+
+### 1.8 Gestione Backup MQL5 e Controllo Spazio
+- Cartelle da backuppare e distribuire con BBTT_Unico:
+  1. Experts/
+  2. Include/
+  3. Scripts/
+  * Nota: Indicators/ esclusa temporaneamente per dimensioni eccessive
+
+- Procedura di backup:
+  1. Compressione in file zip separati:
+     * Experts.zip
+     * Include.zip
+     * Scripts.zip
+  2. Distribuzione insieme a BBTT_Unico.zip
+  3. Applicare stesse regole di distribuzione (max 3 copie per canale)
+
+- Monitoraggio dimensioni:
+  1. Controllo periodico dimensioni in MB di ogni cartella
+  2. Report dimensioni in sezione dedicata di BBTT_Unico
+  3. Segnalazione quando le dimensioni superano soglie critiche
+
+- Gestione spazio e pulizia:
+  1. Monitoraggio continuo di:
+     * File temporanei
+     * File duplicati
+     * Versioni obsolete
+     * File non utilizzati
+  2. Procedura di pulizia:
+     * Identificazione file candidati alla rimozione
+     * Verifica dipendenze e utilizzo
+     * Richiesta consenso utente per eliminazione
+     * Backup preventivo prima della rimozione
+     * Log delle operazioni di pulizia
+
+- Report stato spazio (aggiornato il: {{ data }})
+  * Experts: {{ dimensione_MB }} MB
+  * Include: {{ dimensione_MB }} MB
+  * Scripts: {{ dimensione_MB }} MB
+  * Totale: {{ totale_MB }} MB
+
+- Registro pulizie:
+  * Ultima pulizia: {{ data }}
+  * Files rimossi: {{ lista }}
+  * Spazio liberato: {{ MB }}
+
+### 1.9 Gestione Script
+- Distinzione tra due tipologie di script:
+  1. Script MQL5 per MetaTrader:
+     * Posizione: /MQL5/Scripts/
+     * Inclusi nella distribuzione
+     * Parte del backup regolare
+     * Utilizzati direttamente in MetaTrader 5
+
+  2. Script di Utility Interni:
+     * Posizione: BTT_Runtime/scripts_runtime/
+     * NON inclusi nella distribuzione
+     * Utilizzati solo per gestione interna
+     * Esempi:
+       - send_all.py
+       - clean_all_github.py
+       - altri script di gestione distribuzione
+     * Possono essere organizzati in sottocartelle per ordine
+     * Mai distribuiti con il backup MQL5
+
+- IMPORTANTE: Durante la creazione dei backup, escludere sempre la cartella degli script di utility interni
+
+### 1.10 Monitoraggio e Pulizia File
+- Aree da monitorare:
+  1. Cartella MQL5 (AREA CRITICA):
+     * È il cuore del sistema MetaTrader 5
+     * Contiene componenti critici:
+       - Expert Advisors (EA)
+       - Indicatori
+       - Include files
+       - Scripts
+     * MASSIMA CAUTELA nelle modifiche
+     * Ogni modifica richiede approvazione esplicita
+     * Verificare dipendenze prima di qualsiasi rimozione
+
+  2. Cartelle BBTT:
+     * Monitoraggio file obsoleti o duplicati
+     * Identificazione cartelle non utilizzate
+     * Pulizia più flessibile ma sempre con autorizzazione
+
+- Procedura di Pulizia:
+  1. Fase di Identificazione:
+     * Scansione periodica delle cartelle
+     * Identificazione file/cartelle potenzialmente inutili
+     * Creazione lista candidati alla rimozione
+     
+  2. Fase di Analisi:
+     * Verifica ultimo accesso/modifica
+     * Controllo dipendenze
+     * Valutazione importanza storica
+     * Documentazione uso/scopo
+
+  3. Fase di Proposta:
+     * Presentazione lista all'utente
+     * Dettaglio motivazioni per ogni elemento
+     * Valutazione rischi rimozione
+     * Attesa approvazione esplicita
+
+  4. Fase di Backup:
+     * Backup preventivo elementi da rimuovere
+     * Documentazione stato pre-rimozione
+     
+  5. Fase di Rimozione:
+     * Solo dopo approvazione esplicita
+     * Esecuzione graduale
+     * Log dettagliato operazioni
+     * Verifica integrità sistema post-rimozione
+
+- IMPORTANTE: Mai rimuovere file da MQL5 senza:
+  1. Approvazione esplicita
+  2. Backup completo
+  3. Verifica dipendenze
+  4. Test integrità sistema
+
+### 1.11 Sincronizzazione Stato Conversazione
+- All'apertura di una nuova chat:
+  1. Cascade deve automaticamente:
+     * Leggere l'ultimo BBTT_Unico distribuito
+     * Sincronizzarsi con lo stato più recente del progetto
+     * Riprendere il lavoro dal punto esatto dell'ultima sessione
+  
+  2. Procedura di sincronizzazione:
+     * Caricare intero contenuto di BBTT_Unico
+     * Analizzare lo stato del progetto
+     * Identificare l'ultimo punto di lavoro
+     * Riprendere attività da dove interrotta
+
+  3. Continuità del lavoro:
+     * Mantenere coerenza tra sessioni
+     * Evitare ripetizioni o perdita di contesto
+     * Garantire progressione lineare del progetto
+
+- IMPORTANTE: Questa sincronizzazione è automatica e non richiede comando esplicito
+
+### 1.12 Monitoraggio MQL5
+- Dimensioni e stato cartelle:
+  1. Experts/:
+     * Dimensione: ~2.5 MB
+     * File da monitorare:
+       - MyEA/Zigulì/* (versioni multiple)
+       - Prove EA/* (test files)
+     * Stato: OK (presenza versioni multiple)
+
+  2. Include/:
+     * Dimensione: ~1.0 MB
+     * Librerie principali:
+       - AIChatGpt/OptimizerGenerator.mqh
+       - AIChatGpt/SignalProcessor.mqh
+       - AIChatGpt/DataManager.mqh
+       - AIChatGpt/RiskManager.mqh
+     * Stato: OK
+
+  3. Scripts/:
+     * Dimensione: ~0.5 MB
+     * File da monitorare:
+       - "usa e getta.mq5" (file temporaneo)
+     * Stato: OK (presenza file temporanei)
+
+- Procedure di pulizia:
+  1. Identificazione file:
+     * Versioni multiple dello stesso EA
+     * File di test e prove
+     * File temporanei o "usa e getta"
+     * File non utilizzati da più di 3 mesi
+
+  2. Analisi impatto:
+     * Verificare dipendenze
+     * Controllare ultimi accessi
+     * Documentare funzionalità
+
+  3. Richiesta approvazione:
+     * Lista file da rimuovere
+     * Motivazione per ogni file
+     * Backup preventivo
+     * Attesa consenso esplicito
+
+### 1.13 Regole di Sincronizzazione
+- CASCADE_SYNC.txt:
+  * Scopo: Punto di ingresso per nuove chat
+  * Contenuto: Solo il percorso del file master
+  * Formato semplice e diretto
+  * Non contiene regole o documentazione
+
+- Procedura di sincronizzazione:
+  1. Nuova chat legge CASCADE_SYNC.txt
+  2. Recupera percorso BBTT_Unico.txt
+  3. Carica documentazione completa
+  4. Procede con il lavoro
+
+### 1.14 Regole di Distribuzione
+- Pacchetto completo:
+  1. BBTT_Unico.zip (documentazione principale)
+  2. MQL5.zip contenente SOLO:
+     * Experts/ (~2.5 MB)
+       - Argonaut e configurazioni
+     * Include/ (~1.0 MB)
+       - Librerie AIChatGpt
+     * Scripts/ (~0.5 MB)
+       - Script BTT MQL5
+     Note: 
+     - Indicators esclusa per dimensioni eccessive
+     - Gli script Python di runtime (send_*.py, clean_*.py) NON vanno inclusi
+     - Scripts/ deve contenere solo script MQL5, non script di runtime
+
+- Sequenza distribuzione:
+  1. Compressione file:
+     * BBTT_Unico.txt → BBTT_Unico.zip
+     * Cartelle MQL5 selezionate → MQL5.zip (escludendo script runtime)
+  2. Pulizia GitHub se necessario
+  3. Invio su tutti i canali:
+     * Telegram (bot)
+     * Email (corbruni@gmail.com)
+     * GitHub (BTT-Backup)
+
+- Verifica distribuzione:
+  * Conferma invio su ogni canale
+  * Verifica presenza su GitHub
+  * Controllo hash contenuti
+  * Verifica esclusione script runtime
+
+### 1.15 Regole Definitive Distribuzione Files
+1. Cartelle da includere COMPLETAMENTE:
+   - Experts/ - TUTTI i file
+   - Include/ - TUTTI i file
+   - Scripts/ (~0.5 MB) - SOLO file MQL5
+
+2. Esclusioni TASSATIVE:
+   - Indicators/ (motivo: dimensioni eccessive)
+   - TUTTI gli script Python di runtime
+   - Script di utility (send_*.py, clean_*.py)
+   - Qualsiasi file di runtime
+
+3. Separazione Runtime:
+   - Posizione script runtime: BTT_Runtime/scripts_runtime/
+   - Mai includere nella distribuzione
+   - Mantenimento separazione netta tra file distribuiti e file runtime
+
+4. Regola Fondamentale:
+   La distribuzione deve contenere SOLO i file necessari per il funzionamento dell'EA,
+   mai file di gestione o utility.
+
+NOTA: Questa è una regola DEFINITIVA e non deve essere modificata senza esplicita richiesta dell'utente.
+
+### 1.16 Regola del "Memorizza"
+- Quando l'utente scrive "Memorizza" o "memorizza":
+  * Cascade deve immediatamente aggiungere al file BBTT_Unico.txt tutte le informazioni utili discusse
+  * Le informazioni devono essere:
+    - Ordinate in modo logico
+    - Contestualizzate nel documento
+    - Aggiunte nella sezione appropriata
+    - Formattate in modo coerente con il resto del documento
+  * Cascade deve anche autonomamente:
+    - Identificare informazioni utili per l'avanzamento del lavoro
+    - Aggiungerle al BBTT_Unico senza attendere il comando esplicito
+    - Mantenere il documento aggiornato con le decisioni più recenti
+  * Dopo ogni aggiunta, Cascade deve:
+    - Confermare l'aggiornamento all'utente
+    - Specificare quali informazioni sono state aggiunte
+    - Indicare in quale sezione sono state inserite
+
+## 4. OmniEA - Specifiche e Implementazione
+### 4.1 Struttura del Pannello Grande
+1. **Intestazione**:
+   - Testo: "Universal EA OmniEA MT5 v. [versione] by BTT"
+   - Posizione: parte superiore del pannello
+   - Stile: ben visibile, con colori coerenti con il brand BlueTrendTeam
+
+2. **Sezione Informativa** (sotto l'intestazione):
+   - Dati di visualizzazione senza impostazioni manuali
+   - Informazioni mostrate:
+     * Broker, Account, Balance
+     * Market, Spread, Time Broker
+     * Stato ordini aperti
+     * Profitto/Perdita corrente
+
+3. **Sezioni Indicatori** (sotto la sezione informativa):
+   - Tre aree distinte:
+     * Signal Buy: 3 slot per indicatori di acquisto
+     * Signal Sell: 3 slot per indicatori di vendita
+     * Filter Order: 2 slot per indicatori di filtro
+   - Ogni slot include:
+     * Pulsante per aggiungere indicatore
+     * Visualizzazione nome indicatore assegnato
+     * Pulsante AND/OR per la logica tra indicatori
+     * Feedback visivo durante l'assegnazione
+
+4. **Impostazioni**:
+   - Tutte le impostazioni saranno gestite tramite input dell'EA
+   - Nessun controllo manuale nel pannello
+   - Focus sulla visualizzazione delle informazioni e sull'assegnazione degli indicatori
+
+### 4.2 Identificazione Visiva dei Buffer
+Per aiutare l'utente a identificare i buffer degli indicatori sul grafico:
+
+1. **Etichette Buffer**:
+   - Aggiungere un'etichetta "Buff XX" (dove XX è il numero del buffer) alla fine di ogni linea dell'indicatore
+   - Posizionamento: leggermente distaccato dalla fine della linea dell'indicatore
+   - Stile: discreto ma leggibile, con dimensione del testo appropriata
+
+2. **Casi Specifici**:
+   - **Indicatori lineari** (es. Medie Mobili):
+     * Etichetta "Buff XX" alla fine della linea
+     * Colore dell'etichetta coordinato con il colore della linea
+   
+   - **Indicatori complessi** (es. Ichimoku):
+     * Piccole frecce o lineette che puntano a ciascun elemento dell'indicatore
+     * Etichette posizionate in modo da non sovrapporsi ad altri elementi
+     * Possibile uso di colori diversi per distinguere i vari buffer
+
+3. **Implementazione Tecnica**:
+   - Utilizzare oggetti `OBJ_TEXT` o `OBJ_LABEL` per le etichette
+   - Posizionamento dinamico basato sull'ultimo valore visibile dell'indicatore
+   - Aggiornamento della posizione quando il grafico viene scrollato
+   - Opzione per mostrare/nascondere le etichette (per utenti esperti)
+
+### 4.3 Gestione di Preset Multipli
+Un sistema di gestione dei preset multipli si riferisce alla capacità dell'EA di salvare, caricare e gestire diverse configurazioni complete di indicatori e parametri.
+
+#### Problematiche dell'Implementazione Attuale:
+1. **Salvataggio Limitato**: L'attuale sistema salva solo una configurazione alla volta, sovrascrivendo la precedente
+2. **Nessuna Gestione dei Profili**: Non esiste un'interfaccia per gestire diversi preset o profili
+3. **Mancanza di Naming**: Non è possibile assegnare nomi significativi alle configurazioni
+4. **Nessuna Categorizzazione**: Non c'è modo di organizzare i preset per strategie o mercati
+
+#### Soluzione Proposta:
+1. **Sistema di Preset Completo**:
+   - Salvataggio di configurazioni multiple con nomi personalizzati
+   - Interfaccia per caricare, modificare ed eliminare preset
+   - Categorizzazione per strategie, mercati o timeframe
+   - Esportazione/importazione di preset per la condivisione
+
+2. **Formato JSON Strutturato**:
+   - Utilizzo di JSON per salvare i preset in modo organizzato
+   - Struttura gerarchica per una facile estensione
+   - Metadati per ogni preset (data creazione, descrizione, performance)
+
+3. **Interfaccia Utente Dedicata**:
+   - Menu dropdown per la selezione dei preset
+   - Pulsanti per salvare, rinominare ed eliminare preset
+   - Opzione di backup automatico prima di sovrascrivere
+
+### 4.4 Gestione di Indicatori con Buffer Multipli
+La gestione degli indicatori con buffer multipli è un aspetto critico per OmniEA, poiché molti indicatori tecnici hanno più buffer che rappresentano diverse linee o valori.
+
+#### Problematiche dell'Implementazione Attuale:
+1. **Rilevamento Limitato**: Non c'è un sistema robusto per rilevare tutti i buffer disponibili
+2. **Selezione Buffer Assente**: Manca un'interfaccia per selezionare quale buffer utilizzare
+3. **Identificazione Difficile**: L'utente non ha modo di sapere quale buffer corrisponde a quale linea
+4. **Nessuna Descrizione**: I buffer non hanno nomi descrittivi per aiutare l'utente
+
+#### Soluzioni Dettagliate:
+
+1. **Rilevamento Automatico dei Buffer**:
+   - Esplorare sistematicamente ogni possibile buffer dell'indicatore (tipicamente da 0 a un numero massimo ragionevole)
+   - Verificare quali buffer contengono effettivamente dati validi
+   - Tentare di recuperare i nomi descrittivi dei buffer quando disponibili
+   - Memorizzare il numero totale di buffer rilevati e i loro nomi/descrizioni
+
+2. **Interfaccia di Selezione Buffer**:
+   - Dropdown menu o lista di selezione per ogni indicatore aggiunto
+   - Visualizzazione del numero del buffer, nome descrittivo e valore corrente
+   - Aggiornamento automatico dell'interfaccia quando viene aggiunto un nuovo indicatore
+   - Generazione di input enum per la selezione dei buffer nel backtest/ottimizzazione
+
+3. **Gestione Specializzata per Indicatori Complessi**:
+   - Libreria di mappature per indicatori comuni (MA, RSI, MACD, Bollinger Bands, Ichimoku, ecc.)
+   - Descrizioni intuitive per ogni buffer (es. "MACD Line", "Signal Line", "Histogram")
+   - Gestione speciale per indicatori con molti buffer o comportamenti particolari
+   - Sistema per analizzare e mappare anche indicatori personalizzati
+
+4. **Visualizzazione dei Valori Correnti dei Buffer**:
+   - Visualizzazione del valore numerico corrente di ogni buffer
+   - Aggiornamento in tempo reale dei valori durante la selezione
+   - Formattazione appropriata dei valori in base al tipo di indicatore
+   - Evidenziazione dei buffer che generano segnali di trading
+
+5. **Integrazione con il Sistema di Etichette "Buff XX"**:
+   - Creazione automatica di etichette "Buff XX" per ogni buffer rilevato
+   - Posizionamento dinamico delle etichette in base ai valori correnti
+   - Coordinamento dei colori delle etichette con i colori delle linee dell'indicatore
+   - Aggiornamento delle etichette quando il grafico viene scrollato o ridimensionato
+
+6. **Memorizzazione e Ripristino delle Selezioni**:
+   - Memorizzazione del buffer selezionato per ogni indicatore
+   - Ripristino automatico delle selezioni quando si carica un preset
+   - Persistenza delle selezioni tra sessioni di trading
+   - Integrazione con il sistema di preset multipli
+
+7. **Suggerimenti Aggiuntivi**:
+   - Previsualizzazione grafica dei buffer nel dialogo di selezione
+   - Tooltip informativi sulle etichette "Buff XX"
+   - Modalità di apprendimento con spiegazioni dettagliate
+   - Colori personalizzabili per le etichette
+   - Rilevamento intelligente del buffer più probabile da utilizzare
+   - Documentazione integrata per ogni indicatore
+   - Memorizzazione delle preferenze dell'utente per suggerimenti futuri
+
+### 4.5 Strategie di Ottimizzazione per OmniEA
+Per mantenere l'EA snello ed efficiente, è essenziale implementare strategie di ottimizzazione che riducano al minimo le operazioni ridondanti e costose in termini di risorse.
+
+#### Principi di Ottimizzazione:
+
+1. **Caching Intelligente**:
+   - Memorizzazione dei risultati del rilevamento buffer: Eseguire il rilevamento dei buffer solo una volta per ogni indicatore
+   - Implementare un sistema di timestamp per determinare quando il cache deve essere aggiornato
+
+2. **Lettura Lazy e On-Demand**:
+   - Leggere i dati dei buffer solo quando effettivamente necessario
+   - Aggiornare i valori solo quando richiesto dall'utente o dal sistema di trading
+   - Dare priorità alla lettura dei buffer attualmente selezionati per il trading
+
+3. **Ottimizzazione delle Operazioni di Copia**:
+   - Minimizzare le chiamate CopyBuffer(): Raggruppare le operazioni di copia quando possibile
+   - Copiare solo la quantità di dati necessaria (es. ultimi 3-5 valori per i segnali di trading)
+   - Riutilizzare gli array esistenti invece di crearne di nuovi ad ogni chiamata
+
+4. **Gestione Efficiente della Memoria**:
+   - Preallocare array di dimensioni appropriate
+   - Liberare la memoria quando gli indicatori vengono rimossi
+   - Creare etichette "Buff XX" solo per i buffer rilevanti
+
+5. **Aggiornamenti Condizionali**:
+   - Aggiornare solo gli elementi che sono cambiati
+   - Verificare se un indicatore è ancora valido prima di tentare operazioni su di esso
+   - Aggiornare l'interfaccia solo in risposta a eventi specifici (nuovo tick, modifica dell'indicatore)
+
+6. **Ottimizzazione dell'Interfaccia Utente**:
+   - Limitare il numero di oggetti grafici creati
+   - Aggiornare più elementi dell'interfaccia in un'unica operazione
+   - Limitare la frequenza di aggiornamento dell'interfaccia (es. max 1 volta al secondo)
+
+7. **Implementazione di Controlli di Ridondanza**:
+   - Aggiornare solo se i dati sono effettivamente cambiati
+   - Utilizzare hash o checksum per rilevare rapidamente se una configurazione è cambiata
+   - Tenere traccia dello stato precedente per evitare calcoli ripetuti
+
+#### Considerazioni sulla Performance:
+- Bilanciamento tra reattività e efficienza: Trovare il giusto equilibrio tra aggiornamenti frequenti e consumo di risorse
+- Profiling: Monitorare le parti dell'EA che consumano più risorse e ottimizzarle prioritariamente
+- Scalabilità: Assicurarsi che l'EA rimanga performante anche con molti indicatori
+- Gestione degli errori: Implementare una robusta gestione degli errori per evitare crash o comportamenti imprevisti
+
+#### Metriche di Performance da Monitorare:
+- Tempo di esecuzione per tick: Quanto tempo impiega l'EA a elaborare ogni tick
+- Utilizzo della memoria: Quanta memoria viene allocata durante l'esecuzione
+- Frequenza di aggiornamento dell'interfaccia: Quanto spesso viene aggiornata l'interfaccia utente
+- Latenza dei segnali: Quanto tempo passa tra un segnale di trading e la sua esecuzione
+
+## 5. Analisi di Mercato e Posizionamento
+### 5.1 Panoramica del Mercato MQL5
+- Analisi dei principali EA universali su MQL5.com:
+  * Fascia di prezzo: $39-$499 (con alcuni EA premium fino a $1700)
+  * EA universali più popolari:
+    - MQL Universal EA: $149 (MT4)
+    - Smart Universal Expert Adviser: $299 (MT5)
+    - JesVersal Universal EA: $99 (MT4)
+    - Universal MA EA: $89 (MT5)
+  * Posizionamento OmniEA:
+    - Lite: $39 (competitivo nella fascia entry-level)
+    - Pro: $129 (competitivo nella fascia media)
+    - Standard: $79 (opzionale, posizionamento intermedio)
+
+### 5.2 Funzionalità Più Richieste
+- Caratteristiche più apprezzate dagli utenti:
+  * Integrazione con indicatori personalizzati
+  * Drag & Drop degli indicatori (feature distintiva di OmniEA)
+  * Gestione avanzata del rischio
+  * Trailing stop dinamico
+  * Filtri di trading (spread, news, orari)
+  * Personalizzazione dei parametri
+  * Interfaccia user-friendly
+  * Supporto per tutti i timeframe e mercati
+
+### 5.3 Recensioni e Feedback Clienti
+- Punti di forza evidenziati nelle recensioni:
+  * Supporto clienti rapido e competente
+  * Documentazione chiara e completa
+  * Facilità d'uso per trader non programmatori
+  * Aggiornamenti regolari
+  * Possibilità di testare strategie senza coding
+  * Compatibilità con indicatori personalizzati
+
+- Criticità segnalate:
+  * Limitazioni nel numero di indicatori utilizzabili contemporaneamente
+  * Complessità iniziale nell'impostazione
+  * Necessità di ottimizzazione per mercati specifici
+
+### 5.4 Vantaggi Competitivi di OmniEA
+- Elementi distintivi rispetto alla concorrenza:
+  * Sistema Drag & Drop intuitivo e visuale
+  * Pannello grande con feedback visivo avanzato
+  * Gestione sofisticata degli indicatori duplicati
+  * Validazione completa degli indicatori
+  * Gestione intelligente dei timeframe diversi
+  * Prezzo competitivo (specialmente versione Lite)
+  * Interfaccia moderna e user-friendly
+  * Auto-salvataggio e caricamento configurazione
+
+### 5.5 Strategia di Marketing
+- Punti chiave per la promozione:
+  * Enfatizzare la facilità d'uso per trader non tecnici
+  * Evidenziare il sistema Drag & Drop come innovazione
+  * Posizionare la versione Lite come punto d'ingresso accessibile
+  * Creare tutorial video e documentazione dettagliata
+  * Offrire supporto clienti reattivo
+  * Raccogliere e pubblicare testimonianze
+  * Considerare periodi di prova o versione demo
+  * Aggiornamenti regolari con nuove funzionalità
+
+### 5.6 Differenziazione Versioni OmniEA
+#### 5.6.1 OmniEA Lite ($39)
+- **Funzionalità Core:**
+  * Drag & Drop Indicatori (fino a 3 per Signal Buy/Sell, 2 per Filtri)
+  * Pannelli Interattivi (Minimizzato, Piccolo, Grande)
+  * Filter News (base)
+  * Trading Time (orari di trading configurabili)
+  * Alert via Email (notifiche base)
+  * Condizioni Logiche Base (AND/OR tra indicatori)
+  * Auto-Salvataggio configurazione
+  * Ottimizzazione Intuitiva (parametri base)
+
+- **Input Disponibili:**
+  * Impostazioni Trading Base:
+    - Open Order (Market, Pending)
+    - TP/SL fissi (punti)
+    - Break Even semplice
+    - Trailing Stop semplice
+    - Magic Number
+    - Lotti fissi / Risk%
+    - Commento ordini
+  * Impostazioni Indicatori:
+    - Selezione buffer (principale)
+    - Opzioni base per indicatore
+    - Valore soglia singolo
+  * Filtri:
+    - Spread massimo
+    - Slippage massimo
+    - Orari trading
+    - News filter (eventi principali)
+
+#### 5.6.2 OmniEA Standard ($79) - Opzionale
+- **Tutte le funzionalità Lite più:**
+  * Drag & Drop Indicatori (fino a 5 per Signal Buy/Sell, 3 per Filtri)
+  * Condizioni Logiche Intermedie (AND/OR/XOR tra gruppi)
+  * Filter News (avanzato con categorie)
+  * Alert via Email e Telegram
+  * Ottimizzazione Avanzata (range intelligenti)
+  * Backtest con ottimizzazione parametri
+
+- **Input Aggiuntivi:**
+  * Impostazioni Trading Intermedie:
+    - TP/SL dinamici (% ATR)
+    - Break Even avanzato (multipli livelli)
+    - Trailing Stop dinamico (basato su ATR)
+    - Gestione parziale posizioni
+    - Lotti dinamici (basati su volatilità)
+    - Time exit (chiusura dopo X tempo)
+  * Impostazioni Indicatori:
+    - Selezione buffer multipli
+    - Opzioni intermedie per indicatore
+    - Valori soglia multipli
+    - Timeframe multipli
+  * Filtri Aggiuntivi:
+    - Volatilità minima/massima
+    - Correlazione tra asset
+    - Filtro sessioni di mercato
+    - Filtro giornaliero/settimanale
+
+#### 5.6.3 OmniEA Pro ($129)
+- **Tutte le funzionalità Standard più:**
+  * Drag & Drop Indicatori (illimitati per Signal Buy/Sell e Filtri)
+  * SL/TP Dinamici (algoritmi avanzati)
+  * Condizioni Logiche Avanzate (formule personalizzabili)
+  * Gestione Multi-Asset (correlazioni e hedging)
+  * Ottimizzazione Genetica (algoritmi ML)
+  * Dashboard Avanzato (statistiche real-time)
+  * API per dati esterni
+  * Integrazione con script personalizzati
+
+- **Input Aggiuntivi:**
+  * Impostazioni Trading Avanzate:
+    - Algoritmi proprietari per TP/SL
+    - Trailing Stop adattivo (basato su volatilità)
+    - Gestione posizioni avanzata (scaling)
+    - Hedging automatico
+    - Lotti adattivi (algoritmi proprietari)
+    - Gestione drawdown
+    - Recovery mode
+  * Impostazioni Indicatori:
+    - Formula personalizzabile tra indicatori
+    - Ponderazione segnali
+    - Filtri di qualità segnale
+    - Meta-indicatori (indicatori di indicatori)
+  * Filtri Avanzati:
+    - Machine Learning per qualità segnali
+    - Analisi sentiment mercato
+    - Correlazioni multi-timeframe
+    - Pattern recognition
+    - Filtri economici (tassi, inflazione)
+
+#### 5.6.4 OmniEA Enterprise (Futura Versione)
+- **Tutte le funzionalità Pro più:**
+  * Intelligenza Artificiale per ottimizzazione parametri
+  * Analisi predittiva mercati
+  * Integrazione dati fondamentali
+  * Strategie multi-algoritmo
+  * Gestione portfolio avanzata
+  * API completa per sistemi esterni
+  * White label per broker/istituzioni
+  * Supporto dedicato
+
+- **Input Enterprise:**
+  * Sistema di regole personalizzabili
+  * Algoritmi proprietari configurabili
+  * Integrazione con database esterni
+  * Gestione multi-account
+  * Reporting avanzato
+  * Analisi rischio portfolio
+  * Ottimizzazione fiscale trading
+
+#### 5.6.5 Tabella Comparativa Input Principali
+| Funzionalità/Input | Lite ($39) | Standard ($79) | Pro ($129) | Enterprise |
+|-------------------|------------|---------------|------------|------------|
+| Slot Indicatori Buy/Sell | 3 | 5 | Illimitati | Illimitati |
+| Slot Filtri | 2 | 3 | Illimitati | Illimitati |
+| Logica tra Indicatori | AND/OR | AND/OR/XOR | Formule | AI-based |
+| TP/SL | Fissi | Dinamici | Adattivi | Predittivi |
+| Trailing Stop | Semplice | Dinamico | Adattivo | AI-based |
+| Lotti | Fissi/Risk% | Dinamici | Adattivi | Portfolio-based |
+| Timeframe | Singolo | Multipli | Multi-correlati | Predittivi |
+| Filtri News | Base | Avanzato | Sentiment | AI+Fondamentali |
+| Ottimizzazione | Intuitiva | Avanzata | Genetica | AI+Deep Learning |
+| Backtest | Base | Avanzato | Walk-Forward | Monte Carlo |
+| Alert | Email | Email+Telegram | Multi-canale | Personalizzabili |
+| Supporto | Email | Email+Chat | Prioritario | Dedicato |
+
+Questa struttura di differenziazione permette:
+1. Un punto d'ingresso accessibile con la versione Lite
+2. Un upgrade naturale per utenti che necessitano funzionalità intermedie (Standard)
+3. Funzionalità avanzate per trader professionisti (Pro)
+4. Possibilità di espansione futura con versione Enterprise
+
+La strategia è allineata con i prezzi e le funzionalità della concorrenza, offrendo però vantaggi distintivi in termini di usabilità e sistema Drag & Drop.
+
+## 6. Tool Utility
+### 6.1 OptimizerGenerator
+- Locazione: Scripts/MyScripts/OptimizerGenerator.mq5
+- Include: Include/BTT/OptimizerGenerator.mqh
+- Utilizzi:
+  * Ottimizzazione EA
+  * Ottimizzazione indicatori
+  * Estendibile a futuri prodotti
+
+## 7. Regole di Backup
+- Controllo dimensioni file ogni 3 ore
+- Pulizia automatica file > 3 giorni
+- Integrazione file giornalieri multipli
+- Richiesta conferma per operazioni critiche
+- Aggiornamento BBTT_Unico per ogni modifica
+- Archiviazione in BBTT_Archivio
+
+## 8. Note e Aggiornamenti
+- Prossimi passi:
+  * Verifica file Google Drive
+  * Test Pannello Grande
+  * Implementazione drag & drop reale
+  * Aggiornamento documentazione
+
+## 9. Metodologia di Sviluppo
+### 9.1 Gestione del Codice
+- Lettura automatica dei file nelle cartelle MQL5
+- Analisi automatica dei log di compilazione
+- Monitoraggio cartelle chiave:
+  * MQL5\Experts
+  * MQL5\Include
+  * MQL5\Scripts
+
+### 9.2 Sicurezza
+- Protezione del codice sorgente
+- Caricamento solo di file .ex5 su MQL5.com
+- Gestione attenta delle impostazioni di privacy
+- Verifica delle impostazioni di privacy
+
+### 9.3 Documentazione
+- Consultazione continua documentazione MQL5 (https://www.mql5.com/it/docs)
+- Integrazione librerie esistenti
+- Monitoraggio recensioni e commenti su MQL5.com
+
+## 10. Dettagli Implementativi OmniEA
+### 10.1 Pannelli
+1. Pannello Grande:
+   - Header: Nome EA, versione, "by BTT"
+   - Dati mercato e account
+   - Area Drag & Drop
+   - Configurazione indicatori
+   - Impostazioni trading
+
+2. Pannello Medio:
+   - Header come pannello grande
+   - Dati trading
+   - Ordini attivi e chiusi
+   - Statistiche (7 giorni, giorno corrente, mese)
+
+3. Pannello Piccolo:
+   - Header minimo
+   - Pulsante/barra per cambio pannello
+   - Design non invasivo
+
+### 10.2 Funzionalità Trading
+- Valutazione mercato aperto/chiuso
+- Gestione ordini basata su:
+  * Chiusura candela
+  * Apertura candela
+  * Real-time
+- Input standard:
+  * Impostazioni Trading Base:
+    - Open Order (Market, Pending)
+    - TP/SL fissi (punti)
+    - Break Even semplice
+    - Trailing Stop semplice
+    - Magic Number
+    - Lotti fissi / Risk%
+    - Commento ordini
+  * Impostazioni Indicatori:
+    - Selezione buffer (principale)
+    - Opzioni base per indicatore
+    - Valore soglia singolo
+  * Filtri:
+    - Spread massimo
+    - Slippage massimo
+    - Orari trading
+    - News filter (eventi principali)
+
+### 10.3 Logica Indicatori
+- Drag & Drop per aggiunta indicatori
+- Configurazione condizioni:
+  * AND/OR tra indicatori
+  * Comparazione valori
+  * Buffer multipli
+  * Filtri personalizzabili
+- Esempio Signal Buy:
+  * RSI sopra 30 AND
+  * Prezzo sopra media mobile
+
+## 11. Stato Attuale del Progetto
+### 11.1 Fase di Sviluppo
+- Fase attuale: Testing Iniziale
+- Attività in corso:
+  * Correzioni Pannello Grande
+  * Ottimizzazioni sistema indicatori
+  * Miglioramenti salvataggio/caricamento
+
+### 11.2 Sistema Drag & Drop Dettagliato
+- 3 slot per Signal Buy
+- 3 slot per Signal Sell
+- 2 slot per Filtri
+- Countdown 10 secondi per assegnazione
+- Feedback visivo con lampeggio e colori
+- Icone "X" per rimozione indicatori
+- Conferma rimozione indicatori
+- Funzionalità integrata nelle caselle
+
+### 11.3 Ultime Modifiche
+1. Pannello Grande:
+   - Aggiunte icone "X" per rimozione indicatori
+   - Implementato feedback visivo migliorato
+   - Ottimizzato layout e spaziatura
+   - Aggiunto rischio in tempo reale
+
+2. Sistema Indicatori:
+   - Rimosso pulsante "Add Indicator" separato
+   - Integrata funzionalità nelle caselle
+   - Migliorato feedback visivo assegnazione
+   - Implementata conferma rimozione indicatori
+
+3. Salvataggio/Caricamento:
+   - Auto-salvataggio in last_config.set
+   - Caricamento automatico all'avvio
+   - Gestione errori migliorata
+
+### 11.4 Problemi Aperti
+- Validare compatibilità con timeframe 5m
+- Verificare gestione errori in backtest
+- Testare limiti memoria su operazioni lunghe
+- Controllo aggiuntivo per validazione indicatori
+- Nuovo sistema di logging per debug
+- Ottimizzazione gestione memoria per pannelli
+
+### 11.5 Prossimi Passi
+1. Testing:
+   - Verifica completa assegnazione indicatori
+   - Test compatibilità backtest
+   - Validazione salvataggio configurazioni
+
+2. Ottimizzazione:
+   - Miglioramento performance
+   - Riduzione consumo memoria
+   - Ottimizzazione gestione eventi
+
+3. Documentazione:
+   - Aggiornamento PDF utente
+   - Preparazione video tutorial
+   - Documentazione API per sviluppatori
+
+## 12. Stato Attuale e Priorità
+### 12.1 Prodotto Principale
+- Nome: OmniEA (versione Lite)
+- Stato: In Sviluppo
+- Priorità: Alta
+- Note: Sostituisce Argonaut come prodotto principale
+
+### 12.2 Prodotti Secondari
+- Argonaut:
+  * Stato: In Pausa
+  * Priorità: Bassa
+  * Note: Sviluppo temporaneamente sospeso
+
+### 12.3 Motivazione Cambio Priorità
+- Focus su prodotto più accessibile (Lite)
+- Interfaccia user-friendly
+- Time-to-market ridotto
+- Base per versione Pro futura
+
+## 11. Ottimizzazione Risorse
+### 11.1 Gestione Token e Efficienza
+- Priorità alla concisione mantenendo qualità
+- Evitare ripetizioni non necessarie
+- Focus su informazioni rilevanti
+- Uso di liste puntate per chiarezza
+- Minimizzare overhead comunicativo
+
+### 11.2 Ottimizzazione Tool
+- Chiamate tool solo se necessarie
+- Combinare modifiche in singole chiamate
+- Evitare ridondanze
+- Preferire tool efficienti
+- Riutilizzo risultati precedenti
+
+### 11.3 Gestione Memoria
+- Memorizzazione selettiva informazioni
+- Consolidamento dati correlati
+- Aggiornamento vs creazione
+- Tag per recupero efficiente
+
+## 5. Analisi di Mercato e Posizionamento
+### 5.1 Panoramica del Mercato MQL5
+- Analisi dei principali EA universali su MQL5.com:
+  * Fascia di prezzo: $39-$499 (con alcuni EA premium fino a $1700)
+  * EA universali più popolari:
+    - MQL Universal EA: $149 (MT4)
+    - Smart Universal Expert Adviser: $299 (MT5)
+    - JesVersal Universal EA: $99 (MT4)
+    - Universal MA EA: $89 (MT5)
+  * Posizionamento OmniEA:
+    - Lite: $39 (competitivo nella fascia entry-level)
+    - Pro: $129 (competitivo nella fascia media)
+    - Standard: $79 (opzionale, posizionamento intermedio)
+
+### 5.2 Funzionalità Più Richieste
+- Caratteristiche più apprezzate dagli utenti:
+  * Integrazione con indicatori personalizzati
+  * Drag & Drop degli indicatori (feature distintiva di OmniEA)
+  * Gestione avanzata del rischio
+  * Trailing stop dinamico
+  * Filtri di trading (spread, news, orari)
+  * Personalizzazione dei parametri
+  * Interfaccia user-friendly
+  * Supporto per tutti i timeframe e mercati
+
+### 5.3 Recensioni e Feedback Clienti
+- Punti di forza evidenziati nelle recensioni:
+  * Supporto clienti rapido e competente
+  * Documentazione chiara e completa
+  * Facilità d'uso per trader non programmatori
+  * Aggiornamenti regolari
+  * Possibilità di testare strategie senza coding
+  * Compatibilità con indicatori personalizzati
+
+- Criticità segnalate:
+  * Limitazioni nel numero di indicatori utilizzabili contemporaneamente
+  * Complessità iniziale nell'impostazione
+  * Necessità di ottimizzazione per mercati specifici
+
+### 5.4 Vantaggi Competitivi di OmniEA
+- Elementi distintivi rispetto alla concorrenza:
+  * Sistema Drag & Drop intuitivo e visuale
+  * Pannello grande con feedback visivo avanzato
+  * Gestione sofisticata degli indicatori duplicati
+  * Validazione completa degli indicatori
+  * Gestione intelligente dei timeframe diversi
+  * Prezzo competitivo (specialmente versione Lite)
+  * Interfaccia moderna e user-friendly
+  * Auto-salvataggio e caricamento configurazione
+
+### 5.5 Strategia di Marketing
+- Punti chiave per la promozione:
+  * Enfatizzare la facilità d'uso per trader non tecnici
+  * Evidenziare il sistema Drag & Drop come innovazione
+  * Posizionare la versione Lite come punto d'ingresso accessibile
+  * Creare tutorial video e documentazione dettagliata
+  * Offrire supporto clienti reattivo
+  * Raccogliere e pubblicare testimonianze
+  * Considerare periodi di prova o versione demo
+  * Aggiornamenti regolari con nuove funzionalità
+
+### 5.6 Differenziazione Versioni OmniEA
+#### 5.6.1 OmniEA Lite ($39)
+- **Funzionalità Core:**
+  * Drag & Drop Indicatori (fino a 3 per Signal Buy/Sell, 2 per Filtri)
+  * Pannelli Interattivi (Minimizzato, Piccolo, Grande)
+  * Filter News (base)
+  * Trading Time (orari di trading configurabili)
+  * Alert via Email (notifiche base)
+  * Condizioni Logiche Base (AND/OR tra indicatori)
+  * Auto-Salvataggio configurazione
+  * Ottimizzazione Intuitiva (parametri base)
+
+- **Input Disponibili:**
+  * Impostazioni Trading Base:
+    - Open Order (Market, Pending)
+    - TP/SL fissi (punti)
+    - Break Even semplice
+    - Trailing Stop semplice
+    - Magic Number
+    - Lotti fissi / Risk%
+    - Commento ordini
+  * Impostazioni Indicatori:
+    - Selezione buffer (principale)
+    - Opzioni base per indicatore
+    - Valore soglia singolo
+  * Filtri:
+    - Spread massimo
+    - Slippage massimo
+    - Orari trading
+    - News filter (eventi principali)
+
+#### 5.6.2 OmniEA Standard ($79) - Opzionale
+- **Tutte le funzionalità Lite più:**
+  * Drag & Drop Indicatori (fino a 5 per Signal Buy/Sell, 3 per Filtri)
+  * Condizioni Logiche Intermedie (AND/OR/XOR tra gruppi)
+  * Filter News (avanzato con categorie)
+  * Alert via Email e Telegram
+  * Ottimizzazione Avanzata (range intelligenti)
+  * Backtest con ottimizzazione parametri
+
+- **Input Aggiuntivi:**
+  * Impostazioni Trading Intermedie:
+    - TP/SL dinamici (% ATR)
+    - Break Even avanzato (multipli livelli)
+    - Trailing Stop dinamico (basato su ATR)
+    - Gestione parziale posizioni
+    - Lotti dinamici (basati su volatilità)
+    - Time exit (chiusura dopo X tempo)
+  * Impostazioni Indicatori:
+    - Selezione buffer multipli
+    - Opzioni intermedie per indicatore
+    - Valori soglia multipli
+    - Timeframe multipli
+  * Filtri Aggiuntivi:
+    - Volatilità minima/massima
+    - Correlazione tra asset
+    - Filtro sessioni di mercato
+    - Filtro giornaliero/settimanale
+
+#### 5.6.3 OmniEA Pro ($129)
+- **Tutte le funzionalità Standard più:**
+  * Drag & Drop Indicatori (illimitati per Signal Buy/Sell e Filtri)
+  * SL/TP Dinamici (algoritmi avanzati)
+  * Condizioni Logiche Avanzate (formule personalizzabili)
+  * Gestione Multi-Asset (correlazioni e hedging)
+  * Ottimizzazione Genetica (algoritmi ML)
+  * Dashboard Avanzato (statistiche real-time)
+  * API per dati esterni
+  * Integrazione con script personalizzati
+
+- **Input Aggiuntivi:**
+  * Impostazioni Trading Avanzate:
+    - Algoritmi proprietari per TP/SL
+    - Trailing Stop adattivo (basato su volatilità)
+    - Gestione posizioni avanzata (scaling)
+    - Hedging automatico
+    - Lotti adattivi (algoritmi proprietari)
+    - Gestione drawdown
+    - Recovery mode
+  * Impostazioni Indicatori:
+    - Formula personalizzabile tra indicatori
+    - Ponderazione segnali
+    - Filtri di qualità segnale
+    - Meta-indicatori (indicatori di indicatori)
+  * Filtri Avanzati:
+    - Machine Learning per qualità segnali
+    - Analisi sentiment mercato
+    - Correlazioni multi-timeframe
+    - Pattern recognition
+    - Filtri economici (tassi, inflazione)
+
+#### 5.6.4 OmniEA Enterprise (Futura Versione)
+- **Tutte le funzionalità Pro più:**
+  * Intelligenza Artificiale per ottimizzazione parametri
+  * Analisi predittiva mercati
+  * Integrazione dati fondamentali
+  * Strategie multi-algoritmo
+  * Gestione portfolio avanzata
+  * API completa per sistemi esterni
+  * White label per broker/istituzioni
+  * Supporto dedicato
+
+- **Input Enterprise:**
+  * Sistema di regole personalizzabili
+  * Algoritmi proprietari configurabili
+  * Integrazione con database esterni
+  * Gestione multi-account
+  * Reporting avanzato
+  * Analisi rischio portfolio
+  * Ottimizzazione fiscale trading
+
+#### 5.6.5 Tabella Comparativa Input Principali
+| Funzionalità/Input | Lite ($39) | Standard ($79) | Pro ($129) | Enterprise |
+|-------------------|------------|---------------|------------|------------|
+| Slot Indicatori Buy/Sell | 3 | 5 | Illimitati | Illimitati |
+| Slot Filtri | 2 | 3 | Illimitati | Illimitati |
+| Logica tra Indicatori | AND/OR | AND/OR/XOR | Formule | AI-based |
+| TP/SL | Fissi | Dinamici | Adattivi | Predittivi |
+| Trailing Stop | Semplice | Dinamico | Adattivo | AI-based |
+| Lotti | Fissi/Risk% | Dinamici | Adattivi | Portfolio-based |
+| Timeframe | Singolo | Multipli | Multi-correlati | Predittivi |
+| Filtri News | Base | Avanzato | Sentiment | AI+Fondamentali |
+| Ottimizzazione | Intuitiva | Avanzata | Genetica | AI+Deep Learning |
+| Backtest | Base | Avanzato | Walk-Forward | Monte Carlo |
+| Alert | Email | Email+Telegram | Multi-canale | Personalizzabili |
+| Supporto | Email | Email+Chat | Prioritario | Dedicato |
+
+Questa struttura di differenziazione permette:
+1. Un punto d'ingresso accessibile con la versione Lite
+2. Un upgrade naturale per utenti che necessitano funzionalità intermedie (Standard)
+3. Funzionalità avanzate per trader professionisti (Pro)
+4. Possibilità di espansione futura con versione Enterprise
+
+La strategia è allineata con i prezzi e le funzionalità della concorrenza, offrendo però vantaggi distintivi in termini di usabilità e sistema Drag & Drop.

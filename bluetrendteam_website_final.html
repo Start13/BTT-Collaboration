@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueTrendTeam - Trading Solutions</title>
+    <style>
+        :root {
+            --primary-blue: #0a2a35; /* Blu scuro/teal del logo */
+            --secondary-blue: #1a5fb4; /* Blu medio */
+            --accent-blue: #29b0e8; /* Azzurro chiaro del logo */
+            --dark-gray: #2a2a2e;
+            --light-gray: #f6f6f6;
+            --text-color: #333333;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-blue);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 5px rgba(41, 176, 232, 0.5));
+            transition: filter 0.3s;
+        }
+        
+        .logo img:hover {
+            filter: drop-shadow(0 0 8px rgba(41, 176, 232, 0.8));
+        }
+        
+        .logo-text {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .logo-text span {
+            color: var(--accent-blue);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-blue);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2329b0e8" fill-opacity="0.3" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+        }
+        
+        .hero-logo {
+            max-width: 400px;
+            margin: 0 auto 40px;
+            filter: drop-shadow(0 0 15px rgba(41, 176, 232, 0.6));
+            transition: all 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .hero-logo:hover {
+            filter: drop-shadow(0 0 25px rgba(41, 176, 232, 0.8));
+            transform: scale(1.02);
+        }
+        
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary-blue);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s;
+            margin: 0 10px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-button.secondary {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h3 {
+            font-size: 36px;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .product-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .product-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 350px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .product-header h4 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .product-header .price {
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .product-header .price span {
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        .product-body {
+            padding: 30px;
+        }
+        
+        .product-body ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .product-body ul li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .product-body ul li:before {
+            content: "✓";
+            color: var(--accent-blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .product-body .button {
+            display: block;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .product-body .button:hover {
+            background-color: var(--secondary-blue);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-color: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2329b0e8" fill-opacity="0.1" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,128C960,149,1056,171,1152,165.3C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            background-color: var(--accent-blue);
+            color: var(--white);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            line-height: 80px; /* Aggiunto per centrare verticalmente l'icona */
+        }
+        
+        .feature-item h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+        
+        .feature-item p {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .testimonial-cards {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            padding: 30px;
+            min-width: 300px;
+            flex: 0 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 16px;
+            position: relative;
+        }
+        
+        .testimonial-text::before {
+            content: """;
+            font-size: 60px;
+            color: var(--accent-blue);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: -15px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        
+        .author-info h5 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2329b0e8" fill-opacity="0.2" d="M0,224L48,213.3C96,203,192,181,288,154.7C384,128,480,96,576,90.7C672,85,768,107,864,133.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5;
+        }
+        
+        .cta-section h3 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--accent-blue);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: var(--white);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-blue);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+            }
+            
+            nav ul li {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+            
+            .hero {
+                padding: 180px 0 80px;
+            }
+            
+            .hero h2 {
+                font-size: 36px;
+            }
+            
+            .product-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="logo_mini.png" alt="BTT" width="40" height="40">
+                <div class="logo-text">Blue<span>Trend</span>Team</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Prodotti</a></li>
+                    <li><a href="#features">Caratteristiche</a></li>
+                    <li><a href="#testimonials">Testimonianze</a></li>
+                    <li><a href="#contact">Contatti</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <img src="logo_hero.png" alt="BlueTrendTeam Logo" class="hero-logo">
+            <h2>Trading Automatico Semplificato</h2>
+            <p>OmniEA rivoluziona il trading algoritmico con un sistema Drag & Drop intuitivo che permette di creare strategie di trading avanzate senza scrivere codice.</p>
+            <div>
+                <a href="#products" class="cta-button">Scopri OmniEA</a>
+                <a href="#demo" class="cta-button secondary">Prova Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h3>Le Nostre Soluzioni</h3>
+                <p>Scegli la versione di OmniEA più adatta alle tue esigenze di trading</p>
+            </div>
+            <div class="product-cards">
+                <div class="product-card">
+                    <div class="product-header">
+                        <h4>OmniEA Lite</h4>
+                        <div class="price">€39 <span>/ una tantum</span></div>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>3 slot per segnali Buy/Sell</li>
+                            <li>2 slot per filtri</li>
+                            <li>Logica AND/OR</li>
+                            <li>Sistema Drag & Drop</li>
+                            <li>Parametri di trading essenziali</li>
+                            <li>Supporto email</li>
+                        </ul>
+                        <a href="#" class="button">Acquista Ora</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-header" style="background-color: var(--secondary-blue);">
+                        <h4>OmniEA Standard</h4>
+                        <div class="price">€79 <span>/ una tantum</span></div>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>5 slot per segnali Buy/Sell</li>
+                            <li>3 slot per filtri</li>
+                            <li>Logica AND/OR/XOR</li>
+                            <li>Sistema Drag & Drop avanzato</li>
+                            <li>Break Even e gestione parziale</li>
+                            <li>Supporto prioritario</li>
+                        </ul>
+                        <a href="#" class="button" style="background-color: var(--secondary-blue);">Acquista Ora</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-header" style="background-color: var(--accent-blue);">
+                        <h4>OmniEA Pro</h4>
+                        <div class="price">€129 <span>/ una tantum</span></div>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>Slot illimitati per indicatori</li>
+                            <li>Logica avanzata personalizzabile</li>
+                            <li>Backtesting integrato</li>
+                            <li>Griglia e Hedge automatico</li>
+                            <li>Statistiche avanzate</li>
+                            <li>Supporto VIP e aggiornamenti prioritari</li>
+                        </ul>
+                        <a href="#" class="button" style="background-color: var(--accent-blue);">Acquista Ora</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h3>Caratteristiche Principali</h3>
+                <p>Scopri cosa rende OmniEA la soluzione ideale per il trading automatico</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">D&D</div>
+                    <h4>Drag & Drop Intuitivo</h4>
+                    <p>Aggiungi indicatori al tuo sistema semplicemente trascinandoli dal grafico, senza bisogno di codice.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚙️</div>
+                    <h4>Logica Configurabile</h4>
+                    <p>Combina i tuoi indicatori con operatori logici AND, OR e XOR per strategie personalizzate.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h4>Gestione Avanzata del Rischio</h4>
+                    <p>Controlla il tuo rischio con stop loss, take profit, trailing stop e break even configurabili.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h4>Multi-Timeframe</h4>
+                    <p>Opera su diversi timeframe contemporaneamente per strategie più robuste.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <h4>Notifiche Push</h4>
+                    <p>Ricevi notifiche in tempo reale su operazioni, errori e opportunità di mercato.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛠️</div>
+                    <h4>Personalizzazione Completa</h4>
+                    <p>Adatta ogni aspetto dell'EA alle tue esigenze specifiche di trading.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h3>Cosa Dicono i Nostri Clienti</h3>
+                <p>Scopri le esperienze di chi utilizza OmniEA ogni giorno</p>
+            </div>
+            <div class="testimonial-cards">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "OmniEA ha rivoluzionato il mio approccio al trading. La possibilità di trascinare gli indicatori direttamente nel sistema mi ha fatto risparmiare ore di programmazione."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/50x50" alt="Marco R.">
+                        <div class="author-info">
+                            <h5>Marco R.</h5>
+                            <p>Trader Professionista</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "La versione Pro di OmniEA è incredibilmente potente. Le strategie di grid trading e il backtesting integrato hanno migliorato notevolmente i miei risultati."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/50x50" alt="Laura M.">
+                        <div class="author-info">
+                            <h5>Laura M.</h5>
+                            <p>Investitore Privato</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Come principiante, la versione Lite è perfetta per me. L'interfaccia è intuitiva e il supporto clienti è sempre disponibile per aiutarmi."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/50x50" alt="Giovanni T.">
+                        <div class="author-info">
+                            <h5>Giovanni T.</h5>
+                            <p>Trader Principiante</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h3>Pronto a Rivoluzionare il Tuo Trading?</h3>
+            <p>Inizia oggi con OmniEA e scopri il potere del trading algoritmico semplificato</p>
+            <a href="#products" class="cta-button">Inizia Ora</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Prodotti</h4>
+                    <ul>
+                        <li><a href="#">OmniEA Lite</a></li>
+                        <li><a href="#">OmniEA Standard</a></li>
+                        <li><a href="#">OmniEA Pro</a></li>
+                        <li><a href="#">Confronto Versioni</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Risorse</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorial</a></li>
+                        <li><a href="#">Documentazione</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Supporto</h4>
+                    <ul>
+                        <li><a href="#">Contattaci</a></li>
+                        <li><a href="#">Canale Telegram</a></li>
+                        <li><a href="#">Assistenza Tecnica</a></li>
+                        <li><a href="#">Termini di Servizio</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Seguici</h4>
+                    <div class="social-links">
+                        <a href="#">T</a>
+                        <a href="#">L</a>
+                        <a href="#">Y</a>
+                        <a href="#">M</a>
+                    </div>
+                    <p style="margin-top: 20px;">Iscriviti alla nostra newsletter per ricevere aggiornamenti e offerte esclusive.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BlueTrendTeam. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

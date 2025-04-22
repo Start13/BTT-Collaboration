@@ -1,0 +1,108 @@
+# BlueTrendTeam (BTT) - Sistema di Documentazione
+
+## Nota di Collegamento tra i File BBTT_Unico
+
+### Struttura del Sistema di Documentazione
+1. **BBTT_Unico.txt**: Contiene la documentazione principale del progetto
+2. **BBTT_Unico_2.txt**: Contiene dettagli tecnici e implementazioni specifiche
+3. **BBTT_Unico_Collegamento.txt**: Questo file, che contiene le regole di gestione e collegamento
+
+### Regole di Gestione dei File BBTT_Unico
+1. **Priorità di aggiornamento**: Tutti i file devono essere aggiornati contemporaneamente
+2. **Riferimenti incrociati**: Quando si fa riferimento a contenuti in un altro file, specificare chiaramente il file di origine
+3. **Backup**: Tutti i file devono essere inclusi nelle operazioni di backup
+4. **Comando "Memorizza"**: Quando viene dato il comando "Memorizza", le informazioni devono essere aggiunte al file appropriato in base al contenuto:
+   - Informazioni generali, struttura, regole → BBTT_Unico.txt
+   - Dettagli tecnici, implementazioni, codice → BBTT_Unico_2.txt
+
+### Soluzione per il Problema di Dimensione
+Per gestire in modo più efficace la documentazione in futuro, si implementerà una delle seguenti soluzioni:
+
+1. **Sistema di documentazione modulare**:
+   - Suddivisione della documentazione in file tematici più piccoli
+   - File indice principale che collega tutti i moduli
+   - Sistema di riferimenti incrociati tra i moduli
+
+2. **Conversione in formato database**:
+   - Migrazione della documentazione in un database SQLite
+   - Interfaccia per query e ricerche avanzate
+   - Esportazione automatica in formato testo quando necessario
+
+3. **Sistema di versionamento Git**:
+   - Implementazione di un repository Git locale
+   - Suddivisione della documentazione in file più piccoli e gestibili
+   - Utilizzo di tag e branch per versioni diverse
+
+La soluzione ottimale verrà implementata dopo ulteriore valutazione.
+
+### Analisi del Mercato MQL5 e Funzionalità Mancanti in OmniEA
+
+Basandomi sulla ricerca effettuata sul mercato MQL5.com, ho identificato le seguenti funzionalità che potrebbero essere aggiunte a OmniEA per renderlo più competitivo:
+
+1. **Gestione avanzata del rischio**:
+   - Calcolo automatico del rischio basato sulla volatilità del mercato
+   - Adattamento dinamico della dimensione dei lotti in base al drawdown
+   - Sistema di recovery per posizioni in perdita
+   - Protezione da gap di mercato
+
+2. **Funzionalità di analisi e reporting**:
+   - Dashboard dettagliata con statistiche di trading in tempo reale
+   - Report giornalieri/settimanali via email
+   - Visualizzazione grafica delle performance
+   - Analisi dettagliata delle operazioni (win rate, profit factor, ecc.)
+
+3. **Integrazione con fonti di dati esterne**:
+   - API per dati economici e notizie
+   - Integrazione con servizi di segnali
+   - Supporto per dati fondamentali
+   - Accesso a indicatori proprietari esterni
+
+4. **Gestione multi-asset e correlazione**:
+   - Trading su più coppie di valute correlate
+   - Gestione del rischio basata sulla correlazione
+   - Strategie di hedging automatico
+   - Bilanciamento del portfolio
+
+5. **Funzionalità di machine learning**:
+   - Ottimizzazione dei parametri basata su ML
+   - Riconoscimento automatico di pattern
+   - Previsione della volatilità
+   - Adattamento automatico alle condizioni di mercato
+
+6. **Interfaccia utente avanzata**:
+   - Controlli touch-friendly per dispositivi mobili
+   - Temi personalizzabili (chiaro/scuro)
+   - Modalità di visualizzazione compatta
+   - Tutorial interattivi integrati
+
+7. **Gestione avanzata degli ordini**:
+   - Ordini OCO (One-Cancels-Other)
+   - Trailing stop avanzati (basati su ATR, volatilità, ecc.)
+   - Break-even automatico con multiple condizioni
+   - Chiusura parziale delle posizioni
+
+8. **Compatibilità e integrazione**:
+   - Supporto per broker ECN/STP
+   - Compatibilità con conti hedging e netting
+   - Supporto per VPS
+   - Integrazione con sistemi di copy trading
+
+Queste funzionalità sono state identificate analizzando i prodotti più venduti e meglio recensiti su MQL5.com, con particolare attenzione agli EA universali e ai sistemi di trading basati su indicatori.
+
+### Lettura Live dei Buffer degli Indicatori
+
+Per quanto riguarda la lettura live dei valori dei buffer degli indicatori aggiunti, questa è una funzionalità cruciale che è già stata implementata in OmniEA. Il sistema:
+
+1. Rileva automaticamente tutti i buffer disponibili per ogni indicatore
+2. Permette all'utente di selezionare quale buffer utilizzare
+3. Legge in tempo reale i valori dei buffer selezionati
+4. Utilizza questi valori per generare segnali di trading
+
+L'implementazione tecnica dettagliata di questa funzionalità è descritta nel file BBTT_Unico_2.txt, nelle sezioni:
+- 1.1 Rilevamento Automatico dei Buffer
+- 1.2 Interfaccia di Selezione Buffer
+- 1.4 Visualizzazione dei Valori Correnti dei Buffer
+- 2.1 Implementazione del Caching Intelligente
+- 2.2 Lettura Lazy e On-Demand dei Buffer
+
+Il sistema è progettato per essere efficiente, aggiornando i valori solo quando necessario e utilizzando tecniche di caching per ridurre il carico computazionale.

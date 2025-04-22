@@ -1,0 +1,49 @@
+
+BBTT - Backup BlueTrendTeam
+Data: 13/04/2025
+Progetto attivo: OmniEA Lite v1.0
+Responsabile: Utente (BlueTrendTeam / Coky Trader)
+Supporto AI: ChatGPT (alias "Cuky")
+
+STATO SVILUPPO - OmniEA Lite
+- Versione corrente: Lite v1.0
+- Modalità sviluppo: continua, senza date fisse, rilascio incrementale
+- EA già funzionante e testato con:
+  - Pannello interattivo
+  - Drag & Drop degli indicatori
+  - Gestione visiva con lampeggio e countdown
+  - Salvataggio e persistenza delle impostazioni
+  - Compatibilità con backtest e ottimizzazione
+
+INCLUDE E STRUTTURA ATTUALE
+- BTT_SlotLogic.mqh: logica slot (assegnazione, countdown, gestione eventi)
+- BTT_PanelDraw.mqh: disegno pannello grafico (slot, bottoni, indicatori)
+- BTT_Panels_13_04_2025.mqh: versione sperimentale alternativa pannello
+- BTT_UIUtils.mqh: funzioni UI (Label, Button, Rectangle, Edit)
+- OptimizerGenerator.mqh: include per .set/.opt generation
+- ExportOptimizerScript.mq5: script per esportare parametri .set
+
+COMPORTAMENTO SLOT (drag & drop)
+- Stato iniziale: "Add Indicator"
+- Click su slot: lampeggia, "Drag Indicator [xx]", countdown 20s
+- Nuovo click: annulla assegnazione
+- Indicatori assegnati:
+  - Nome visibile, colorato
+  - Lettura buffer e handle
+  - Usabili in backtest/ottimizzazione
+- Doppio click su slot assegnato: conferma e rimozione anche da grafico
+- Stato salvato e ripristinato tra riavvii
+
+PROBLEMI RECENTI
+- `#pragma once` non supportato in MQL5
+- Assegnazione `IndicatorSlot` con puntatore `NULL` non valida
+- Errori su `File.mqh`, `CObject`: da rimuovere
+- Alcuni include da validare (es. `BTT_Panels_13_04_2025.mqh`)
+- Compilazione fallita su `MetaEditor`
+
+IN CORSO
+- Fix completo 4 include principali
+- Compatibilità con MetaEditor
+- Codice MQL5 puro (no OOP/dip. esterne)
+- Archiviazione .zip per test
+- Reinserimento modulo `Optimizer` nel pannello

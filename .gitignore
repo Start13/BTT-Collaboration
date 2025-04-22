@@ -1,0 +1,54 @@
+# File di sistema Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# File di sistema macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# File di sistema Linux
+*~
+.directory
+.Trash-*
+
+# File di log
+*.log
+
+# File temporanei
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# File di backup
+*.bak
+*.backup
+
+# File compilati MQL5
+*.ex5
+
+# File di configurazione personali
+*.ini
+*.conf
+*.config
+
+# File di token e credenziali
+docs/scripts/github_token.txt
+**/github_token.txt
+**/config.json
+**/*.token
+**/*.key
+**/*.secret
+
+# Directory specifiche
+.vscode/
+.idea/
+.vs/
+
+# Directory di backup sensibili
+BBTT/Scripts/Backup/

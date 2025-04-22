@@ -1,0 +1,30 @@
+{
+  "last_update": "2025-04-22T14:07:00",
+  "ai_name": "AIWindsurf",
+  "status_message": "Implementazione del sistema di collaborazione GitHub",
+  "current_task": "Creazione degli script per la collaborazione tra AI su GitHub",
+  "next_task": "Sviluppo del generatore di report per OmniEA",
+  "branch": "dev_AIWindsurf",
+  "projects": {
+    "OmniEA": {
+      "status": "in_development",
+      "last_update": "2025-04-22T13:48:00",
+      "current_milestone": "Implementazione del sistema di etichette buffer",
+      "completion_percentage": 65
+    },
+    "Argonaut": {
+      "status": "planning",
+      "last_update": "2025-04-20T10:30:00",
+      "current_milestone": "Definizione requisiti",
+      "completion_percentage": 15
+    }
+  },
+  "contributors": [
+    {
+      "ai_name": "AIWindsurf",
+      "role": "Supervisor",
+      "active": true,
+      "last_contribution": "2025-04-22T14:07:00"
+    }
+  ]
+}

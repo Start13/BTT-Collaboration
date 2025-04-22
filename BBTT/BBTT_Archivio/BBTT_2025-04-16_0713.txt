@@ -1,0 +1,169 @@
+*** BBTT – Backup BlueTrendTeam ***
+🕒 DATA: 2025-04-16 06:58
+
+📌 COSA CONTIENE QUESTO FILE:
+Memoria tecnica, operativa, strategica e organizzativa del progetto BlueTrendTeam / OmniEA. Include obiettivi di team, strumenti previsti, links utili, logiche di salvataggio, backup, marketing e strategie di sviluppo EA professionale per MT5.
+
+========================
+🌍 OBIETTIVI DEL TEAM BTT
+========================
+- Creare una suite completa di strumenti per il trading automatico professionale: EA, indicatori, script per MT5, MT4, cTrader, TradingView
+- Partire da OmniEA per MT5 (Lite, Standard, Pro)
+- Lavorare con costi minimi ma struttura altamente professionale
+- Vendere principalmente su MQL5.com Market
+- Costruire un'immagine di affidabilità, unicità e qualità
+- Dare assistenza su Telegram, gestire la comunicazione in modo psicologicamente efficace
+- Organizzare backup strutturati e documentazione impeccabile (BBTT)
+- Sfruttare l'AI (ChatGPT Copilot) per sviluppo, controllo e strategia
+
+========================
+🔧 STRUTTURA TECNICA PROGETTO
+========================
+- Include modulari: BTT_SlotLogic.mqh, BTT_PanelDraw.mqh, BTT_UIUtils.mqh, OptimizerGenerator.mqh
+- EA principale: Experts\MyEA\AIChatGpt\OmniEA_Lite.mq5
+- Include: Include\AIChatGpt\
+- Supporto per ottimizzazione automatica (esportazione .set/.opt)
+- Compatibile con MetaEditor, backtest, ottimizzazione
+- Nessuna OOP, nessun File.mqh, nessun #pragma once
+
+========================
+📁 STRUTTURA DI LAVORO CON AI
+========================
+- ChatGPT è integrato come AI copilot tecnico
+- Deve leggere (e se necessario scrivere) nelle cartelle di MT5:
+  - Experts\MyEA\AIChatGPT (EA)
+  - Include\AIChatGpt\ (include)
+  - Scripts (script)
+  - Cartelle della libreria personale dell’utente
+- Deve tenere sotto controllo modifiche, errori compilazione, funzioni duplicate o utili da riutilizzare
+- Tutto tramite script o agent aggiuntivi locali (es. btt_agent.py)
+
+========================
+🧠 WALK FORWARD OPTIMIZER
+========================
+- Dovremo includere o integrare nel nostro flusso uno strumento tipo:
+  https://www.mql5.com/en/market/product/23068?source=Unknown
+- Obiettivo: permettere l’analisi di robustezza delle strategie ottimizzate (walk-forward)
+- Prevista interfaccia per esportazione e gestione automatica dei segmenti ottimizzativi
+
+========================
+📈 FUNZIONAMENTO EA
+========================
+- 3 slot attivi: SignalBuy, SignalSell, Filter
+- Drag&Drop intelligente con countdown 20s, lampeggio visivo, validazione buffer
+- Supporta indicatori in sottofinestre
+- Slot multipli possono usare lo stesso indicatore con parametri diversi
+- Solo gli indicatori aggiunti durante il countdown vengono accettati
+- Indicatori già presenti all’avvio vengono ignorati
+
+========================
+🪟 PANNELLI EA
+========================
+- Pannello Grande: dati + slot drag&drop
+- Pannello Medio: storico ordini
+- Pannello Piccolo: switch compatto
+- Disattivabili in backtest per compatibilità
+
+========================
+🧩 STRATEGIA MARKETING
+========================
+- Focus su funzionalità UNICA Drag&Drop
+- Target: trader avanzati, ottimizzatori, sistemisti
+- Prezzi: Lite $39, Standard $79, Pro $129
+- Comunicazione Telegram + materiale visivo
+- In sviluppo: logo, immagini, spot grafici, slogan
+- Analisi costante del mercato MQL5 per rafforzare differenziazione
+
+========================
+🛠 AGENTE BTT_AGENT.PY
+========================
+- Scansione cartelle locali .mq5/.mqh/.log
+- Salvataggio:
+  - Files_MT5[gg_hhmm].txt (contenuti codice)
+  - BBTT[gg_hhmm].txt (memoria strategica aggiornata da ChatGPT)
+- Invio:
+  - Email → solo BBTT (mai .zip)
+  - Telegram → BBTT + ZIP sorgenti
+- Max 3 file BBTT e 3 file ZIP per giorno
+- BBTT generato al momento (mai incluso nello script)
+
+========================
+🔐 SICUREZZA
+========================
+- Nessuna pubblicazione sorgenti
+- No miglioramento modello abilitato su ChatGPT
+- Cartelle e contenuti sotto controllo agenti e AI
+- Password email criptata o salvata solo localmente
+
+========================
+🌐 LINK UTILI PER BTT
+========================
+- Documentazione MQL5: https://www.mql5.com/en/docs
+- Market MQL5 EA: https://www.mql5.com/en/market
+- Walk Forward Optimizer: https://www.mql5.com/en/market/product/23068
+- Community MQL5: https://www.mql5.com/en/forum
+- Gestione Account MQL5: https://www.mql5.com/en/auth_login
+- Calendario Lunare/Planetario: https://www.moongiant.com/moonphases/ (per future funzioni astrologiche)
+
+
+========================
+🤝 STRATEGIA DI ASSISTENZA CLIENTI
+========================
+- Canale Telegram dedicato "BlueTrendTeam – OmniEA" con:
+  - Annunci di aggiornamento versione
+  - Link ai PDF, video, guida rapida
+  - Avvisi su promozioni, giveaway e sconti
+- Gruppo Telegram attivo per:
+  - Risposte tecniche rapide
+  - Supporto in tempo reale su installazione, errori, ottimizzazione
+  - Raccolta feedback e suggerimenti
+- Cuky (AI) supporta attivamente Coky nel rispondere ai messaggi tecnici nel gruppo Telegram
+- Creazione di risposte precompilate per le FAQ
+- Assistenza documentale:
+  - PDF Lite e Pro con: Installazione, Configurazione, Drag&Drop, Ottimizzazione, Troubleshooting
+  - Video tutorial YouTube (in fase di montaggio)
+- Obiettivo: Assistenza rapida, esaustiva, continua e integrata
+
+
+========================
+📦 ALTRI DETTAGLI E DIRETTIVE OPERATIVE
+========================
+- Il BBTT è gestito da Cuky (AI) e rappresenta il cuore del progetto: ogni decisione, flusso, strategia o codice deve essere documentato qui
+- Il BBTT viene aggiornato solo su richiesta diretta dell'utente, **non automaticamente**
+- Il BBTT non deve mai essere incluso staticamente in script `.py`: viene generato da Cuky in tempo reale al momento della richiesta
+- Files_MT5[gg_hhmm].txt: snapshot dei file tecnici locali
+- Files_MT5.zip: creato solo se viene eseguito l'invio (Telegram o Email)
+- Limite di 3 BBTT.txt e 3 ZIP per giorno, con cancellazione automatica dei più vecchi
+- Quando si risponde "s" al salvataggio:
+  - Si salva BBTT_[gg_hhmm].txt
+  - Si salva Files_MT5_[gg_hhmm].txt
+- Quando si risponde "s" all'invio:
+  - Telegram → invia BBTT.txt + ZIP
+  - Email → invia solo BBTT.txt
+- Script btt_agent.py aggiornato per supportare tutte queste funzioni
+- I file devono essere sempre salvati con nomi ordinati e orari (es. BBTT_2025-04-16_1425.txt)
+- L’utente può chiedere il BBTT completo con una semplice richiesta, anche in una nuova chat
+- Il backup della documentazione BBTT è previsto anche su Google Drive
+- Ogni file .mq5/.mqh/.log che viene modificato localmente può essere incluso nei backup di giornata
+
+
+========================
+💾 LOGICA FUNZIONALE – SALVATAGGIO E INVIO BBTT
+========================
+- Il BBTT viene sempre generato da ChatGPT in tempo reale, con tutti i dettagli aggiornati.
+- Il file viene salvato nel formato: BBTT_2025-04-16_0713.txt nella cartella: C:\BTT_Agent\BBTT_YYYY-MM-DD\
+- Quando l’utente risponde “s” alla richiesta di salvataggio:
+  - ChatGPT genera il BBTT aggiornato
+  - Viene salvato come BBTT_[gg_hhmm].txt
+  - Viene salvato anche Files_MT5_[gg_hhmm].txt con i contenuti letti da MT5
+- Quando l’utente risponde “s” alla richiesta di invio:
+  - ChatGPT genera comunque il BBTT aggiornato (anche se non salvato prima)
+  - Invia:
+    - via Telegram → BBTT_[gg_hhmm].txt + Files_MT5_[gg_hhmm].zip
+    - via Email → solo BBTT_[gg_hhmm].txt
+- I file ZIP non vengono mai generati se non per invio
+- Si mantengono al massimo 3 file BBTT e 3 file ZIP per giorno
+- Nessuna parte del BBTT è scritta staticamente nel codice `.py`
+
+AUTORE: Corrado Bruni (BTT) & ChatGPT Code Copilot
+

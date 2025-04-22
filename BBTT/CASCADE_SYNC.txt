@@ -1,0 +1,72 @@
+# CASCADE SYNC FILE
+Last Update: 2025-04-17 21:36
+Master File: C:\Users\Asus\CascadeProjects\BlueTrendTeam\BBTT\BBTT_Unico.txt
+
+## Project Status
+- Current Version: BBTT_Unico with sections 1.1 to 1.13
+- Last Added: Separazione zip MQL5 e monitoraggio dimensioni
+- Working On: Gestione sincronizzazione e distribuzione
+
+## MQL5 Files Status
+1. Experts/:
+   - Size: ~2.5 MB (stima)
+   - Contenuto di Experts.zip:
+     * Argonaut/Argonaut.ex5
+     * Argonaut/Argonaut.mq5
+     * Argonaut/Argonaut.set
+   - File da monitorare:
+     * MyEA/Zigulì/* (versioni multiple)
+     * Prove EA/* (test files)
+
+2. Include/:
+   - Size: ~1.0 MB (stima)
+   - Contenuto di Include.zip:
+     * AIChatGpt/OptimizerGenerator.mqh
+     * AIChatGpt/SignalProcessor.mqh
+     * AIChatGpt/DataManager.mqh
+     * AIChatGpt/RiskManager.mqh
+
+3. Scripts/:
+   - Size: ~0.5 MB (stima)
+   - Contenuto di Scripts.zip:
+     * BTT_Scripts/*.mq5
+   - File da monitorare:
+     * "usa e getta.mq5" (potenziale file temporaneo)
+
+## Dimensioni e Monitoraggio
+- Dimensione totale stimata: ~4.0 MB
+- Stato spazio:
+  * Experts: OK (presenza di versioni multiple da valutare)
+  * Include: OK
+  * Scripts: OK (presenza di file temporanei)
+- File candidati per pulizia:
+  * Experts/MyEA/Zigulì/* (mantenere solo ultima versione)
+  * Experts/Prove EA/* (valutare se necessario)
+  * Scripts/"usa e getta.mq5" (valutare se temporaneo)
+  * Richiede approvazione esplicita per ogni rimozione
+
+## Resume Point
+- Implementing automatic sync between sessions
+- Added CASCADE_SYNC.txt to distribution package
+- Enhanced documentation with detailed sync procedures
+- Added MQL5 files tracking and size monitoring
+- Implemented separate zip files for MQL5 folders
+
+## Distribution Package
+1. BBTT_Unico.zip
+2. MQL5 Archives:
+   - Experts.zip (~2.5 MB)
+   - Include.zip (~1.0 MB)
+   - Scripts.zip (~0.5 MB)
+3. CASCADE_SYNC.txt
+
+## File Verification
+Content Hash: [Calcolato al momento della distribuzione]
+Last Distribution: pending
+Distribution Status: ready for next distribution
+
+## Note
+* Le dimensioni sono stime basate sui file trovati
+* È necessaria una verifica più accurata delle dimensioni
+* Identificati alcuni file potenzialmente non necessari
+* Richiesta revisione per confermare quali file possono essere rimossi

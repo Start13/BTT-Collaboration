@@ -1,0 +1,89 @@
+
+============================
+BBTT - Backup BlueTrendTeam
+Progetto: OmniEA Lite v1.0
+Ultimo aggiornamento: 2025-04-12
+============================
+
+🧠 CONCETTO CENTRALE
+---------------------
+OmniEA Lite è un Expert Advisor (EA) universale e modulare per MetaTrader 5, progettato per gestire segnali, filtri e condizioni tramite un’interfaccia utente interattiva. Si distingue per l’uso innovativo del drag&drop degli indicatori direttamente sul grafico per assegnare input dinamici agli slot operativi.
+
+📁 STRUTTURA FILE
+---------------------
+EA:         Experts/MyEA/AIChatGpt/OmniEA_Lite.mq5
+Include:    Include/AIChatGpt/OmniEA_Lite_Include.mqh
+
+🎯 OBIETTIVO VENDITA
+---------------------
+- Target: Market di MQL5.com
+- Versioni: Lite ($39), Standard ($79), Pro ($129)
+- Requisiti: compatibilità con backtest, ottimizzazione, persistenza impostazioni, interfaccia chiara
+
+🧩 FUNZIONALITÀ BASE
+---------------------
+✔️ Interfaccia grafica principale (Pannello Grande)
+✔️ 3 Slot per indicatori:
+   - SignalBuy
+   - SignalSell
+   - Filter
+✔️ Assegnazione tramite drag&drop da parte dell’utente
+✔️ Countdown di 20 secondi per l'assegnazione
+✔️ Lettura e salvataggio di: Nome, Input, Valori buffer
+✔️ Supporto a più istanze dello stesso indicatore (con diverse impostazioni)
+
+🪟 PANNELLO GRANDE – Parte Superiore
+---------------------
+Visualizza solo dati di mercato e impostazioni operative:
+- Nome EA: “OmniEA Lite by BBT”
+- Nome broker
+- Numero account
+- Spread
+- Mercato (symbol)
+- Balance
+- Impostazioni news
+- Impostazioni time trading
+- Impostazioni day trading
+- Ordini live (Open Orders) / Candela chiusa
+- Magic Number
+- Comment
+
+🧠 GESTIONE INDICATORI
+---------------------
+- All’avvio, tutte le caselle sono in attesa (scritta: “ADD Indicator”)
+- L’EA ignora gli indicatori già presenti sul grafico o caricati se non è attivo un countdown.
+- Cliccando su una casella:
+   🔸 Se vuota → parte il countdown di 20 secondi. Il pulsante lampeggia con testo “Drag Indicator [xx]”
+   🔸 Se viene cliccata di nuovo → annulla il countdown e ritorna allo stato iniziale
+   🔸 Se viene caricato un indicatore → nome, input, buffer vengono salvati e visualizzati con colore unico
+   🔸 Se cliccata una casella già assegnata → l’EA avverte che rimuoverà l’indicatore, lo rimuove dal grafico e resetta la casella
+- È ammesso caricare lo stesso indicatore in slot diversi (es. Buy vs Sell, con parametri diversi)
+- Indicatori su sottografico vengono riconosciuti e trattati come validi
+- Viene accettato un solo countdown attivo alla volta: se l’utente clicca un altro slot, il vecchio viene annullato e passa al nuovo
+
+⚙️ BACKTEST & PERSISTENZA
+---------------------
+- Le impostazioni del pannello sono collegate agli input dell’EA per funzionare in backtest e ottimizzazione
+- Tutte le assegnazioni e impostazioni devono essere salvate tra i riavvii di MT5
+- I dati vengono salvati in file o parametri input sincronizzati
+- Indicatori che non hanno buffer, sono lenti o generano errori → vengono rilevati e gestiti con alert per l’utente (ed eventualmente rimossi)
+
+📢 MARKETING STRATEGICO
+---------------------
+- Drag&Drop indicatori mai visto su altri EA nel market MQL5
+- Punto chiave nel marketing: “Slot interattivi intelligenti per segnali e filtri via Drag&Drop”
+- Target: trader semi-avanzati con esperienza in ottimizzazione
+
+🧩 SVILUPPO MODULARE
+---------------------
+- Tutti i nuovi avanzamenti devono essere in include modulari e brevi
+- Layout migliorabile: attualmente funzionale ma da ottimizzare graficamente
+
+🛠️ AVANZAMENTI RICHIESTI
+---------------------
+- Migliorare il layout del Pannello Grande (estetica, spaziatura, raggruppamenti)
+- Validatore per indicatori non validi/lenti
+- Handler centralizzato per countdown
+- Tooltips e messaggi user-friendly
+- Sincronizzazione Input ⇄ Pannello ⇄ Indicatori
+

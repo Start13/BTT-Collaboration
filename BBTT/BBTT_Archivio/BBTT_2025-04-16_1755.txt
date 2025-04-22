@@ -1,0 +1,88 @@
+*** BBTT – Backup BlueTrendTeam ***
+🕒 DATA: 2025-04-16 17:55
+
+📌 STATO ATTUALE
+- Progetto: OmniEA (Expert Advisor per MT5)
+- Versioni: Lite ($39), Standard ($79), Pro ($129)
+- Fase attuale: Testing Iniziale (Fase 2)
+- Ultimo aggiornamento significativo: Correzioni Pannello Grande (24/04/2025)
+
+🔧 STRUTTURA DEL PROGETTO
+Base Path: C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166
+
+File Principali:
+- EA: Experts/MyEA/AIChatGpt/OmniEA.mq5
+- Include Core:
+  • BTT_SlotLogic.mqh
+  • BTT_PanelDraw.mqh
+  • BTT_UIUtils.mqh
+  • BTT_Indicators.mqh
+  • BTT_FilterIndicators.mqh
+- Include Managers:
+  • BTT_SettingsManager.mqh
+  • BTT_OptimizationManager.mqh
+  • BTT_AlertManager.mqh
+
+🎯 CARATTERISTICHE PRINCIPALI
+1. Interfaccia Utente:
+   - Pannello Grande: Dati mercato, impostazioni trading, slot indicatori
+   - Pannello Medio: Storico ordini
+   - Pannello Piccolo: Switch compatto
+   - Compatibilità completa con backtest/ottimizzazione
+
+2. Sistema Drag & Drop:
+   - 3 slot per Signal Buy
+   - 3 slot per Signal Sell
+   - 2 slot per Filtri
+   - Countdown 10 secondi per assegnazione
+   - Feedback visivo con lampeggio e colori
+   - Icone "X" per rimozione indicatori
+
+3. Gestione Trading:
+   - Modalità Live/Candela Chiusa
+   - SL/TP dinamici (versione Pro)
+   - Gestione News
+   - Trading Time personalizzabile
+   - Risk management integrato
+
+🛠️ ULTIME MODIFICHE (24/04/2025)
+1. Pannello Grande:
+   - Aggiunte icone "X" per rimozione indicatori
+   - Implementato feedback visivo migliorato
+   - Ottimizzato layout e spaziatura
+   - Aggiunto rischio in tempo reale
+
+2. Sistema Indicatori:
+   - Rimosso pulsante "Add Indicator" separato
+   - Integrata funzionalità nelle caselle
+   - Migliorato feedback visivo assegnazione
+   - Implementata conferma rimozione indicatori
+
+3. Salvataggio/Caricamento:
+   - Auto-salvataggio in last_config.set
+   - Caricamento automatico all'avvio
+   - Gestione errori migliorata
+
+📋 PROSSIMI PASSI
+1. Testing:
+   - Verifica completa assegnazione indicatori
+   - Test compatibilità backtest
+   - Validazione salvataggio configurazioni
+
+2. Ottimizzazione:
+   - Miglioramento performance
+   - Riduzione consumo memoria
+   - Ottimizzazione gestione eventi
+
+3. Documentazione:
+   - Aggiornamento PDF utente
+   - Preparazione video tutorial
+   - Documentazione API per sviluppatori
+
+🔄 STRATEGIA DI BACKUP
+- Salvataggio BBTT giornaliero
+- Backup su Google Drive
+- Copie locali incrementali
+- Gestione versioni via BBTT
+
+AUTORE: Corrado Bruni Team

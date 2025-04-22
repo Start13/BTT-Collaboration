@@ -1,0 +1,626 @@
+{{ ... }}
+# BlueTrendTeam (BTT) - Documentazione Tecnica OmniEA (Estensione)
+
+## Nota di Collegamento
+Questo documento è un'estensione di BBTT_Unico.txt. I due file sono collegati e devono essere considerati come un'unica documentazione. Questa separazione è stata necessaria a causa di limitazioni tecniche nella dimensione massima dei file modificabili.
+
+### Regole di Gestione dei File BBTT_Unico
+1. **BBTT_Unico.txt**: Contiene la documentazione principale del progetto
+2. **BBTT_Unico_2.txt**: Contiene dettagli tecnici e implementazioni specifiche
+3. **Priorità di aggiornamento**: Entrambi i file devono essere aggiornati contemporaneamente
+4. **Riferimenti incrociati**: Quando si fa riferimento a contenuti nell'altro file, specificare chiaramente il file di origine
+5. **Backup**: Entrambi i file devono essere inclusi nelle operazioni di backup
+
+### Soluzione per il Problema di Dimensione
+Per gestire in modo più efficace la documentazione in futuro, si implementerà una delle seguenti soluzioni:
+
+1. **Sistema di documentazione modulare**:
+   - Suddivisione della documentazione in file tematici più piccoli
+   - File indice principale che collega tutti i moduli
+   - Sistema di riferimenti incrociati tra i moduli
+
+2. **Conversione in formato database**:
+   - Migrazione della documentazione in un database SQLite
+   - Interfaccia per query e ricerche avanzate
+   - Esportazione automatica in formato testo quando necessario
+
+3. **Sistema di versionamento Git**:
+   - Implementazione di un repository Git locale
+   - Suddivisione della documentazione in file più piccoli e gestibili
+   - Utilizzo di tag e branch per versioni diverse
+
+La soluzione ottimale verrà implementata dopo ulteriore valutazione.
+
+## 1. Gestione dei Buffer Multipli in OmniEA
+
+### 1.1 Rilevamento Automatico dei Buffer
+Il rilevamento automatico dei buffer è un sistema che identifica tutti i buffer disponibili in un indicatore. L'implementazione dovrebbe:
+- Esplorare sistematicamente ogni possibile buffer dell'indicatore (tipicamente da 0 a un numero massimo ragionevole)
+- Verificare quali buffer contengono effettivamente dati validi
+- Tentare di recuperare i nomi descrittivi dei buffer quando disponibili
+- Memorizzare il numero totale di buffer rilevati e i loro nomi/descrizioni
+
+Funzione di esempio per il rilevamento dei buffer:
+```cpp
+int DetectIndicatorBuffers(int indicator_handle, string &buffer_names[]) {
+    if(indicator_handle == INVALID_HANDLE) return 0;
+    
+    int max_buffers = 20; // Numero massimo di buffer da controllare
+    int detected_buffers = 0;
+    
+    ArrayResize(buffer_names, 0);
+    
+    for(int i = 0; i < max_buffers; i++) {
+        double temp_buffer[];
+        if(CopyBuffer(indicator_handle, i, 0, 1, temp_buffer) > 0) {
+            detected_buffers++;
+            
+            // Tenta di ottenere il nome del buffer
+            string buffer_name = "";
+            if(IndicatorBufferName(indicator_handle, i, buffer_name)) {
+                ArrayResize(buffer_names, detected_buffers);
+                buffer_names[detected_buffers-1] = buffer_name;
+            } else {
+                ArrayResize(buffer_names, detected_buffers);
+                buffer_names[detected_buffers-1] = "Buffer " + IntegerToString(i);
+            }
+        } else {
+            // Se non riesce a copiare, probabilmente abbiamo raggiunto la fine dei buffer disponibili
+            break;
+        }
+    }
+    
+    return detected_buffers;
+}
+```
+
+### 1.2 Interfaccia di Selezione Buffer
+Per implementare un'interfaccia di selezione con enum, possiamo creare un sistema che generi dinamicamente enum per i buffer disponibili:
+
+```cpp
+// Nella struttura IndicatorSlot, aggiungiamo:
+struct IndicatorSlot {
+    // ... campi esistenti ...
+    int selected_buffer;
+    string buffer_names[];
+    int buffer_count;
+};
+
+// Funzione per aggiornare l'interfaccia di selezione buffer
+void UpdateBufferSelectionInterface(string section, int slot_index) {
+    IndicatorSlot *slot = GetSlotBySection(section, slot_index);
+    if(slot == NULL || slot.handle == INVALID_HANDLE) return;
+    
+    // Rileva i buffer disponibili
+    string buffer_names[];
+    int buffer_count = DetectIndicatorBuffers(slot.handle, buffer_names);
+    
+    // Aggiorna le informazioni dello slot
+    slot.buffer_count = buffer_count;
+    ArrayResize(slot.buffer_names, buffer_count);
+    ArrayCopy(slot.buffer_names, buffer_names);
+    
+    // Se non è stato selezionato alcun buffer, imposta il primo come predefinito
+    if(slot.selected_buffer < 0 || slot.selected_buffer >= buffer_count)
+        slot.selected_buffer = 0;
+    
+    // Crea l'interfaccia di selezione (dropdown)
+    string dropdown_name = section + "_Buffer_" + IntegerToString(slot_index);
+    
+    // Implementazione del dropdown (questo è un esempio semplificato)
+    // In MQL5 non esiste un vero controllo dropdown, quindi dobbiamo simularlo
+    // con pulsanti o utilizzare un dialogo esterno
+    
+    // Aggiorna l'etichetta per mostrare il buffer selezionato
+    string buffer_label_name = section + "_BufferLabel_" + IntegerToString(slot_index);
+    if(ObjectFind(0, buffer_label_name) < 0) {
+        ObjectCreate(0, buffer_label_name, OBJ_LABEL, 0, 0, 0);
+        ObjectSetInteger(0, buffer_label_name, OBJPROP_XDISTANCE, x);
+        ObjectSetInteger(0, buffer_label_name, OBJPROP_YDISTANCE, y);
+    }
+    
+    ObjectSetString(0, buffer_label_name, OBJPROP_TEXT, "Buffer: " + buffer_names[slot.selected_buffer] + " (" + IntegerToString(slot.selected_buffer) + ")");
+}
+```
+
+### 1.3 Gestione Specializzata per Indicatori Complessi
+Per gli indicatori complessi, creiamo una libreria di mappature predefinite:
+
+```cpp
+// Struttura per la mappatura predefinita dei buffer
+struct BufferMapping {
+    string indicator_name;
+    string buffer_descriptions[];
+};
+
+// Funzione per ottenere descrizioni predefinite dei buffer
+bool GetPredefinedBufferDescriptions(string indicator_name, string &descriptions[]) {
+    // Mappature predefinite per indicatori comuni
+    static BufferMapping mappings[] = {
+        {"Moving Average", {"MA Line"}},
+        {"RSI", {"RSI Line"}},
+        {"MACD", {"MACD Line", "Signal Line", "Histogram"}},
+        {"Bollinger Bands", {"Middle Band", "Upper Band", "Lower Band"}},
+        {"Stochastic", {"Main Line", "Signal Line"}},
+        {"Ichimoku", {"Tenkan-sen", "Kijun-sen", "Senkou Span A", "Senkou Span B", "Chikou Span"}}
+        // Aggiungi altri indicatori standard...
+    };
+    
+    // Cerca una corrispondenza
+    for(int i = 0; i < ArraySize(mappings); i++) {
+        if(StringFind(indicator_name, mappings[i].indicator_name) >= 0) {
+            ArrayResize(descriptions, ArraySize(mappings[i].buffer_descriptions));
+            ArrayCopy(descriptions, mappings[i].buffer_descriptions);
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+// Funzione per migliorare le descrizioni dei buffer
+void EnhanceBufferDescriptions(string indicator_name, int handle, string &buffer_names[]) {
+    // Prova a ottenere descrizioni predefinite
+    string predefined_descriptions[];
+    if(GetPredefinedBufferDescriptions(indicator_name, predefined_descriptions)) {
+        // Usa le descrizioni predefinite se disponibili
+        int min_size = MathMin(ArraySize(buffer_names), ArraySize(predefined_descriptions));
+        for(int i = 0; i < min_size; i++) {
+            buffer_names[i] = predefined_descriptions[i] + " (Buffer " + IntegerToString(i) + ")";
+        }
+    }
+}
+```
+
+### 1.4 Visualizzazione dei Valori Correnti dei Buffer
+Per aiutare l'utente a identificare il buffer corretto, mostriamo i valori correnti:
+
+```cpp
+// Funzione per ottenere i valori correnti dei buffer
+void GetCurrentBufferValues(int handle, double &values[], int buffer_count) {
+    ArrayResize(values, buffer_count);
+    
+    for(int i = 0; i < buffer_count; i++) {
+        double buffer[];
+        if(CopyBuffer(handle, i, 0, 1, buffer) > 0) {
+            values[i] = buffer[0];
+        } else {
+            values[i] = EMPTY_VALUE;
+        }
+    }
+}
+
+// Aggiornamento dell'interfaccia con i valori correnti
+void UpdateBufferValuesDisplay(string section, int slot_index) {
+    IndicatorSlot *slot = GetSlotBySection(section, slot_index);
+    if(slot == NULL || slot.handle == INVALID_HANDLE) return;
+    
+    double current_values[];
+    GetCurrentBufferValues(slot.handle, current_values, slot.buffer_count);
+    
+    // Aggiorna la visualizzazione per ogni buffer
+    for(int i = 0; i < slot.buffer_count; i++) {
+        string value_label = section + "_BufferValue_" + IntegerToString(slot_index) + "_" + IntegerToString(i);
+        
+        if(ObjectFind(0, value_label) < 0) {
+            // Crea l'etichetta se non esiste
+            // ...
+        }
+        
+        // Formatta il valore con precisione appropriata
+        string value_text = DoubleToString(current_values[i], 5);
+        ObjectSetString(0, value_label, OBJPROP_TEXT, slot.buffer_names[i] + ": " + value_text);
+    }
+}
+```
+
+### 1.5 Integrazione con il Sistema di Etichette "Buff XX"
+Integriamo il sistema di etichette "Buff XX" con il rilevamento dei buffer:
+
+```cpp
+// Funzione per creare o aggiornare le etichette "Buff XX" sul grafico
+void UpdateBufferLabelsOnChart() {
+    // Per ogni slot con un indicatore assegnato
+    for(int section = 0; section < 3; section++) {
+        string section_name;
+        IndicatorSlot *slots;
+        int slot_count;
+        
+        // Determina la sezione corrente
+        switch(section) {
+            case 0: section_name = "Buy"; slots = signal_buy_slots; slot_count = ArraySize(signal_buy_slots); break;
+            case 1: section_name = "Sell"; slots = signal_sell_slots; slot_count = ArraySize(signal_sell_slots); break;
+            case 2: section_name = "Filter"; slots = filter_slots; slot_count = ArraySize(filter_slots); break;
+        }
+        
+        for(int i = 0; i < slot_count; i++) {
+            if(slots[i].name != "Add Indicator" && slots[i].handle != INVALID_HANDLE) {
+                // Per ogni buffer dell'indicatore
+                for(int j = 0; j < slots[i].buffer_count; j++) {
+                    string label_name = "Buff_" + section_name + "_" + IntegerToString(i) + "_" + IntegerToString(j);
+                    
+                    // Ottieni il valore più recente del buffer
+                    double buffer[];
+                    if(CopyBuffer(slots[i].handle, j, 0, 1, buffer) <= 0) continue;
+                    
+                    // Calcola la posizione dell'etichetta
+                    datetime time = TimeCurrent();
+                    double price = buffer[0];
+                    
+                    // Se il prezzo non è valido, salta
+                    if(price == EMPTY_VALUE) continue;
+                    
+                    // Crea o aggiorna l'etichetta
+                    if(ObjectFind(0, label_name) < 0) {
+                        ObjectCreate(0, label_name, OBJ_TEXT, 0, time, price);
+                    } else {
+                        ObjectMove(0, label_name, 0, time, price);
+                    }
+                    
+                    // Imposta il testo e lo stile dell'etichetta
+                    ObjectSetString(0, label_name, OBJPROP_TEXT, "Buff " + IntegerToString(j));
+                    
+                    // Ottieni il colore dell'indicatore se possibile
+                    color buffer_color = clrWhite; // Colore predefinito
+                    
+                    // Imposta colore e stile
+                    ObjectSetInteger(0, label_name, OBJPROP_COLOR, buffer_color);
+                    ObjectSetInteger(0, label_name, OBJPROP_FONTSIZE, 8);
+                    ObjectSetInteger(0, label_name, OBJPROP_ANCHOR, ANCHOR_LEFT);
+                }
+            }
+        }
+    }
+}
+```
+
+### 1.6 Memorizzazione e Ripristino delle Selezioni
+Sistema per salvare e ripristinare le selezioni dei buffer:
+
+```cpp
+void SaveSelectedBuffer(string section, int slot_index, int buffer_index) {
+    IndicatorSlot *slot = GetSlotBySection(section, slot_index);
+    if(slot == NULL) return;
+    
+    slot.selected_buffer = buffer_index;
+    
+    // Aggiorna l'interfaccia per mostrare il buffer selezionato
+    string slot_name = section + "_Slot_" + IntegerToString(slot_index);
+    string buffer_info = slot.name + " (Buffer: " + IntegerToString(buffer_index) + ")";
+    ObjectSetString(0, slot_name, OBJPROP_TEXT, buffer_info);
+    
+    // Salva la configurazione
+    SaveIndicatorSlots();
+}
+```
+
+### 1.7 Suggerimenti Aggiuntivi
+Funzionalità avanzate per migliorare ulteriormente l'esperienza utente:
+
+1. **Previsualizzazione dei buffer**: Aggiungere una piccola anteprima grafica di ciascun buffer nel dialogo di selezione.
+
+2. **Tooltip informativi**: Implementare tooltip che mostrano informazioni dettagliate quando l'utente passa il mouse sopra un'etichetta "Buff XX".
+
+3. **Modalità di apprendimento**: Creare una modalità speciale che mostra descrizioni estese e spiegazioni per ogni buffer.
+
+4. **Colori personalizzabili**: Permettere all'utente di personalizzare i colori delle etichette dei buffer.
+
+5. **Rilevamento intelligente**: Implementare un algoritmo che suggerisca automaticamente il buffer più probabile da utilizzare in base al contesto (ad esempio, per un segnale di acquisto, suggerire il buffer che genera più segnali di acquisto).
+
+6. **Documentazione integrata**: Aggiungere un pulsante di aiuto che mostri la documentazione specifica per l'indicatore selezionato.
+
+7. **Memorizzazione delle preferenze**: Ricordare quali buffer l'utente ha selezionato in passato per ogni indicatore e suggerirli come predefiniti in futuro.
+
+## 2. Strategie di Ottimizzazione per OmniEA
+
+### 2.1 Implementazione del Caching Intelligente
+
+Per ottimizzare le performance dell'EA, implementiamo un sistema di caching intelligente:
+
+```cpp
+// Struttura per il caching delle informazioni sugli indicatori
+struct CachedIndicatorInfo {
+    string name;
+    int buffer_count;
+    string buffer_names[];
+    datetime last_update;
+};
+
+// Mappa per memorizzare le informazioni sui buffer già rilevati
+static map<string, CachedIndicatorInfo> cached_indicators;
+
+// Funzione ottimizzata per il rilevamento dei buffer
+int DetectIndicatorBuffers(int handle, string indicator_name, string &buffer_names[]) {
+    // Verifica se l'indicatore è già nel cache e se è ancora valido
+    if(cached_indicators.ContainsKey(indicator_name) && 
+       (TimeCurrent() - cached_indicators[indicator_name].last_update) < 3600) { // Cache valido per un'ora
+        
+        // Usa i dati dal cache
+        int buffer_count = cached_indicators[indicator_name].buffer_count;
+        ArrayResize(buffer_names, buffer_count);
+        ArrayCopy(buffer_names, cached_indicators[indicator_name].buffer_names);
+        return buffer_count;
+    }
+    
+    // Se non nel cache o non valido, esegui il rilevamento
+    // [implementazione del rilevamento]
+    
+    // Salva nel cache per uso futuro
+    CachedIndicatorInfo info;
+    info.name = indicator_name;
+    info.buffer_count = detected_count;
+    ArrayResize(info.buffer_names, detected_count);
+    ArrayCopy(info.buffer_names, buffer_names);
+    info.last_update = TimeCurrent();
+    
+    cached_indicators.Set(indicator_name, info);
+    
+    return detected_count;
+}
+```
+
+### 2.2 Lettura Lazy e On-Demand dei Buffer
+
+Implementiamo un sistema di lettura lazy per i buffer:
+
+```cpp
+// Struttura per memorizzare i valori dei buffer
+struct BufferValues {
+    double values[];
+    datetime last_update;
+    bool is_valid;
+};
+
+// Mappa per memorizzare i valori dei buffer
+static map<string, BufferValues> buffer_values_cache;
+
+// Funzione ottimizzata per leggere i valori dei buffer
+bool GetBufferValues(int handle, int buffer_index, double &values[], int bars_to_copy, string cache_key) {
+    // Verifica se i valori sono nel cache e se sono ancora validi
+    if(buffer_values_cache.ContainsKey(cache_key) && 
+       buffer_values_cache[cache_key].is_valid &&
+       (TimeCurrent() - buffer_values_cache[cache_key].last_update) < 1) { // Cache valido per 1 secondo
+        
+        // Usa i valori dal cache
+        ArrayResize(values, ArraySize(buffer_values_cache[cache_key].values));
+        ArrayCopy(values, buffer_values_cache[cache_key].values);
+        return true;
+    }
+    
+    // Se non nel cache o non valido, esegui la copia
+    if(CopyBuffer(handle, buffer_index, 0, bars_to_copy, values) > 0) {
+        // Salva nel cache
+        BufferValues buffer_data;
+        ArrayResize(buffer_data.values, bars_to_copy);
+        ArrayCopy(buffer_data.values, values);
+        buffer_data.last_update = TimeCurrent();
+        buffer_data.is_valid = true;
+        
+        buffer_values_cache.Set(cache_key, buffer_data);
+        return true;
+    }
+    
+    return false;
+}
+```
+
+### 2.3 Ottimizzazione delle Operazioni di Copia
+
+Implementiamo strategie per ottimizzare le operazioni di copia dei buffer:
+
+```cpp
+// Funzione per copiare i buffer in modo efficiente
+bool CopyBuffersEfficiently(int handle, int buffer_indices[], double &values[][], int bars_to_copy) {
+    bool success = true;
+    int buffer_count = ArraySize(buffer_indices);
+    
+    // Preallocare gli array
+    ArrayResize(values, buffer_count);
+    
+    // Copiare tutti i buffer richiesti in un'unica passata
+    for(int i = 0; i < buffer_count; i++) {
+        ArrayResize(values[i], bars_to_copy);
+        if(CopyBuffer(handle, buffer_indices[i], 0, bars_to_copy, values[i]) <= 0) {
+            success = false;
+            break;
+        }
+    }
+    
+    return success;
+}
+```
+
+### 2.4 Gestione Efficiente della Memoria
+
+Implementiamo strategie per una gestione efficiente della memoria:
+
+```cpp
+// Funzione per liberare le risorse degli indicatori
+void CleanupIndicatorResources(IndicatorSlot &slot) {
+    if(slot.handle != INVALID_HANDLE) {
+        IndicatorRelease(slot.handle);
+        slot.handle = INVALID_HANDLE;
+    }
+    
+    // Rimuovi le etichette "Buff XX" associate
+    for(int i = 0; i < slot.buffer_count; i++) {
+        string label_name = "Buff_" + slot.section + "_" + IntegerToString(slot.index) + "_" + IntegerToString(i);
+        if(ObjectFind(0, label_name) >= 0) {
+            ObjectDelete(0, label_name);
+        }
+    }
+    
+    // Resetta i valori dello slot
+    slot.name = "Add Indicator";
+    slot.buffer_count = 0;
+    ArrayResize(slot.buffer_names, 0);
+    slot.selected_buffer = -1;
+    // ... resetta altri campi
+}
+```
+
+### 2.5 Aggiornamenti Condizionali
+
+Implementiamo un sistema di aggiornamenti condizionali:
+
+```cpp
+// Funzione per aggiornare l'interfaccia solo quando necessario
+void UpdateInterfaceConditionally() {
+    static datetime last_update = 0;
+    datetime current_time = TimeCurrent();
+    
+    // Aggiorna l'interfaccia al massimo una volta al secondo
+    if(current_time - last_update >= 1) {
+        UpdatePanelInfo();
+        UpdateBufferLabelsOnChart();
+        last_update = current_time;
+    }
+}
+
+// Funzione per verificare se un indicatore è ancora valido
+bool IsIndicatorValid(int handle) {
+    if(handle == INVALID_HANDLE) return false;
+    
+    // Tenta di copiare un valore per verificare se l'handle è ancora valido
+    double buffer[];
+    return CopyBuffer(handle, 0, 0, 1, buffer) > 0;
+}
+```
+
+### 2.6 Ottimizzazione dell'Interfaccia Utente
+
+Implementiamo strategie per ottimizzare l'interfaccia utente:
+
+```cpp
+// Funzione per aggiornare l'interfaccia in batch
+void UpdateInterfaceBatch() {
+    // Disabilita temporaneamente gli aggiornamenti del grafico
+    ChartSetInteger(0, CHART_AUTOSCROLL, false);
+    ChartSetInteger(0, CHART_SHIFT, false);
+    
+    // Esegui tutti gli aggiornamenti dell'interfaccia
+    UpdatePanelInfo();
+    UpdateBufferLabelsOnChart();
+    UpdateIndicatorSlots();
+    
+    // Riabilita gli aggiornamenti del grafico
+    ChartSetInteger(0, CHART_AUTOSCROLL, true);
+    ChartSetInteger(0, CHART_SHIFT, true);
+    ChartRedraw();
+}
+```
+
+### 2.7 Implementazione di Controlli di Ridondanza
+
+Implementiamo controlli di ridondanza per evitare operazioni inutili:
+
+```cpp
+// Funzione per verificare se i dati sono cambiati
+bool HasDataChanged(double &old_values[], double &new_values[]) {
+    int size = MathMin(ArraySize(old_values), ArraySize(new_values));
+    
+    for(int i = 0; i < size; i++) {
+        if(MathAbs(old_values[i] - new_values[i]) > EPSILON) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+// Funzione per generare un hash semplice della configurazione
+string GenerateConfigHash() {
+    string hash = "";
+    
+    // Combina le informazioni di tutti gli slot in una stringa
+    for(int i = 0; i < ArraySize(signal_buy_slots); i++) {
+        hash += signal_buy_slots[i].name + "|" + IntegerToString(signal_buy_slots[i].selected_buffer) + "|";
+    }
+    
+    for(int i = 0; i < ArraySize(signal_sell_slots); i++) {
+        hash += signal_sell_slots[i].name + "|" + IntegerToString(signal_sell_slots[i].selected_buffer) + "|";
+    }
+    
+    for(int i = 0; i < ArraySize(filter_slots); i++) {
+        hash += filter_slots[i].name + "|" + IntegerToString(filter_slots[i].selected_buffer) + "|";
+    }
+    
+    return hash;
+}
+
+// Funzione per salvare la configurazione solo se è cambiata
+void SaveConfigurationIfChanged() {
+    static string last_config_hash = "";
+    string current_hash = GenerateConfigHash();
+    
+    if(current_hash != last_config_hash) {
+        SaveConfiguration();
+        last_config_hash = current_hash;
+    }
+}
+```
+
+### 2.8 Considerazioni sulla Performance
+
+Implementiamo un sistema di monitoraggio delle performance:
+
+```cpp
+// Struttura per monitorare le performance
+struct PerformanceMetrics {
+    ulong tick_processing_time;
+    ulong interface_update_time;
+    ulong buffer_copy_time;
+    int memory_usage;
+    datetime last_update;
+};
+
+// Variabile globale per le metriche
+PerformanceMetrics g_metrics;
+
+// Funzione per aggiornare le metriche di performance
+void UpdatePerformanceMetrics(string operation, ulong execution_time) {
+    switch(operation) {
+        case "tick_processing":
+            g_metrics.tick_processing_time = execution_time;
+            break;
+        case "interface_update":
+            g_metrics.interface_update_time = execution_time;
+            break;
+        case "buffer_copy":
+            g_metrics.buffer_copy_time = execution_time;
+            break;
+    }
+    
+    // Aggiorna l'utilizzo della memoria (approssimativo)
+    g_metrics.memory_usage = TerminalInfoInteger(TERMINAL_MEMORY_PHYSICAL);
+    g_metrics.last_update = TimeCurrent();
+}
+
+// Funzione per misurare il tempo di esecuzione
+ulong MeasureExecutionTime(void (*func)()) {
+    ulong start_time = GetMicrosecondCount();
+    func();
+    return GetMicrosecondCount() - start_time;
+}
+```
+
+### 2.9 Metriche di Performance da Monitorare
+
+Implementiamo un sistema per monitorare le metriche di performance:
+
+```cpp
+// Funzione per visualizzare le metriche di performance
+void DisplayPerformanceMetrics() {
+    string metrics_text = "Performance Metrics:\n";
+    metrics_text += "Tick Processing: " + DoubleToString(g_metrics.tick_processing_time / 1000.0, 2) + " ms\n";
+    metrics_text += "Interface Update: " + DoubleToString(g_metrics.interface_update_time / 1000.0, 2) + " ms\n";
+    metrics_text += "Buffer Copy: " + DoubleToString(g_metrics.buffer_copy_time / 1000.0, 2) + " ms\n";
+    metrics_text += "Memory Usage: " + IntegerToString(g_metrics.memory_usage / 1024) + " KB\n";
+    metrics_text += "Last Update: " + TimeToString(g_metrics.last_update, TIME_DATE|TIME_SECONDS);
+    
+    // Visualizza le metriche nel pannello o in un file di log
+    Comment(metrics_text);
+}
+```
+
+```

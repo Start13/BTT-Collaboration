@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniEA Inputs Preview</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .inputs-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #1a5fb4;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            background-color: #1a5fb4;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .input-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .input-title {
+            font-weight: bold;
+            color: #1a5fb4;
+            margin-bottom: 10px;
+        }
+        
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .input-label {
+            width: 250px;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .input-field {
+            flex-grow: 1;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        .input-description {
+            font-size: 12px;
+            color: #666;
+            margin-top: 3px;
+            margin-left: 250px;
+            font-style: italic;
+        }
+        
+        .indicator-name {
+            font-weight: bold;
+            color: #1a5fb4;
+        }
+    </style>
+</head>
+<body>
+    <div class="inputs-container">
+        <h1>OmniEA Lite v1.0 - Input Parameters</h1>
+        
+        <!-- General Settings -->
+        <div class="input-section">
+            <div class="section-title">Impostazioni Generali</div>
+            
+            <div class="input-group">
+                <div class="input-row">
+                    <div class="input-label">SignalMode</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0">LIVE (ogni tick)</option>
+                            <option value="1" selected>CANDLE_CLOSED (a candela chiusa)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Determina quando valutare le condizioni di trading</div>
+                
+                <div class="input-row">
+                    <div class="input-label">RiskPercent</div>
+                    <div class="input-field">
+                        <input type="text" value="1.0">
+                    </div>
+                </div>
+                <div class="input-description">Percentuale di rischio per operazione (1.0 = 1%)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">FixedLots</div>
+                    <div class="input-field">
+                        <input type="text" value="0.1">
+                    </div>
+                </div>
+                <div class="input-description">Dimensione fissa del lotto (se RiskPercent = 0)</div>
+            </div>
+        </div>
+        
+        <!-- Buy Signal Settings -->
+        <div class="input-section">
+            <div class="section-title">Segnali di Acquisto</div>
+            
+            <!-- First Buy Indicator (MA) -->
+            <div class="input-group">
+                <div class="input-title"><span class="indicator-name">Moving Average</span> (Buy Slot 1)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_1_MA_BufferIndex</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0" selected>Buff 00 - Linea MA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Buffer dell'indicatore da utilizzare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_1_MA_Condition</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0">Prezzo sopra MA</option>
+                            <option value="1">Prezzo sotto MA</option>
+                            <option value="2" selected>Prezzo incrocia MA salendo</option>
+                            <option value="3">Prezzo incrocia MA scendendo</option>
+                            <option value="4">MA crescente</option>
+                            <option value="5">MA decrescente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Condizione da verificare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_1_MA_CompareValue</div>
+                    <div class="input-field">
+                        <input type="text" value="0.0">
+                    </div>
+                </div>
+                <div class="input-description">Valore di confronto (0.0 = non utilizzato)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_1_MA_LogicOp</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0" selected>AND</option>
+                            <option value="1">OR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Operatore logico con l'indicatore successivo</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_1_MA_Enabled</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="1" selected>Abilitato</option>
+                            <option value="0">Disabilitato</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Attiva/disattiva questo indicatore</div>
+            </div>
+            
+            <!-- Second Buy Indicator (RSI) -->
+            <div class="input-group">
+                <div class="input-title"><span class="indicator-name">RSI</span> (Buy Slot 2)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_2_RSI_BufferIndex</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0" selected>Buff 00 - Linea RSI</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Buffer dell'indicatore da utilizzare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_2_RSI_Condition</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0">RSI sopra livello</option>
+                            <option value="1" selected>RSI sotto livello</option>
+                            <option value="2">RSI incrocia livello salendo</option>
+                            <option value="3">RSI incrocia livello scendendo</option>
+                            <option value="4">RSI crescente</option>
+                            <option value="5">RSI decrescente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Condizione da verificare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_2_RSI_CompareValue</div>
+                    <div class="input-field">
+                        <input type="text" value="30.0">
+                    </div>
+                </div>
+                <div class="input-description">Valore di confronto (30.0 = livello di ipervenduto)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_2_RSI_LogicOp</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0" selected>AND</option>
+                            <option value="1">OR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Operatore logico con l'indicatore successivo</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Buy_2_RSI_Enabled</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="1" selected>Abilitato</option>
+                            <option value="0">Disabilitato</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Attiva/disattiva questo indicatore</div>
+            </div>
+        </div>
+        
+        <!-- Sell Signal Settings -->
+        <div class="input-section">
+            <div class="section-title">Segnali di Vendita</div>
+            
+            <!-- First Sell Indicator (Stochastic) -->
+            <div class="input-group">
+                <div class="input-title"><span class="indicator-name">Stochastic</span> (Sell Slot 1)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Sell_1_Stochastic_BufferIndex</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0" selected>Buff 00 - %K</option>
+                            <option value="1">Buff 01 - %D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Buffer dell'indicatore da utilizzare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Sell_1_Stochastic_Condition</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0" selected>Stochastic sopra livello</option>
+                            <option value="1">Stochastic sotto livello</option>
+                            <option value="2">Stochastic incrocia livello salendo</option>
+                            <option value="3">Stochastic incrocia livello scendendo</option>
+                            <option value="4">%K incrocia %D salendo</option>
+                            <option value="5">%K incrocia %D scendendo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Condizione da verificare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Sell_1_Stochastic_CompareValue</div>
+                    <div class="input-field">
+                        <input type="text" value="80.0">
+                    </div>
+                </div>
+                <div class="input-description">Valore di confronto (80.0 = livello di ipercomprato)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Sell_1_Stochastic_CompareBuffer</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0">Non utilizzato</option>
+                            <option value="1" selected>Buff 01 - %D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Buffer secondario per confronto (per condizioni di incrocio)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Sell_1_Stochastic_LogicOp</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0" selected>AND</option>
+                            <option value="1">OR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Operatore logico con l'indicatore successivo</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Sell_1_Stochastic_Enabled</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="1" selected>Abilitato</option>
+                            <option value="0">Disabilitato</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Attiva/disattiva questo indicatore</div>
+            </div>
+        </div>
+        
+        <!-- Filter Settings -->
+        <div class="input-section">
+            <div class="section-title">Filtri</div>
+            
+            <!-- First Filter Indicator (Bollinger) -->
+            <div class="input-group">
+                <div class="input-title"><span class="indicator-name">Bollinger Bands</span> (Filter Slot 1)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Filter_1_Bollinger_BufferIndex</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0">Buff 00 - Linea Media</option>
+                            <option value="1" selected>Buff 01 - Banda Superiore</option>
+                            <option value="2">Buff 02 - Banda Inferiore</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Buffer dell'indicatore da utilizzare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Filter_1_Bollinger_Condition</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="0">Prezzo sopra banda</option>
+                            <option value="1">Prezzo sotto banda</option>
+                            <option value="2">Prezzo tocca banda superiore</option>
+                            <option value="3">Prezzo tocca banda inferiore</option>
+                            <option value="4" selected>Bande in espansione</option>
+                            <option value="5">Bande in contrazione</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Condizione da verificare</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Filter_1_Bollinger_CompareValue</div>
+                    <div class="input-field">
+                        <input type="text" value="0.0">
+                    </div>
+                </div>
+                <div class="input-description">Valore di confronto (0.0 = non utilizzato)</div>
+                
+                <div class="input-row">
+                    <div class="input-label">Filter_1_Bollinger_Enabled</div>
+                    <div class="input-field">
+                        <select>
+                            <option value="1" selected>Abilitato</option>
+                            <option value="0">Disabilitato</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-description">Attiva/disattiva questo filtro</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
