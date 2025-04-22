@@ -5,7 +5,7 @@
 > La documentazione è stata riorganizzata in una struttura modulare per facilitare la gestione e l'aggiornamento.
 
 ## Punto di Ripresa del Lavoro
-**Ultimo aggiornamento**: 22 aprile 2025, 16:14
+**Ultimo aggiornamento**: 22 aprile 2025, 16:21
 
 **Stato attuale**: Completato: Definizione della struttura degli input per indicatori aggregati in OmniEA
 
@@ -23,7 +23,7 @@
 ### Repository e Cartelle di Lavoro
 1. È stato creato un repository dedicato per il tuo lavoro: https://github.com/Start13/OmniEA-Lite-ChatGPT
 2. Devi sviluppare i file MQL5 e salvarli sia nel repository che nelle seguenti cartelle locali:
-   - Expert Advisor: `C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5\Experts\AIChatGpt`
+   - Expert Advisor: `C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5\Experts\MyEA\AIChatGpt`
    - Include files: `C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5\Include\AIChatGpt`
 
 ### Compiti Specifici
