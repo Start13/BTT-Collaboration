@@ -157,6 +157,17 @@ try {
     Initialize-BackupRepo
     Sync-MQL5Files
     Commit-Changes
+    
+    # Invia notifiche dopo il backup
+    $notificationScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "send_notifications.ps1"
+    if (Test-Path $notificationScript) {
+        Write-Host "Invio notifiche via email e Telegram..." -ForegroundColor Cyan
+        & $notificationScript
+    }
+    else {
+        Write-Host "Script di notifica non trovato: $notificationScript" -ForegroundColor Yellow
+    }
+    
     Write-Host "=== Backup MQL5 completato ===" -ForegroundColor Green
 }
 catch {
