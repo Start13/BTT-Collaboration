@@ -17,7 +17,15 @@
 
 **Nota per l'AI**: Quando vedi questo file, carica immediatamente il contenuto di [Stato del Progetto](./core/stato_progetto.md) e [Regole Fondamentali](./core/regole_fondamentali.md) per avere il contesto completo. Ricorda che tutte le comunicazioni devono essere in italiano.
 
-## Struttura della Documentazione
+
+## Backup Automatico
+Il sistema Ã¨ configurato per eseguire backup automatici:
+- Ogni ora tramite Task Scheduler
+- Alla chiusura della chat (clicca sul collegamento "BTT_Backup_OnChatEnd" sul desktop)
+
+**IMPORTANTE**: Prima di chiudere la chat, clicca sempre sul collegamento sul desktop per eseguire il backup.
+
+
 
 ### Core
 - [Regole Fondamentali](./core/regole_fondamentali.md) - Regole e principi guida del progetto
@@ -45,3 +53,4 @@ Per informazioni su obiettivi social e community, consultare il file [BBTT_Socia
 ---
 
 *Ultimo aggiornamento: 22 aprile 2025*
+
