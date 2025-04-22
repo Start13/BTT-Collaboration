@@ -12,6 +12,14 @@ Questa cartella contiene i documenti fondamentali che definiscono la struttura, 
 
 - [**decisioni_chiave.md**](./decisioni_chiave.md): Registro storico di tutte le decisioni strategiche e tecniche significative prese durante lo sviluppo del progetto.
 
+- [**glossario_tecnico.md**](./glossario_tecnico.md): Elenco completo di tutti i termini tecnici, acronimi e concetti utilizzati nel progetto.
+
+- [**faq_team.md**](./faq_team.md): Risposte alle domande più frequenti sul progetto e su OmniEA.
+
+- [**contributori.md**](./contributori.md): Elenco di tutti i contributori al progetto, sia umani che AI, con i rispettivi ruoli e responsabilità.
+
+- [**checklist.txt**](./checklist.txt): Lista di controllo operativa per guidare il lavoro quotidiano sul progetto.
+
 ## Utilizzo
 
 Questi documenti dovrebbero essere consultati regolarmente durante lo sviluppo per garantire che tutte le attività siano allineate con gli obiettivi e le regole del progetto. In particolare:
@@ -20,3 +28,7 @@ Questi documenti dovrebbero essere consultati regolarmente durante lo sviluppo p
 - Rivedere **regole_fondamentali.md** per assicurarsi che le implementazioni rispettino le linee guida stabilite.
 - Fare riferimento a **windsurf_ai.md** quando è necessario comprendere la gerarchia decisionale e il protocollo di comunicazione.
 - Aggiornare **decisioni_chiave.md** ogni volta che viene presa una decisione significativa che influisce sulla direzione del progetto.
+- Consultare **glossario_tecnico.md** per chiarire il significato di termini tecnici, acronimi e concetti utilizzati nel progetto.
+- Utilizzare **faq_team.md** per trovare risposte rapide alle domande più frequenti sul progetto e su OmniEA.
+- Fare riferimento a **contributori.md** per comprendere i ruoli e le responsabilità di ciascun membro del team.
+- Seguire la **checklist.txt** come guida operativa per il lavoro quotidiano sul progetto.

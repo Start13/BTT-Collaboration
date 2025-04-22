@@ -15,7 +15,7 @@
 
 **Priorità attuale**: Completare l'implementazione del sistema di collaborazione GitHub e iniziare lo sviluppo del generatore di report per OmniEA.
 
-**Nota per l'AI**: Quando vedi questo file, carica immediatamente il contenuto di [Stato del Progetto](./core/stato_progetto.md), [Regole Fondamentali](./core/regole_fondamentali.md) e [AI Windsurf](./core/windsurf_ai.md) per avere il contesto completo. Consulta anche il [Registro delle Decisioni Chiave](./core/decisioni_chiave.md) per comprendere l'evoluzione del progetto. Ricorda che tutte le comunicazioni devono essere in italiano.
+**Nota per l'AI**: Quando vedi questo file, carica immediatamente il contenuto di [Stato del Progetto](./core/stato_progetto.md), [Regole Fondamentali](./core/regole_fondamentali.md) e [AI Windsurf](./core/windsurf_ai.md) per avere il contesto completo. Consulta anche il [Registro delle Decisioni Chiave](./core/decisioni_chiave.md), il [Glossario Tecnico](./core/glossario_tecnico.md), le [FAQ del Team](./core/faq_team.md) e l'elenco dei [Contributori](./core/contributori.md) per comprendere l'evoluzione del progetto. Utilizza la [Checklist Operativa](./core/checklist.txt) per guidare il tuo lavoro. Ricorda che tutte le comunicazioni devono essere in italiano.
 
 ## Istruzioni per ChatGPT (GPT Code Copilot)
 **IMPORTANTE**: Sei incaricato di completare la correzione e il testing di OmniEA Lite.

@@ -1,0 +1,31 @@
+# Checklist Operativa - BlueTrendTeam
+
+## Prima di Iniziare una Nuova Sessione
+- [ ] Leggere lo stato attuale del progetto in stato_progetto.md
+- [ ] Consultare le regole fondamentali in regole_fondamentali.md
+- [ ] Verificare le ultime decisioni chiave in decisioni_chiave.md
+- [ ] Controllare il ruolo di AI Windsurf in windsurf_ai.md
+
+## Durante lo Sviluppo
+- [ ] Seguire le convenzioni di codice stabilite
+- [ ] Documentare tutte le funzioni e classi implementate
+- [ ] Testare le implementazioni con diversi timeframe e simboli
+- [ ] Aggiornare la documentazione in base alle modifiche apportate
+
+## Prima di Pushare Modifiche
+- [ ] Verificare che il codice sia funzionante e privo di errori
+- [ ] Aggiornare lo stato del progetto in stato_progetto.md
+- [ ] Documentare eventuali decisioni chiave in decisioni_chiave.md
+- [ ] Eseguire un backup manuale con backup_mql5.ps1
+
+## Alla Fine della Sessione
+- [ ] Riassumere il lavoro svolto
+- [ ] Aggiornare lo stato del progetto
+- [ ] Indicare la prossima attività da svolgere
+- [ ] Eseguire un backup finale (automatico quando si indica la fine della chat)
+
+## In Caso di Cambio AI
+- [ ] Eseguire un backup completo
+- [ ] Assicurarsi che il file README.md sia aggiornato
+- [ ] Verificare che tutte le decisioni chiave siano documentate
+- [ ] Indicare chiaramente lo stato del progetto e la prossima attività
