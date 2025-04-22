@@ -16,7 +16,8 @@ def send_telegram_message(token, chat_id, message):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     params = {
         "chat_id": chat_id,
-        "text": message
+        "text": message,
+        "parse_mode": "Markdown"
     }
     
     try:
@@ -33,9 +34,39 @@ def send_telegram_message(token, chat_id, message):
         print(f"✗ Eccezione durante l'invio del messaggio Telegram: {str(e)}")
         return False
 
-def send_email(sender_email, sender_password, recipient_email, subject, body):
+def send_telegram_file(token, chat_id, file_path, caption=""):
     """
-    Invia un'email con Gmail
+    Invia un file su Telegram
+    """
+    if not os.path.exists(file_path):
+        print(f"✗ File non trovato: {file_path}")
+        return False
+    
+    url = f"https://api.telegram.org/bot{token}/sendDocument"
+    
+    try:
+        with open(file_path, 'rb') as f:
+            files = {'document': f}
+            data = {'chat_id': chat_id}
+            if caption:
+                data['caption'] = caption
+            
+            response = requests.post(url, data=data, files=files)
+            result = response.json()
+            
+            if result.get("ok"):
+                print("✓ File Telegram inviato con successo!")
+                return True
+            else:
+                print(f"✗ Errore nell'invio del file Telegram: {result.get('description')}")
+                return False
+    except Exception as e:
+        print(f"✗ Eccezione durante l'invio del file Telegram: {str(e)}")
+        return False
+
+def send_email(sender_email, sender_password, recipient_email, subject, body, attachment_path=None):
+    """
+    Invia un'email con Gmail, opzionalmente con un allegato
     """
     try:
         msg = EmailMessage()
@@ -46,6 +77,15 @@ def send_email(sender_email, sender_password, recipient_email, subject, body):
         
         # Per inviare email HTML
         msg.add_alternative(body, subtype='html')
+        
+        # Aggiungi allegato se specificato
+        if attachment_path and os.path.exists(attachment_path):
+            with open(attachment_path, 'rb') as f:
+                file_data = f.read()
+                file_name = os.path.basename(attachment_path)
+            
+            msg.add_attachment(file_data, maintype='text', subtype='markdown', filename=file_name)
+            print(f"Allegato aggiunto: {file_name}")
         
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(sender_email, sender_password)
@@ -212,21 +252,31 @@ def main():
         # Crea il contenuto delle notifiche
         notification_content = create_notification_content(project_info)
         
-        # Invia email
+        # Invia email con README.md allegato
         email_sent = send_email(
             sender_email,
             sender_password,
             recipient_email,
             notification_content['email_subject'],
-            notification_content['email_body']
+            notification_content['email_body'],
+            readme_path  # Aggiungi README.md come allegato
         )
         
-        # Invia messaggio Telegram
+        # Invia messaggio Telegram con le istruzioni
         telegram_sent = send_telegram_message(
             telegram_token,
             telegram_chat_id,
             notification_content['telegram_message']
         )
+        
+        # Invia anche il file README.md completo su Telegram
+        if telegram_sent:
+            send_telegram_file(
+                telegram_token,
+                telegram_chat_id,
+                readme_path,
+                "File README.md da condividere con la nuova AI"
+            )
         
         if email_sent or telegram_sent:
             print("Notifiche inviate con successo!")

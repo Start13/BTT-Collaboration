@@ -1,4 +1,4 @@
-﻿# BlueTrendTeam (BTT) - Documentazione Unificata
+# BlueTrendTeam (BTT) - Documentazione Unificata
 
 > **IMPORTANTE: Nuova Struttura della Documentazione**  
 > Questo file è l'indice principale della documentazione di BlueTrendTeam.  
@@ -15,7 +15,7 @@
 
 **Priorità attuale**: Completare l'implementazione del sistema di collaborazione GitHub e iniziare lo sviluppo del generatore di report per OmniEA.
 
-**Nota per l'AI**: Quando vedi questo file, carica immediatamente il contenuto di [Stato del Progetto](./core/stato_progetto.md) e [Regole Fondamentali](./core/regole_fondamentali.md) per avere il contesto completo. Ricorda che tutte le comunicazioni devono essere in italiano.
+**Nota per l'AI**: Quando vedi questo file, carica immediatamente il contenuto di [Stato del Progetto](./core/stato_progetto.md), [Regole Fondamentali](./core/regole_fondamentali.md) e [AI Windsurf](./core/windsurf_ai.md) per avere il contesto completo. Consulta anche il [Registro delle Decisioni Chiave](./core/decisioni_chiave.md) per comprendere l'evoluzione del progetto. Ricorda che tutte le comunicazioni devono essere in italiano.
 
 ## Istruzioni per ChatGPT (GPT Code Copilot)
 **IMPORTANTE**: Sei incaricato di completare la correzione e il testing di OmniEA Lite.
