@@ -4,10 +4,9 @@
 # Configurazione
 $configPath = "C:\Users\Asus\BTT_Secure\notification_config.json"
 $readmePath = "C:\Users\Asus\CascadeProjects\BlueTrendTeam\BBTT\docs\README.md"
-$statusPath = "C:\Users\Asus\CascadeProjects\BlueTrendTeam\BBTT\docs\core\stato_progetto.md"
 
 # Funzione per caricare la configurazione
-function Load-Configuration {
+function Get-NotificationConfiguration {
     if (Test-Path $configPath) {
         try {
             $config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
@@ -77,9 +76,9 @@ function Send-TelegramNotification {
             chat_id = $chatId
             text = $Message
             parse_mode = "HTML"
-        } | ConvertTo-Json
+        }
         
-        Invoke-RestMethod -Uri $uri -Method Post -ContentType "application/json" -Body $body
+        Invoke-RestMethod -Uri $uri -Method Post -ContentType "application/json" -Body ($body | ConvertTo-Json)
         
         Write-Host "Messaggio Telegram inviato con successo" -ForegroundColor Green
         return $true
@@ -93,15 +92,10 @@ function Send-TelegramNotification {
 # Funzione per ottenere informazioni sul progetto
 function Get-ProjectInfo {
     $readmeContent = ""
-    $statusContent = ""
     $currentDateTime = Get-Date -Format "dd MMMM yyyy, HH:mm"
     
     if (Test-Path $readmePath) {
         $readmeContent = Get-Content -Path $readmePath -Raw
-    }
-    
-    if (Test-Path $statusPath) {
-        $statusContent = Get-Content -Path $statusPath -Raw
     }
     
     # Estrai informazioni rilevanti
@@ -125,7 +119,7 @@ function Get-ProjectInfo {
 }
 
 # Funzione per creare il contenuto della notifica
-function Create-NotificationContent {
+function New-NotificationContent {
     param (
         [Parameter(Mandatory=$true)]
         $ProjectInfo
@@ -225,7 +219,7 @@ function Send-BackupNotifications {
     Write-Host "=== Invio notifiche dopo il backup ===" -ForegroundColor Cyan
     
     # Carica la configurazione
-    $config = Load-Configuration
+    $config = Get-NotificationConfiguration
     if ($null -eq $config) {
         Write-Host "Impossibile inviare notifiche: configurazione non valida" -ForegroundColor Red
         return
@@ -235,7 +229,7 @@ function Send-BackupNotifications {
     $projectInfo = Get-ProjectInfo
     
     # Crea il contenuto della notifica
-    $notificationContent = Create-NotificationContent -ProjectInfo $projectInfo
+    $notificationContent = New-NotificationContent -ProjectInfo $projectInfo
     
     # Invia email
     $emailSent = Send-EmailNotification -Subject $notificationContent.EmailSubject -Body $notificationContent.EmailBody -Config $config
