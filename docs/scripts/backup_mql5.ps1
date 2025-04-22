@@ -159,13 +159,19 @@ try {
     Commit-Changes
     
     # Invia notifiche dopo il backup
-    $notificationScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "send_notifications.ps1"
-    if (Test-Path $notificationScript) {
+    $notificationConfigPath = "C:\Users\Asus\BTT_Secure\notification_config.json"
+    if (Test-Path $notificationConfigPath) {
         Write-Host "Invio notifiche via email e Telegram..." -ForegroundColor Cyan
-        & $notificationScript
+        $notificationScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "send_all_notifications.py"
+        if (Test-Path $notificationScript) {
+            python $notificationScript $notificationConfigPath
+        }
+        else {
+            Write-Host "Script di notifica non trovato: $notificationScript" -ForegroundColor Yellow
+        }
     }
     else {
-        Write-Host "Script di notifica non trovato: $notificationScript" -ForegroundColor Yellow
+        Write-Host "File di configurazione delle notifiche non trovato: $notificationConfigPath" -ForegroundColor Yellow
     }
     
     Write-Host "=== Backup MQL5 completato ===" -ForegroundColor Green
