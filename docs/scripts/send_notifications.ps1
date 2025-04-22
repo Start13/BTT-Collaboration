@@ -72,13 +72,14 @@ function Send-TelegramNotification {
         $chatId = $Config.telegram.chat_id
         
         # Salva il messaggio in un file temporaneo
-        $tempMessageFile = [System.IO.Path]::GetTempFileName()
+        $tempMessageFile = Join-Path $env:TEMP "telegram_message_$(Get-Date -Format 'yyyyMMddHHmmss').txt"
         $Message | Out-File -FilePath $tempMessageFile -Encoding utf8
         
         # Usa lo script Python per inviare il messaggio
         $pythonScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "send_telegram_notification.py"
         
         if (Test-Path $pythonScript) {
+            Write-Host "Invio messaggio Telegram usando Python..." -ForegroundColor Cyan
             $result = python $pythonScript $botToken $chatId $tempMessageFile 2>&1
             Write-Host $result
             
