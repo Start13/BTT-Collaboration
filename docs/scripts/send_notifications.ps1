@@ -71,17 +71,23 @@ function Send-TelegramNotification {
         $botToken = $Config.telegram.bot_token
         $chatId = $Config.telegram.chat_id
         
+        # Utilizziamo il metodo sendMessage con parametri semplici
         $uri = "https://api.telegram.org/bot$botToken/sendMessage"
-        $body = @{
+        $params = @{
             chat_id = $chatId
             text = $Message
-            parse_mode = "HTML"
         }
         
-        Invoke-RestMethod -Uri $uri -Method Post -ContentType "application/json" -Body ($body | ConvertTo-Json)
+        $response = Invoke-RestMethod -Uri $uri -Method Post -Body $params
         
-        Write-Host "Messaggio Telegram inviato con successo" -ForegroundColor Green
-        return $true
+        if ($response.ok) {
+            Write-Host "Messaggio Telegram inviato con successo" -ForegroundColor Green
+            return $true
+        }
+        else {
+            Write-Host "Errore durante l'invio del messaggio Telegram: $($response.description)" -ForegroundColor Red
+            return $false
+        }
     }
     catch {
         Write-Host "Errore durante l'invio del messaggio Telegram: $_" -ForegroundColor Red
