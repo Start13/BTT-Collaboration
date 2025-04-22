@@ -71,21 +71,33 @@ function Send-TelegramNotification {
         $botToken = $Config.telegram.bot_token
         $chatId = $Config.telegram.chat_id
         
-        # Utilizziamo il metodo sendMessage con parametri semplici
-        $uri = "https://api.telegram.org/bot$botToken/sendMessage"
-        $params = @{
-            chat_id = $chatId
-            text = $Message
-        }
+        # Salva il messaggio in un file temporaneo
+        $tempMessageFile = [System.IO.Path]::GetTempFileName()
+        $Message | Out-File -FilePath $tempMessageFile -Encoding utf8
         
-        $response = Invoke-RestMethod -Uri $uri -Method Post -Body $params
+        # Usa lo script Python per inviare il messaggio
+        $pythonScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "send_telegram_notification.py"
         
-        if ($response.ok) {
-            Write-Host "Messaggio Telegram inviato con successo" -ForegroundColor Green
-            return $true
+        if (Test-Path $pythonScript) {
+            $result = python $pythonScript $botToken $chatId $tempMessageFile 2>&1
+            Write-Host $result
+            
+            # Elimina il file temporaneo
+            if (Test-Path $tempMessageFile) {
+                Remove-Item -Path $tempMessageFile -Force
+            }
+            
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "Messaggio Telegram inviato con successo" -ForegroundColor Green
+                return $true
+            }
+            else {
+                Write-Host "Errore durante l'invio del messaggio Telegram" -ForegroundColor Red
+                return $false
+            }
         }
         else {
-            Write-Host "Errore durante l'invio del messaggio Telegram: $($response.description)" -ForegroundColor Red
+            Write-Host "Script Python per l'invio di messaggi Telegram non trovato: $pythonScript" -ForegroundColor Red
             return $false
         }
     }
