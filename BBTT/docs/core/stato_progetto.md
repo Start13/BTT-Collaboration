@@ -49,6 +49,9 @@
 - Riorganizzazione della documentazione in una struttura modulare
 
 ## Prossimi Task Pianificati
+- Completare la correzione e il testing di OmniEA Lite
+- Verifica della compatibilità con diversi timeframe e simboli
+- Test completo delle funzionalità di base in ambiente live
 - Implementazione dettagliata del sistema di etichette "Buff XX" per l'identificazione visiva dei buffer
 - Sviluppo del sistema di gestione preset multipli con formato JSON
 - Ottimizzazione delle performance con implementazione del caching intelligente
