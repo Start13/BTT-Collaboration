@@ -1,0 +1,134 @@
+TEST UNICO DI RIPARTENZA - TRENDMASTERPRO MT5
+
+1. CONTESTO ATTUALE
+
+Problema principale: Trendline non visibili sul grafico MT5 nonostante compilazione corretta
+
+Ultime modifiche testate:
+
+Aumento LeftBars a 24
+
+Riduzione MinSlopeAngle a 5°
+
+Aggiunta debug prints per valori slope
+
+Risultati: Slope calcolati correttamente ma nessuna visualizzazione grafica
+
+2. CODICE BASE
+
+mql5
+Copy
+// PARAMETRI (DA MODIFICARE PER TEST)
+input int LeftBars = 12;                   // Attualmente testato con 24
+input int RightBars = 3;                   // Mantenuto 3
+input double MinSlopeAngle = 15.0;         // Testato anche con 5.0
+
+// FUNZIONE PRINCIPALE DI DISEGNO
+void CalculateAndDrawTrendLines() {
+    double high[], low[];
+    ArraySetAsSeries(high, true);
+    ArraySetAsSeries(low, true);
+    
+    if(CopyHigh(_Symbol,_Period,0,LeftBars+RightBars,high)<=0 || 
+       CopyLow(_Symbol,_Period,0,LeftBars+RightBars,low)<=0) {
+        Print("Errore copia dati: ",GetLastError());
+        return;
+    }
+
+    int maxLeftIdx = ArrayMaximum(high,RightBars,LeftBars);
+    int maxRightIdx = ArrayMaximum(high,0,RightBars);
+    
+    double slope = (high[maxRightIdx]-high[maxLeftIdx])/(maxRightIdx-maxLeftIdx);
+    double angleFilter = tan(MinSlopeAngle*M_PI/180.0);
+    
+    if(MathAbs(slope) >= angleFilter) {
+        datetime t1 = iTime(_Symbol,_Period,maxLeftIdx);
+        datetime t2 = iTime(_Symbol,_Period,maxRightIdx);
+        ObjectMove(0,"TL_Resistance",0,t1,high[maxLeftIdx]);
+        ObjectMove(0,"TL_Resistance",1,t2,high[maxRightIdx]);
+        ObjectSetInteger(0,"TL_Resistance",OBJPROP_HIDDEN,false);
+        currentResistance = high[maxRightIdx];
+    }
+}
+3. PUNTI CRITICI DA VERIFICARE
+
+Controllo oggetti grafici:
+
+mql5
+Copy
+if(ObjectFind(0,"TL_Resistance")<0) Print("Oggetto non trovato!");
+else Print("Oggetto trovato ma non visibile");
+Verifica proprietà grafiche:
+
+mql5
+Copy
+ObjectSetInteger(0,"TL_Resistance",OBJPROP_COLOR,clrRed);
+ObjectSetInteger(0,"TL_Resistance",OBJPROP_WIDTH,2);
+4. DEBUG ATTIVO
+
+mql5
+Copy
+void OnTick() {
+    static int tickCount = 0;
+    if(tickCount++ % 100 == 0) { // Log ogni 100 tick
+        Print("Ultimo high: ", high[0], " | Slope: ", slope);
+        Print("Visibility: ", ObjectGetInteger(0,"TL_Resistance",OBJPROP_HIDDEN));
+    }
+    // ... resto del codice
+}
+5. CHECKLIST DI RIPARTO
+
+Verificato che LeftBars > RightBars
+
+Controllato valori slope nel Journal (Ctrl+T)
+
+Testato su timeframe H1 (non solo M15)
+
+Verificato colori e spessore trendline
+
+Controllato errori in Experts tab
+
+6. PROSSIMI TEST PROPOSTI
+
+Test forzato:
+
+mql5
+Copy
+// Da inserire in OnInit()
+ObjectCreate(0,"TEST_LINE",OBJ_TREND,0,0,0);
+ObjectMove(0,"TEST_LINE",0,TimeCurrent(),1.1000);
+ObjectMove(0,"TEST_LINE",1,TimeCurrent()+3600,1.1050);
+Versione semplificata:
+
+mql5
+Copy
+void DrawTestLine() {
+    datetime now = TimeCurrent();
+    ObjectCreate(0,"MANUAL_TL",OBJ_TREND,0,now,Bid,now+3600,Bid+0.0050);
+    ObjectSetInteger(0,"MANUAL_TL",OBJPROP_COLOR,clrBlue);
+}
+7. DATI DI CONTESTO SALVATI
+
+Timeframe testati: M15, H1
+
+Simbolo: EURUSD
+
+Ultimo errore registrato: ERR_OBJECT_NOT_FOUND (-4401)
+
+Build MetaTrader: 5.0.0.2361
+
+8. RACCOMANDAZIONI PER NUOVA CHAT
+
+Inviare:
+
+Output completo della scheda Experts
+
+Screenshot della finestra "Oggetti" (Ctrl+B)
+
+Eventuali modifiche al codice testate
+
+Specificare:
+
+Timeframe esatti dove il problema si manifesta
+
+Se il problema è persistente su diversi simboli

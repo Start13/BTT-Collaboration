@@ -1,0 +1,3 @@
+@echo off
+echo Avvio sincronizzazione MQL5 con GitHub...
+PowerShell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "%~dp0auto_sync_github.ps1"

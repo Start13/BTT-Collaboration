@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniEA Lite Panel Preview</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .panel {
+            width: 700px;
+            background-color: #2a2a2e;
+            color: #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .panel-header {
+            background-color: #3867d6;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #5c5c5c;
+        }
+        
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .panel-buttons {
+            display: flex;
+        }
+        
+        .panel-button {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .minimize {
+            background-color: #f7b731;
+        }
+        
+        .close {
+            background-color: #eb3b5a;
+        }
+        
+        .panel-section {
+            padding: 10px;
+            border-bottom: 1px solid #3a3a3d;
+        }
+        
+        .instruments {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .instruments-list {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .instrument {
+            background-color: #3a3a3d;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .instrument.active {
+            background-color: #3867d6;
+        }
+        
+        .instrument.add {
+            background-color: #20bf6b;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+        
+        .market-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #20bf6b;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #a5b1c2;
+            text-align: center;
+        }
+        
+        .drag-drop-area {
+            background-color: #1e1e20;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .signals-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .signal-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .signal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #a5b1c2;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .signal-slot {
+            background-color: #3a3a3d;
+            border: 1px dashed #5c5c5c;
+            padding: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #a5b1c2;
+        }
+        
+        .signal-slot.filled {
+            background-color: #3867d6;
+            border: 1px solid #4b6584;
+            color: white;
+        }
+        
+        .logic-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .logic-button {
+            background-color: #3a3a3d;
+            border: 1px solid #5c5c5c;
+            color: #e0e0e0;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .logic-button.active {
+            background-color: #3867d6;
+            border-color: #a5b1c2;
+        }
+        
+        .params-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .param-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .param-label {
+            font-size: 13px;
+            color: #a5b1c2;
+            min-width: 100px;
+        }
+        
+        .param-input {
+            background-color: #3a3a3d;
+            border: 1px solid #5c5c5c;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 3px;
+            width: 60px;
+            text-align: right;
+        }
+        
+        .param-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        
+        .param-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3a3a3d;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #20bf6b;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .stat-item {
+            background-color: #3a3a3d;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #a5b1c2;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        
+        .action-button {
+            background-color: #3867d6;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .action-button.start {
+            background-color: #20bf6b;
+        }
+        
+        .action-button.stop {
+            background-color: #eb3b5a;
+        }
+        
+        .action-button.settings {
+            background-color: #3c6382;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <div class="panel-title">OMNIEA LITE v1.0 by BTT</div>
+            <div class="panel-buttons">
+                <div class="panel-button minimize"></div>
+                <div class="panel-button close"></div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="instruments">
+                <div class="instruments-list">
+                    <div class="instrument active">EURUSD</div>
+                    <div class="instrument">GBPUSD</div>
+                    <div class="instrument">USDJPY</div>
+                    <div class="instrument">XAUUSD</div>
+                    <div class="instrument add">+</div>
+                </div>
+                <div class="market-status">
+                    <div>
+                        <span class="status-indicator"></span>
+                        Mercato: APERTO
+                    </div>
+                    <div>
+                        Spread: 0.5
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="section-title">INDICATORI DRAG & DROP</div>
+            <div class="drag-drop-area">
+                <div class="signals-container">
+                    <div class="signal-column">
+                        <div class="signal-title">BUY SIGNALS</div>
+                        <div class="signal-slot filled">
+                            Moving Average Cross
+                        </div>
+                        <div class="signal-slot">
+                            Trascina qui un indicatore
+                        </div>
+                        <div class="signal-slot">
+                            Trascina qui un indicatore
+                        </div>
+                        <div class="logic-buttons">
+                            <div class="logic-button active">AND</div>
+                            <div class="logic-button">OR</div>
+                        </div>
+                    </div>
+                    
+                    <div class="signal-column">
+                        <div class="signal-title">SELL SIGNALS</div>
+                        <div class="signal-slot">
+                            Trascina qui un indicatore
+                        </div>
+                        <div class="signal-slot">
+                            Trascina qui un indicatore
+                        </div>
+                        <div class="signal-slot">
+                            Trascina qui un indicatore
+                        </div>
+                        <div class="logic-buttons">
+                            <div class="logic-button active">AND</div>
+                            <div class="logic-button">OR</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-title" style="margin-top: 15px;">FILTRI</div>
+                <div class="signals-container">
+                    <div class="signal-slot">
+                        Trascina qui un filtro
+                    </div>
+                    <div class="signal-slot">
+                        Trascina qui un filtro
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="section-title">PARAMETRI DI TRADING</div>
+            <div class="params-grid">
+                <div class="param-group">
+                    <span class="param-label">Rischio:</span>
+                    <input type="text" class="param-input" value="1%">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Lotti:</span>
+                    <input type="text" class="param-input" value="Auto">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Take Profit:</span>
+                    <input type="text" class="param-input" value="30">
+                    <span>pips</span>
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Stop Loss:</span>
+                    <input type="text" class="param-input" value="20">
+                    <span>pips</span>
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Trailing Stop:</span>
+                    <label class="param-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="param-group">
+                    <span class="param-label">News Filter:</span>
+                    <label class="param-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="section-title">STATISTICHE</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Operazioni</div>
+                    <div class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Vincenti</div>
+                    <div class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Perdenti</div>
+                    <div class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Profitto</div>
+                    <div class="stat-value">0.00€</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Drawdown</div>
+                    <div class="stat-value">0.00%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Win Rate</div>
+                    <div class="stat-value">0.00%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="action-buttons">
+                <button class="action-button start">INIZIA</button>
+                <button class="action-button stop">FERMA</button>
+                <button class="action-button settings">IMPOSTAZIONI</button>
+                <button class="action-button">AIUTO</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -63,3 +63,61 @@ Aggiungere questa sezione dopo la sezione dei percorsi di lavoro:
    - Compilazione di prova degli Expert Advisor
    - Generazione automatica della documentazione
 ```
+
+## Nuova Sezione: Procedura di Backup Automatico
+
+```markdown
+## Procedura di Backup Automatico
+
+### Quando Eseguire il Backup
+- Quando l'utente saluta a fine lavori (es. "a domani", "ciao", "arrivederci")
+- Ogni ora di lavoro continuativo
+- Quando si cambia chat
+- Quando si cambia AI
+
+### Configurazione
+- **Script di Backup**: `C:\Users\Asus\CascadeProjects\BlueTrendTeam\send_backup.py`
+- **Comando**: `cd C:\Users\Asus\CascadeProjects\BlueTrendTeam; python send_backup.py`
+
+### Credenziali
+- **Telegram Token**: `7643660310:AAFTOpU5Q2SEVyHaWnpESZ65KkGeYUyVFwk`
+- **Telegram Chat ID**: `271416564`
+- **Email Sender**: `corbruniminer1@gmail.com`
+- **Email Password**: `pxlk yyjh vofe dvua`
+- **Email Receiver**: `corbruni@gmail.com`
+
+### Formato del Messaggio di Backup
+```
+# BlueTrendTeam - Backup Completato
+
+📅 Data e ora: [DATA ATTUALE]
+
+📊 Stato attuale: [STATO DEL PROGETTO]
+
+🔄 Prossima attività: [PROSSIMA ATTIVITÀ]
+
+Istruzioni per Continuare il Lavoro:
+
+Per iniziare una nuova chat:
+1. Carica il file README.md nella nuova chat
+2. Segui le istruzioni nel README
+
+Se continui con un'altra AI:
+1. Carica lo stesso file README.md
+2. L'AI troverà tutte le istruzioni necessarie
+
+Se AI Windsurf finisce i token:
+1. La supervisione passa ad un'altra AI oppure
+2. Procedi senza supervisione
+
+IMPORTANTE: Tutti i file sono stati salvati in modo sicuro su GitHub.
+```
+
+### Implementazione
+Lo script Python `send_backup.py` implementa questa procedura di backup e deve essere eseguito nei seguenti casi:
+1. Quando l'utente dice "a domani" o termina una sessione
+2. Ogni ora di lavoro continuativo
+3. Quando si cambia chat
+4. Quando si cambia AI
+
+Questo garantisce che il backup sia sempre aggiornato e disponibile per tutte le AI che lavorano sul progetto.

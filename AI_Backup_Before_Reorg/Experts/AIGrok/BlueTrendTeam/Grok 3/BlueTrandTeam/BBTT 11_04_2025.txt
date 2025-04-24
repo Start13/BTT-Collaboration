@@ -1,0 +1,138 @@
+Riepilogo BBTT Aggiornato
+Panoramica Generale
+Il progetto BBTT è un Expert Advisor (EA) per MetaTrader 5, denominato OmniEA_11_04_2025.mq5, che utilizza un file di supporto BTT_Panels_11_04_2025.mqh per gestire un pannello grafico interattivo. Il pannello consente agli utenti di configurare indicatori tecnici per segnali di acquisto (Signal Buy), segnali di vendita (Signal Sell) e filtri, utilizzando una funzionalità di drag & drop per assegnare indicatori agli slot. Il pannello supporta anche la gestione del rischio, trailing stop, break-even, e altre impostazioni di trading.
+
+File Principali:
+OmniEA_11_04_2025.mq5: EA principale che include il file di supporto e gestisce gli eventi principali (OnInit(), OnTick(), OnChartEvent()).
+BTT_Panels_11_04_2025.mqh: File di supporto che contiene la logica per il pannello grafico, la gestione degli slot degli indicatori, e le funzionalità di drag & drop.
+Stato Attuale:
+Il codice è funzionante e privo di errori di compilazione.
+Le funzionalità principali del pannello grande e del drag & drop sono implementate e testate.
+Alcune funzionalità (es. logica per i pulsanti "And/Or", "Opzione ind", "Valore opzione") sono ancora in fase di sviluppo (segnalate con TODO).
+Funzioni del Pannello Grande (DrawBigPanel())
+La funzione DrawBigPanel() è responsabile della creazione del pannello grafico interattivo nella modalità "Large". Il pannello è organizzato in diverse sezioni, ognuna con etichette, pulsanti e campi di input per configurare il trading.
+
+Descrizione:
+Disegna un pannello rettangolare di dimensioni 700x400 pixel, posizionato a (10, 10) sul grafico.
+Include una barra del titolo con pulsanti per minimizzare e chiudere il pannello.
+È suddiviso in quattro sezioni principali:
+Sezione Informazioni: Mostra informazioni sul broker, conto, saldo, stato del mercato, spread, e altre impostazioni di trading (es. TP, SL, trailing stop, break-even, rischio).
+Sezione Signal Buy: Contiene 3 slot per assegnare indicatori di acquisto, con pulsanti per il drag & drop e pulsanti aggiuntivi ("And/Or", "Opzione ind", "Valore opzione").
+Sezione Signal Sell: Contiene 3 slot per assegnare indicatori di vendita, con la stessa struttura della sezione Signal Buy.
+Sezione Filtri: Contiene 2 slot per assegnare filtri, con la stessa struttura delle sezioni precedenti.
+Dettagli Tecnici:
+Sfondo e Barra del Titolo:
+Sfondo: Rettangolo (PanelBackground) con bordo dinamico (verde se il mercato è aperto, rosso se chiuso).
+Barra del titolo: Rettangolo (TitleBar) con etichetta "OMNIEA LITE v1.0 by BTT" e pulsanti "Minimize" (-) e "Close" (X).
+Sezione Informazioni:
+Contiene etichette statiche (es. "Broker", "Account", "Balance") e valori placeholder (es. "XXXX").
+Include campi di input editabili per:
+RiskPercentInput: Percentuale di rischio (valore corrente: risk_percent).
+TsInput: Trailing stop (valore corrente: trailing_stop).
+BEInput: Break-even (valore corrente: break_even).
+I campi di input cambiano colore (verde se il valore è valido, rosso se non lo è).
+Sezioni Signal Buy, Signal Sell, Filtri:
+Ogni slot è rappresentato da un pulsante (es. SignalBuy_Slot_0) che mostra il nome dell'indicatore assegnato o "Add Indicator" se vuoto.
+Il colore del pulsante varia in base allo stato:
+clrLightGray: Slot vuoto.
+clrGreen: Indicatore assegnato.
+clrYellow/clrWhite: Lampeggio durante il drag & drop.
+Ogni slot ha pulsanti aggiuntivi:
+"And/Or": Per configurare la logica tra indicatori (non implementato).
+"Opzione ind": Per selezionare opzioni dell'indicatore (non implementato).
+"Valore opzione": Per impostare valori specifici (non implementato).
+Stato:
+La funzione è completa e disegna correttamente il pannello.
+I valori delle etichette nella sezione Informazioni sono ancora placeholder (es. "XXXX") e devono essere aggiornati con dati reali (es. saldo del conto, spread attuale).
+I pulsanti "And/Or", "Opzione ind", e "Valore opzione" sono presenti ma non funzionali (segnalati con TODO).
+Funzioni dei Pulsanti Drag & Drop
+Le funzionalità di drag & drop consentono agli utenti di assegnare indicatori agli slot trascinandoli dal Navigator al grafico. Questo processo è gestito principalmente da tre funzioni: OnSlotClick(), CheckForNewIndicators(), e UpdatePanel().
+
+Funzione OnSlotClick(string section, int slot_index):
+Descrizione:
+Gestisce il clic su un pulsante di uno slot (es. SignalBuy_Slot_0).
+Ha tre comportamenti principali:
+Se lo slot ha un indicatore assegnato:
+Mostra un messaggio di conferma per rimuovere l'indicatore.
+Se confermato, rimuove l'indicatore dal grafico, resetta lo slot a "Add Indicator", e aggiorna il colore a clrLightGray.
+Se lo slot è in modalità assegnazione:
+Annulla la modalità assegnazione, resetta lo slot a "Add Indicator", e aggiorna il colore a clrLightGray.
+Se lo slot è vuoto:
+Mostra un avviso (opzionale) che istruisce l'utente a trascinare un indicatore.
+Avvia la modalità assegnazione:
+Imposta un timer di 10 secondi (countdown).
+Cambia il colore del pulsante a clrYellow e avvia il lampeggio.
+Aggiorna il testo del pulsante a "Drag ind\nTime: 10s".
+Registra gli indicatori preesistenti per lo slot (RecordInitialIndicatorsForSlot()).
+Imposta active_section e active_slot per tracciare lo slot attivo.
+Dettagli Tecnici:
+Usa MessageBox() per mostrare avvisi e conferme.
+Aggiorna le proprietà grafiche del pulsante (testo, colore, dimensione del font) usando ObjectSetString() e ObjectSetInteger().
+Salva la configurazione dopo ogni modifica (SaveIndicatorSlots()).
+Stato:
+Funzione completa e funzionante.
+L'avviso per il drag & drop può essere disattivato dall'utente.
+Funzione CheckForNewIndicators():
+Descrizione:
+Controlla se un nuovo indicatore è stato aggiunto al grafico durante la modalità drag & drop.
+Esegue una serie di controlli prima di assegnare l'indicatore allo slot:
+Indicatori preesistenti globali: Ignora gli indicatori già presenti sul grafico all'avvio dell'EA (elencati in existing_indicators).
+Indicatori preesistenti per lo slot: Ignora gli indicatori già presenti nello slot prima dell'assegnazione (IsNewIndicator()).
+Ultimo indicatore rimosso: Ignora l'indicatore se è stato appena rimosso (last_removed_indicator).
+Buffer validi: Verifica che l'indicatore abbia almeno un buffer valido (DetectBufferCount()).
+Tempi di caricamento: Controlla che l'indicatore non sia troppo lento (tempo di caricamento < 500ms).
+Indicatori duplicati: Verifica che l'indicatore non sia già assegnato a un altro slot (unique_id).
+Se tutti i controlli sono superati, assegna l'indicatore allo slot:
+Aggiorna il nome, handle, numero di buffer, e ID univoco dello slot.
+Cambia il colore del pulsante a clrGreen.
+Mostra temporaneamente il nome dell'indicatore per 2 secondi (show_name_temp).
+Salva la configurazione (SaveIndicatorSlots()).
+Resetta active_section e active_slot.
+Dettagli Tecnici:
+Usa ChartIndicatorsTotal() e ChartIndicatorName() per rilevare gli indicatori sul grafico.
+Usa CopyBuffer() per testare i buffer e misurare i tempi di caricamento.
+Gestisce gli slot in modo sicuro usando una variabile temporanea (temp_slot) per evitare problemi di compilazione.
+Stato:
+Funzione completa e funzionante.
+Include controlli robusti per evitare assegnazioni errate o indicatori problematici.
+Funzione UpdatePanel():
+Descrizione:
+Aggiorna lo stato del pannello a ogni tick (con un limite di 100ms tra gli aggiornamenti).
+Gestisce il timer e il lampeggio dei pulsanti durante il drag & drop:
+Aggiorna il countdown e il testo del pulsante (es. "Drag ind\nTime: 8s").
+Cambia il colore del pulsante alternando tra clrYellow e clrWhite (blink_colors).
+Se il timer scade (countdown ≤ 0), annulla la modalità assegnazione e resetta lo slot.
+Chiama CheckForNewIndicators() per rilevare nuovi indicatori.
+Gestisce la visualizzazione temporanea del nome dell'indicatore (2 secondi dopo l'assegnazione).
+Dettagli Tecnici:
+Usa GetTickCount() per gestire i timer.
+Aggiorna dinamicamente le proprietà grafiche dei pulsanti.
+Salva la configurazione se ci sono cambiamenti (SaveIndicatorSlots()).
+Stato:
+Funzione completa e funzionante.
+Garantisce un aggiornamento fluido del pannello senza sovraccaricare il sistema.
+Stato Generale del Drag & Drop:
+La funzionalità è completamente implementata e testata.
+Supporta l'assegnazione di indicatori a 3 slot Signal Buy, 3 slot Signal Sell, e 2 slot Filtri.
+Include effetti visivi (lampeggio, cambio colore) per migliorare l'esperienza utente.
+Gestisce casi limite (es. indicatori lenti, buffer non validi, duplicati) con messaggi di errore appropriati.
+Altre Funzioni Rilevanti
+Funzione RemoveIndicatorFromChart():
+Rimuove un indicatore dal grafico e aggiorna lo slot.
+Include un effetto visivo (lampeggio arancione) per indicare la rimozione.
+Funzione CheckForRemovedIndicators():
+Controlla se gli indicatori assegnati sono stati rimossi manualmente dal grafico e aggiorna gli slot di conseguenza.
+Funzione HandlePanelChartEvent():
+Gestisce gli eventi del grafico, inclusi i clic sui pulsanti di drag & drop e le modifiche ai campi di input (es. RiskPercentInput).
+Prossimi Passi
+Implementazione dei Pulsanti "And/Or", "Opzione ind", "Valore opzione":
+Aggiungere la logica per configurare la logica tra indicatori (es. AND/OR).
+Implementare la selezione delle opzioni dell'indicatore e l'impostazione dei valori.
+Aggiornamento dei Dati nella Sezione Informazioni:
+Sostituire i valori placeholder (es. "XXXX") con dati reali (es. saldo del conto, spread attuale).
+Suddivisione del Codice:
+Come discusso in precedenza, il file BTT_Panels_11_04_2025.mqh è lungo (~600 righe). Si potrebbe dividere in:
+BTT_IndicatorSlots.mqh: Per la gestione degli slot e degli indicatori.
+BTT_UIUtils.mqh: Per le funzioni di creazione degli elementi UI.
+Documentazione:
+Completare la documentazione (es. PDF) con una descrizione dettagliata delle funzionalità e delle istruzioni per l'utente.

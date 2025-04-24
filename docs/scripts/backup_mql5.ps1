@@ -1,12 +1,10 @@
 # Script per il backup automatico dei file MQL5 su GitHub
-# Versione 1.0 - 22 aprile 2025
+# Versione 2.0 - 23 aprile 2025
 
 # Configurazione
 $mql5Path = "C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5"
 $backupRepoPath = "C:\Users\Asus\CascadeProjects\MQL5-Backup"
-$tokenPath = "C:\Users\Asus\BTT_Secure\github_token.txt"
-$repoName = "MQL5-Backup"
-$githubUser = "Start13"
+$configPath = "C:\Users\Asus\BTT_Secure\github_config.json"
 
 # Funzione per creare il repository di backup se non esiste
 function Initialize-BackupRepo {
@@ -47,40 +45,13 @@ Questo repository contiene:
 
 # File di configurazione personali
 terminal.ini
+config.json
+**/notification_config.json
+**/github_config.json
 "@ | Out-File -FilePath "$backupRepoPath\.gitignore" -Encoding utf8
         
         git add .
         git commit -m "Inizializzazione del repository di backup MQL5"
-        
-        # Creazione del repository su GitHub
-        if (Test-Path $tokenPath) {
-            $token = Get-Content -Path $tokenPath
-            $headers = @{
-                Authorization = "token $token"
-                Accept = "application/vnd.github.v3+json"
-            }
-            
-            $body = @{
-                name = $repoName
-                description = "Backup automatico dei file MQL5 per BlueTrendTeam"
-                private = $false
-                auto_init = $false
-            } | ConvertTo-Json
-            
-            try {
-                $response = Invoke-RestMethod -Uri "https://api.github.com/user/repos" -Method Post -Headers $headers -Body $body -ContentType "application/json"
-                Write-Host "Repository creato con successo: $($response.html_url)"
-                
-                git remote add origin "https://x-access-token:$token@github.com/$githubUser/$repoName.git"
-                git push -u origin master
-            }
-            catch {
-                Write-Host "Errore durante la creazione del repository: $_"
-            }
-        }
-        else {
-            Write-Host "Token GitHub non trovato. Impossibile creare il repository remoto."
-        }
     }
     else {
         Write-Host "Repository di backup già esistente."
@@ -125,7 +96,7 @@ function Sync-MQL5Files {
 }
 
 # Funzione per eseguire commit e push
-function Commit-Changes {
+function Submit-Changes {
     Write-Host "Esecuzione del commit e push delle modifiche..."
     
     Set-Location $backupRepoPath
@@ -136,14 +107,18 @@ function Commit-Changes {
         git add .
         git commit -m "Backup automatico MQL5: $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
         
-        if (Test-Path $tokenPath) {
-            $token = Get-Content -Path $tokenPath
+        if (Test-Path $configPath) {
+            $config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
+            $token = $config.token
+            $githubUser = $config.githubUser
+            $repoName = $config.repoName
+            
             git remote set-url origin "https://x-access-token:$token@github.com/$githubUser/$repoName.git"
             git push
             Write-Host "Backup completato con successo!"
         }
         else {
-            Write-Host "Token GitHub non trovato. Impossibile eseguire il push."
+            Write-Host "File di configurazione non trovato. Impossibile eseguire il push."
         }
     }
     else {
@@ -152,11 +127,20 @@ function Commit-Changes {
 }
 
 # Esecuzione principale
+param(
+    [switch]$LocalOnly
+)
+
 try {
     Write-Host "=== Avvio del backup MQL5 ===" -ForegroundColor Green
     Initialize-BackupRepo
     Sync-MQL5Files
-    Commit-Changes
+    
+    if (-not $LocalOnly) {
+        Submit-Changes
+    } else {
+        Write-Host "Modalità backup locale attivata. Skip del push su GitHub." -ForegroundColor Yellow
+    }
     
     # Invia notifiche dopo il backup
     $notificationConfigPath = "C:\Users\Asus\BTT_Secure\notification_config.json"

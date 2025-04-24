@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniEA Complete Panel Preview</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .panel {
+            width: 900px;
+            background-color: #2a2a2e;
+            color: #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .panel-header {
+            background-color: #4b6584;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #5c5c5c;
+        }
+        
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .panel-buttons {
+            display: flex;
+        }
+        
+        .panel-button {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .minimize {
+            background-color: #f7b731;
+        }
+        
+        .close {
+            background-color: #eb3b5a;
+        }
+        
+        .panel-tabs {
+            display: flex;
+            background-color: #3a3a3d;
+            border-bottom: 1px solid #5c5c5c;
+        }
+        
+        .panel-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            border-right: 1px solid #5c5c5c;
+        }
+        
+        .panel-tab.active {
+            background-color: #4b6584;
+            color: white;
+        }
+        
+        .panel-section {
+            padding: 15px;
+            border-bottom: 1px solid #3a3a3d;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #a5b1c2;
+            border-bottom: 1px solid #4b6584;
+            padding-bottom: 5px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            background-color: #3a3a3d;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .info-label {
+            color: #a5b1c2;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .info-value {
+            font-weight: bold;
+            color: white;
+        }
+        
+        .signals-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .signal-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .signal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #a5b1c2;
+        }
+        
+        .signal-add-button {
+            background-color: #20bf6b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .signal-add-button:hover {
+            background-color: #0fb25a;
+        }
+        
+        .signal-slots {
+            background-color: #1e1e20;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        .signal-slot {
+            background-color: #3a3a3d;
+            border: 1px solid #5c5c5c;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .signal-slot.filled {
+            background-color: #3867d6;
+            border-color: #4b6584;
+        }
+        
+        .signal-slot.waiting {
+            background-color: #f7b731;
+            border-color: #f7b731;
+            color: #2a2a2e;
+        }
+        
+        .signal-slot.error {
+            background-color: #eb3b5a;
+            border-color: #eb3b5a;
+        }
+        
+        .slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .slot-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .slot-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .slot-action {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background-color: #2a2a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .slot-action.remove {
+            background-color: #eb3b5a;
+        }
+        
+        .slot-action.edit {
+            background-color: #f7b731;
+        }
+        
+        .slot-action.settings {
+            background-color: #20bf6b;
+        }
+        
+        .slot-params {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 12px;
+        }
+        
+        .slot-param {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .param-name {
+            color: #a5b1c2;
+        }
+        
+        .param-value {
+            font-weight: bold;
+        }
+        
+        .slot-condition {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #5c5c5c;
+            font-size: 12px;
+        }
+        
+        .condition-label {
+            color: #a5b1c2;
+            margin-bottom: 5px;
+        }
+        
+        .condition-value {
+            background-color: #2a2a2e;
+            padding: 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        .slot-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .slot-status.active {
+            background-color: #20bf6b;
+        }
+        
+        .slot-status.inactive {
+            background-color: #eb3b5a;
+        }
+        
+        .slot-countdown {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            font-size: 12px;
+            color: #f7b731;
+            font-weight: bold;
+        }
+        
+        .logic-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .logic-button {
+            background-color: #3a3a3d;
+            border: 1px solid #5c5c5c;
+            color: #e0e0e0;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .logic-button.active {
+            background-color: #4b6584;
+            border-color: #a5b1c2;
+        }
+        
+        .empty-slot-message {
+            text-align: center;
+            color: #a5b1c2;
+            font-style: italic;
+            padding: 20px;
+            font-size: 12px;
+        }
+        
+        .drag-drop-hint {
+            text-align: center;
+            color: #f7b731;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .filters-section {
+            margin-top: 20px;
+        }
+        
+        .filter-slots {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .trading-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #3a3a3d;
+        }
+        
+        .risk-params {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .param-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .param-label {
+            font-size: 12px;
+            color: #a5b1c2;
+        }
+        
+        .param-input {
+            background-color: #3a3a3d;
+            border: 1px solid #5c5c5c;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 3px;
+            width: 60px;
+            text-align: right;
+            font-size: 12px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background-color: #4b6584;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .action-button.start {
+            background-color: #20bf6b;
+        }
+        
+        .action-button.stop {
+            background-color: #eb3b5a;
+        }
+        
+        .action-button.settings {
+            background-color: #3c6382;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <div class="panel-title">OMNIEA PRO v1.0 by BTT</div>
+            <div class="panel-buttons">
+                <div class="panel-button minimize"></div>
+                <div class="panel-button close"></div>
+            </div>
+        </div>
+        
+        <div class="panel-tabs">
+            <div class="panel-tab active">Trading</div>
+            <div class="panel-tab">Impostazioni</div>
+            <div class="panel-tab">Statistiche</div>
+            <div class="panel-tab">Aiuto</div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Simbolo</span>
+                    <span class="info-value">EURUSD</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Broker</span>
+                    <span class="info-value">RoboForex</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Bilancio</span>
+                    <span class="info-value">10,000€</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Equity</span>
+                    <span class="info-value">10,120€</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Spread</span>
+                    <span class="info-value">0.5 pips</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Stato Mercato</span>
+                    <span class="info-value" style="color: #20bf6b;">APERTO</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Timeframe</span>
+                    <span class="info-value">H1</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Numero Magico</span>
+                    <span class="info-value">123456</span>
+                </div>
+            </div>
+            
+            <div class="signals-container">
+                <div class="signal-column">
+                    <div class="signal-header">
+                        <div class="signal-title">SEGNALI DI ACQUISTO</div>
+                        <button class="signal-add-button">
+                            <span>+</span> Aggiungi Indicatore
+                        </button>
+                    </div>
+                    <div class="signal-slots">
+                        <div class="signal-slot filled">
+                            <div class="slot-status active"></div>
+                            <div class="slot-header">
+                                <div class="slot-title">Moving Average Cross</div>
+                                <div class="slot-actions">
+                                    <div class="slot-action edit">E</div>
+                                    <div class="slot-action settings">S</div>
+                                    <div class="slot-action remove">X</div>
+                                </div>
+                            </div>
+                            <div class="slot-params">
+                                <div class="slot-param">
+                                    <span class="param-name">Periodo MA1:</span>
+                                    <span class="param-value">14</span>
+                                </div>
+                                <div class="slot-param">
+                                    <span class="param-name">Periodo MA2:</span>
+                                    <span class="param-value">28</span>
+                                </div>
+                                <div class="slot-param">
+                                    <span class="param-name">Metodo:</span>
+                                    <span class="param-value">EMA</span>
+                                </div>
+                                <div class="slot-param">
+                                    <span class="param-name">Applicato a:</span>
+                                    <span class="param-value">Close</span>
+                                </div>
+                            </div>
+                            <div class="slot-condition">
+                                <div class="condition-label">Condizione:</div>
+                                <div class="condition-value">MA1 crosses above MA2</div>
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot waiting">
+                            <div class="slot-countdown">15s</div>
+                            <div class="slot-header">
+                                <div class="slot-title">RSI</div>
+                                <div class="slot-actions">
+                                    <div class="slot-action remove">X</div>
+                                </div>
+                            </div>
+                            <div class="empty-slot-message">
+                                In attesa di conferma... (15 secondi rimanenti)
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot">
+                            <div class="slot-header">
+                                <div class="slot-title">Slot Vuoto</div>
+                            </div>
+                            <div class="empty-slot-message">
+                                Trascina qui un indicatore dal grafico o clicca su "Aggiungi Indicatore"
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot">
+                            <div class="slot-header">
+                                <div class="slot-title">Slot Vuoto</div>
+                            </div>
+                            <div class="empty-slot-message">
+                                Trascina qui un indicatore dal grafico o clicca su "Aggiungi Indicatore"
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot">
+                            <div class="slot-header">
+                                <div class="slot-title">Slot Vuoto</div>
+                            </div>
+                            <div class="empty-slot-message">
+                                Trascina qui un indicatore dal grafico o clicca su "Aggiungi Indicatore"
+                            </div>
+                        </div>
+                        
+                        <div class="logic-selector">
+                            <div class="logic-button active">AND</div>
+                            <div class="logic-button">OR</div>
+                            <div class="logic-button">XOR</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="signal-column">
+                    <div class="signal-header">
+                        <div class="signal-title">SEGNALI DI VENDITA</div>
+                        <button class="signal-add-button">
+                            <span>+</span> Aggiungi Indicatore
+                        </button>
+                    </div>
+                    <div class="signal-slots">
+                        <div class="signal-slot error">
+                            <div class="slot-status inactive"></div>
+                            <div class="slot-header">
+                                <div class="slot-title">MACD</div>
+                                <div class="slot-actions">
+                                    <div class="slot-action edit">E</div>
+                                    <div class="slot-action settings">S</div>
+                                    <div class="slot-action remove">X</div>
+                                </div>
+                            </div>
+                            <div class="slot-params">
+                                <div class="slot-param">
+                                    <span class="param-name">Periodo Fast:</span>
+                                    <span class="param-value">12</span>
+                                </div>
+                                <div class="slot-param">
+                                    <span class="param-name">Periodo Slow:</span>
+                                    <span class="param-value">26</span>
+                                </div>
+                                <div class="slot-param">
+                                    <span class="param-name">Segnale:</span>
+                                    <span class="param-value">9</span>
+                                </div>
+                                <div class="slot-param">
+                                    <span class="param-name">Applicato a:</span>
+                                    <span class="param-value">Close</span>
+                                </div>
+                            </div>
+                            <div class="slot-condition">
+                                <div class="condition-label">Errore:</div>
+                                <div class="condition-value">Timeframe non compatibile (H1 vs M5)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot">
+                            <div class="slot-header">
+                                <div class="slot-title">Slot Vuoto</div>
+                            </div>
+                            <div class="empty-slot-message">
+                                Trascina qui un indicatore dal grafico o clicca su "Aggiungi Indicatore"
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot">
+                            <div class="slot-header">
+                                <div class="slot-title">Slot Vuoto</div>
+                            </div>
+                            <div class="empty-slot-message">
+                                Trascina qui un indicatore dal grafico o clicca su "Aggiungi Indicatore"
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot">
+                            <div class="slot-header">
+                                <div class="slot-title">Slot Vuoto</div>
+                            </div>
+                            <div class="empty-slot-message">
+                                Trascina qui un indicatore dal grafico o clicca su "Aggiungi Indicatore"
+                            </div>
+                        </div>
+                        
+                        <div class="signal-slot">
+                            <div class="slot-header">
+                                <div class="slot-title">Slot Vuoto</div>
+                            </div>
+                            <div class="empty-slot-message">
+                                Trascina qui un indicatore dal grafico o clicca su "Aggiungi Indicatore"
+                            </div>
+                        </div>
+                        
+                        <div class="logic-selector">
+                            <div class="logic-button active">AND</div>
+                            <div class="logic-button">OR</div>
+                            <div class="logic-button">XOR</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filters-section">
+                <div class="signal-header">
+                    <div class="signal-title">FILTRI</div>
+                    <button class="signal-add-button">
+                        <span>+</span> Aggiungi Filtro
+                    </button>
+                </div>
+                <div class="filter-slots">
+                    <div class="signal-slot filled">
+                        <div class="slot-status active"></div>
+                        <div class="slot-header">
+                            <div class="slot-title">ATR Filter</div>
+                            <div class="slot-actions">
+                                <div class="slot-action edit">E</div>
+                                <div class="slot-action settings">S</div>
+                                <div class="slot-action remove">X</div>
+                            </div>
+                        </div>
+                        <div class="slot-params">
+                            <div class="slot-param">
+                                <span class="param-name">Periodo:</span>
+                                <span class="param-value">14</span>
+                            </div>
+                            <div class="slot-param">
+                                <span class="param-name">Soglia:</span>
+                                <span class="param-value">0.0020</span>
+                            </div>
+                        </div>
+                        <div class="slot-condition">
+                            <div class="condition-label">Condizione:</div>
+                            <div class="condition-value">ATR > Soglia</div>
+                        </div>
+                    </div>
+                    
+                    <div class="signal-slot">
+                        <div class="slot-header">
+                            <div class="slot-title">Slot Vuoto</div>
+                        </div>
+                        <div class="empty-slot-message">
+                            Trascina qui un indicatore dal grafico o clicca su "Aggiungi Filtro"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trading-controls">
+                <div class="risk-params">
+                    <div class="param-group">
+                        <span class="param-label">Rischio %:</span>
+                        <input type="text" class="param-input" value="1.5">
+                    </div>
+                    <div class="param-group">
+                        <span class="param-label">TP (pips):</span>
+                        <input type="text" class="param-input" value="50">
+                    </div>
+                    <div class="param-group">
+                        <span class="param-label">SL (pips):</span>
+                        <input type="text" class="param-input" value="30">
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-button start">AVVIA TRADING</button>
+                    <button class="action-button stop">STOP</button>
+                    <button class="action-button settings">IMPOSTAZIONI</button>
+                </div>
+            </div>
+            
+            <div class="drag-drop-hint">
+                * Trascina gli indicatori dal grafico direttamente negli slot per aggiungerli
+            </div>
+        </div>
+    </div>
+</body>
+</html>

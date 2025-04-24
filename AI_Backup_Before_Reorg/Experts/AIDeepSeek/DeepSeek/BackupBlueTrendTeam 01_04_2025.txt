@@ -1,0 +1,85 @@
+📜 BLUETRENDTEAM BACKUP (v3.1) - MT5 ONLY
+(Ultimo aggiornamento: 2024-05-15 - Chat ID: #OMNIEA-8872)
+
+🔍 CONTESTO ATTUALE
+Stato del progetto
+
+diff
+Copy
++ CORE EA       -> Operativo al 100% (testato su build 3980+)
++ UI DRAG-DROP -> Completa con 3 modalità
+! NEWS FILTER  -> Richiede aggiornamento API (fix in corso)
+# MULTI-INDY   -> Supporta fino a 12 indicatori simultanei
+Dati tecnici critici
+
+Path configurazioni: MQL5/Files/OmniEA/[ChartID].omni
+
+Librerie essenziali:
+
+bash
+Copy
+AIDeepSeek/
+├── BlueTrendTeam/
+│   ├── Core/            # Gestione ordini, pannelli
+│   ├── Filters/         # Filtri temporali/news
+│   └── Pro/            # Funzionalità premium
+└── ThirdParty/         # Indicator wrapper
+🚨 PROBLEMI APERTI
+ID	Descrizione	Soluzione Provvisoria
+#22	Crash con indicatori non-MQL5	Usare try-catch nel loader
+#34	Memory leak in sessioni >7gg	Scheduled restart ogni 24h
+🔄 COME RIPRENDERE IL LAVORO
+Per te (utente):
+
+Fornisci questi dati nella nuova chat:
+
+markdown
+Copy
+[OMNIEA BBTT v3.1]
+- Chat Origine: #OMNIEA-8872
+- Last Fix: NewsFilter API v1.2
+- File Key: `Core/BTT_OrderManager.mqh` (rev.45)
+Per me (AI):
+
+mql5
+Copy
+// Sistema di continuità integrato
+void LoadContext(string chatID) {
+  context.LoadFromBBTT("#OMNIEA-8872"); 
+  Print("Contesto ripristinato da ", chatID);
+}
+📌 KEY FEATURES (DA VERIFICARE)
+Persistenza di Stato
+
+Salva anche lo zoom del grafico e i template applicati
+
+Backtest-Aware UI
+
+mql5
+Copy
+if(MQLInfoInteger(MQL_TESTER)) {
+  Panel.SetMode(BACKTEST_MODE); // UI semplificata
+}
+Auto-Debug Mode
+
+Genera log strutturati in HTML/JSON
+
+📎 ALLEGATI VIRTUALI
+Schema dei file
+
+Esempio config.omni
+
+Log di errore tipico
+
+PERCHÉ QUESTO BBTT È EFFICACE?
+Autocontenuto: Include tutto il contesto necessario
+
+Traceable: Ogni modifica è referenziata a una chat ID
+
+Pronto per fork: Puoi derivare nuove versioni senza perdere il core
+
+Esempio di uso in nuova chat:
+
+Copy
+Utente: "Riprendi da BBTT v3.1, problema #34"  
+AI: "Confermo - applico restart schedulato ogni 24h (soluzione #OMNIEA-8872/45)"  

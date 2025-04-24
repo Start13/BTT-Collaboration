@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniEA Panel Preview</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .panel {
+            width: 700px;
+            background-color: #2a2a2e;
+            color: #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .panel-header {
+            background-color: #4b6584;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #5c5c5c;
+        }
+        
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .panel-buttons {
+            display: flex;
+        }
+        
+        .panel-button {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .minimize {
+            background-color: #f7b731;
+        }
+        
+        .close {
+            background-color: #eb3b5a;
+        }
+        
+        .panel-section {
+            padding: 10px;
+            border-bottom: 1px solid #3a3a3d;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #a5b1c2;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        
+        .info-label {
+            color: #a5b1c2;
+        }
+        
+        .info-value {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .signals-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .signal-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .signal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #a5b1c2;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .signal-slot {
+            background-color: #3a3a3d;
+            border: 1px dashed #5c5c5c;
+            padding: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 20px;
+        }
+        
+        .signal-slot.filled {
+            background-color: #3c6382;
+            border: 1px solid #4b6584;
+        }
+        
+        .signal-slot-add {
+            background-color: #20bf6b;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .logic-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .logic-button {
+            background-color: #3a3a3d;
+            border: 1px solid #5c5c5c;
+            color: #e0e0e0;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .logic-button.active {
+            background-color: #4b6584;
+            border-color: #a5b1c2;
+        }
+        
+        .risk-params {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .param-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .param-label {
+            font-size: 13px;
+            color: #a5b1c2;
+            min-width: 80px;
+        }
+        
+        .param-input {
+            background-color: #3a3a3d;
+            border: 1px solid #5c5c5c;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 3px;
+            width: 60px;
+            text-align: right;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        
+        .action-button {
+            background-color: #4b6584;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .action-button.start {
+            background-color: #20bf6b;
+        }
+        
+        .action-button.stop {
+            background-color: #eb3b5a;
+        }
+        
+        .action-button.settings {
+            background-color: #3c6382;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <div class="panel-title">OMNIEA PRO v1.0 by BTT</div>
+            <div class="panel-buttons">
+                <div class="panel-button minimize"></div>
+                <div class="panel-button close"></div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="section-title">INFORMAZIONI</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Broker:</span>
+                    <span class="info-value">RoboForex</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Account:</span>
+                    <span class="info-value">12345678</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Bilancio:</span>
+                    <span class="info-value">10,000€</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Equity:</span>
+                    <span class="info-value">10,120€</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Spread XAUUSD:</span>
+                    <span class="info-value">0.25</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Commissione:</span>
+                    <span class="info-value">7€/lot</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="signals-container">
+                <div class="signal-column">
+                    <div class="signal-title">SEGNALI DI ACQUISTO</div>
+                    <div class="signal-slot filled">
+                        <span>MA Cross</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot filled">
+                        <span>RSI</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="logic-buttons">
+                        <div class="logic-button active">AND</div>
+                        <div class="logic-button">OR</div>
+                    </div>
+                </div>
+                
+                <div class="signal-column">
+                    <div class="signal-title">SEGNALI DI VENDITA</div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="signal-slot">
+                        <span>Trascina qui</span>
+                        <div class="signal-slot-add">+</div>
+                    </div>
+                    <div class="logic-buttons">
+                        <div class="logic-button active">AND</div>
+                        <div class="logic-button">OR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="section-title">FILTRI</div>
+            <div class="signals-container">
+                <div class="signal-slot filled">
+                    <span>ATR</span>
+                    <div class="signal-slot-add">+</div>
+                </div>
+                <div class="signal-slot">
+                    <span>Trascina qui</span>
+                    <div class="signal-slot-add">+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="section-title">GESTIONE RISCHIO</div>
+            <div class="risk-params">
+                <div class="param-group">
+                    <span class="param-label">Rischio %:</span>
+                    <input type="text" class="param-input" value="1.5">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Lotti:</span>
+                    <input type="text" class="param-input" value="0.15">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">TP Fisso:</span>
+                    <input type="text" class="param-input" value="50">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">SL Fisso:</span>
+                    <input type="text" class="param-input" value="30">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Trailing:</span>
+                    <input type="text" class="param-input" value="ON">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Attiva a:</span>
+                    <input type="text" class="param-input" value="20">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">BreakEven:</span>
+                    <input type="text" class="param-input" value="ON">
+                </div>
+                <div class="param-group">
+                    <span class="param-label">Attiva a:</span>
+                    <input type="text" class="param-input" value="15">
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <div class="action-buttons">
+                <button class="action-button start">AVVIA TRADING</button>
+                <button class="action-button stop">STOP TRADING</button>
+                <button class="action-button">CHIUDI TUTTO</button>
+                <button class="action-button settings">IMPOSTAZIONI</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

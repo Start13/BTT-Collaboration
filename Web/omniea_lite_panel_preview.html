@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniEA Lite Panel Preview</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .panel {
+            width: 700px;
+            height: 400px;
+            background-color: #2a2a2e;
+            color: #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .panel-header {
+            background-color: #1a5fb4;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #5c5c5c;
+        }
+        
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .panel-buttons {
+            display: flex;
+        }
+        
+        .panel-button {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .minimize {
+            background-color: #f7b731;
+        }
+        
+        .close {
+            background-color: #eb3b5a;
+        }
+        
+        .panel-content {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            gap: 15px;
+        }
+        
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background-color: #353535;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            color: #aaaaaa;
+            font-size: 10px;
+        }
+        
+        .signals-section {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .signals-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .signals-header {
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 3px;
+            text-align: center;
+        }
+        
+        .buy-header {
+            background-color: #26de81;
+            color: #1e272e;
+        }
+        
+        .sell-header {
+            background-color: #fc5c65;
+            color: #1e272e;
+        }
+        
+        .filter-header {
+            background-color: #4b6584;
+        }
+        
+        .signal-slot {
+            height: 40px;
+            border: 1px dashed #5c5c5c;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #353535;
+            cursor: pointer;
+        }
+        
+        .signal-slot.waiting {
+            background-color: #f7b731;
+            color: #1e272e;
+            border: 1px solid #e58e26;
+        }
+        
+        .signal-slot.assigned {
+            background-color: #3c6382;
+            color: #ffffff;
+            border: 1px solid #0a3d62;
+            justify-content: flex-start;
+            padding-left: 10px;
+        }
+        
+        .signal-slot.error {
+            background-color: #eb3b5a;
+            color: #ffffff;
+            border: 1px solid #a71d40;
+        }
+        
+        .countdown {
+            position: absolute;
+            right: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .add-indicator-button {
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: #a5b1c2;
+            color: #1e272e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .risk-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            background-color: #353535;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        
+        .risk-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .risk-label {
+            color: #aaaaaa;
+            font-size: 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .action-button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 3px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .start-button {
+            background-color: #26de81;
+            color: #1e272e;
+        }
+        
+        .stop-button {
+            background-color: #fc5c65;
+            color: #ffffff;
+        }
+        
+        .reset-button {
+            background-color: #4b6584;
+            color: #ffffff;
+        }
+        
+        .config-button {
+            background-color: #a5b1c2;
+            color: #1e272e;
+        }
+        
+        .market-open {
+            color: #26de81;
+            font-weight: bold;
+        }
+        
+        .market-closed {
+            color: #fc5c65;
+            font-weight: bold;
+        }
+        
+        .trading-enabled {
+            color: #26de81;
+            font-weight: bold;
+        }
+        
+        .trading-disabled {
+            color: #fc5c65;
+            font-weight: bold;
+        }
+        
+        .comment {
+            font-size: 10px;
+            color: #a5b1c2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        
+        .mode-live {
+            color: #26de81;
+            font-weight: bold;
+        }
+        
+        .mode-demo {
+            color: #a5b1c2;
+            font-weight: bold;
+        }
+        
+        .time-trading-enabled {
+            color: #26de81;
+            font-weight: bold;
+        }
+        
+        .time-trading-disabled {
+            color: #fc5c65;
+            font-weight: bold;
+        }
+        
+        .news-filter {
+            font-size: 10px;
+            color: #a5b1c2;
+        }
+        
+        .version-lite {
+            color: #a5b1c2;
+            font-weight: bold;
+        }
+        
+        .version-pro {
+            color: #fed330;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <div class="panel-buttons">
+                <div class="panel-button" style="background-color: #fc5c65;"></div>
+                <div class="panel-button" style="background-color: #fed330;"></div>
+                <div class="panel-button" style="background-color: #26de81;"></div>
+            </div>
+            <div class="panel-title">OMNIEA LITE v1.0 by BTT</div>
+            <div style="width: 60px;"></div>
+        </div>
+        
+        <div class="panel-content">
+            <div class="info-section">
+                <div class="info-item">
+                    <div class="info-label">BROKER</div>
+                    <div>IC Markets</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">ACCOUNT</div>
+                    <div>12345678</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">BALANCE</div>
+                    <div>10,000.00 USD</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">MARKET</div>
+                    <div>EURUSD</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">SPREAD</div>
+                    <div>1.2 pips</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">TIME</div>
+                    <div>15:30:45</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">STATO MERCATO</div>
+                    <div class="market-open">Aperto</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">TIME TRADING</div>
+                    <div class="time-trading-enabled">08:00-20:00 Attivo</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">NEWS FILTER</div>
+                    <div class="news-filter">Prima: 1h - Dopo: 30m</div>
+                </div>
+            </div>
+            
+            <div class="signals-section">
+                <div class="signals-column">
+                    <div class="signals-header buy-header">SEGNALI ACQUISTO</div>
+                    <div class="signal-slot">
+                        Trascina qui
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                    <div class="signal-slot waiting">
+                        In attesa...
+                        <div class="countdown">15s</div>
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                    <div class="signal-slot assigned">
+                        MA (Buff 0) > Prezzo
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                </div>
+                
+                <div class="signals-column">
+                    <div class="signals-header sell-header">SEGNALI VENDITA</div>
+                    <div class="signal-slot">
+                        Trascina qui
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                    <div class="signal-slot error">
+                        Errore assegnazione
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                    <div class="signal-slot assigned">
+                        RSI (Buff 0) < 30
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                </div>
+                
+                <div class="signals-column" style="flex: 0.5;">
+                    <div class="signals-header filter-header">FILTRI</div>
+                    <div class="signal-slot">
+                        Trascina qui
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                    <div class="signal-slot assigned">
+                        ADX (Buff 0) > 25
+                        <div class="add-indicator-button">+</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="risk-section">
+                <div class="risk-item">
+                    <div class="risk-label">RISK%</div>
+                    <div>1.0%</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-label">TP</div>
+                    <div>50 pips</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-label">SL</div>
+                    <div>30 pips</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-label">BE</div>
+                    <div>15 pips</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-label">TS</div>
+                    <div>10 pips</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-label">MAGIC</div>
+                    <div>12345</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-label">COMMENT</div>
+                    <div>OmniEA_EURUSD</div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-label">VERSION</div>
+                    <div class="version-lite">Lite v1.0</div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <div class="action-button start-button">AVVIA</div>
+                <div class="action-button stop-button">STOP</div>
+                <div class="action-button reset-button">RESET</div>
+                <div class="action-button config-button">CONFIG</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
