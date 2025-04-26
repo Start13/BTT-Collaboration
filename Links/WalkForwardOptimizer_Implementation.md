@@ -153,3 +153,20 @@ void OnTick(void)
 3. Modificare le funzioni OnInit(), OnTick(), OnTester(), OnTesterInit(), OnTesterDeinit() e OnTesterPass()
 4. Configurare i parametri appropriati per la strategia di OmniEA
 5. Eseguire l'ottimizzazione utilizzando il tester di strategia di MetaTrader 5
+
+## RISORSE MQL5 UFFICIALI
+
+### Articoli su Walk Forward Optimization
+
+- [Custom Walk Forward optimization in MetaTrader 5](https://www.mql5.com/en/articles/3279) - Articolo dettagliato sugli approcci che consentono una simulazione accurata della walk forward optimization utilizzando il tester integrato e le librerie ausiliarie implementate in MQL.
+
+### Documentazione della libreria WalkForwardOptimizer
+
+- [Walk-forward optimization library for MetaTrader: advanced options](https://www.mql5.com/en/blogs/post/754712) - Documentazione ufficiale sulle opzioni avanzate della libreria WalkForwardOptimizer, inclusi flag e funzionalità come la chiusura automatica delle posizioni, la correzione delle discrepanze e il controllo della modellazione dei tick.
+- [Walk-forward optimization library for MetaTrader: pause, resume, refine](https://www.mql5.com/en/blogs/post/754713) - Documentazione sulla funzionalità di pausa, ripresa e perfezionamento dell'ottimizzazione, introdotta nella versione 1.12 della libreria WalkForwardOptimizer. Include dettagli su come utilizzare il flag WFO_FLAG_RESUME_OPTIMIZATION per continuare un'ottimizzazione interrotta.
+
+## IMPLEMENTAZIONI IN PYTHON
+
+### Link utili per Walk Forward Optimization in Python
+
+- [Walk Forward Optimization in Python](https://mayerkrebs.com/walk-forward-optimization-in-python/) - Tutorial completo su come implementare la Walk Forward Optimization in Python, con esempi di codice e spiegazioni dettagliate.

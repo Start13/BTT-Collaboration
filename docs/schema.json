@@ -1,0 +1,152 @@
+{
+  "project_info": {
+    "name": "BlueTrendTeam",
+    "last_updated": "2025-04-24T18:07:00",
+    "version": "1.0.0",
+    "description": "Progetto di collaborazione AI per lo sviluppo di strumenti di trading avanzati"
+  },
+  "files": [
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/BTT_Dashboard.html",
+      "last_modified": "2025-04-24T17:45:00",
+      "last_modified_by": "Cascade",
+      "status": "active",
+      "category": "dashboard",
+      "description": "Dashboard principale con visualizzatore file integrato e apertura in MetaEditor",
+      "dependencies": ["btt_dashboard_server.ps1", "Prism.js"]
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs/scripts/btt_dashboard_server.ps1",
+      "last_modified": "2025-04-24T17:40:00",
+      "last_modified_by": "Cascade",
+      "status": "active",
+      "category": "server",
+      "description": "Server PowerShell per la dashboard con endpoint API migliorati",
+      "dependencies": []
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs/Riepilogo_Dashboard_Miglioramenti.md",
+      "last_modified": "2025-04-24T17:50:00",
+      "last_modified_by": "Cascade",
+      "status": "active",
+      "category": "documentation",
+      "description": "Riepilogo dei miglioramenti apportati alla dashboard",
+      "dependencies": []
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs/BBTT_2025-04-24_1800.md",
+      "last_modified": "2025-04-24T18:00:00",
+      "last_modified_by": "Cascade",
+      "status": "active",
+      "category": "documentation",
+      "description": "Riepilogo completo del progetto per la continuità tra AI",
+      "dependencies": []
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs/core/regole_fondamentali.md",
+      "last_modified": "2025-04-24T16:30:00",
+      "last_modified_by": "AI",
+      "status": "active",
+      "category": "rules",
+      "description": "Regole fondamentali del progetto BlueTrendTeam",
+      "dependencies": []
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs/WFO_Integration_Status.md",
+      "last_modified": "2025-04-23T15:20:00",
+      "last_modified_by": "AI",
+      "status": "active",
+      "category": "documentation",
+      "description": "Stato dell'integrazione del Walk Forward Optimizer",
+      "dependencies": []
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/MT5_Projects/OmniEA_WFO_Integration/Include/omniea/WFOIntegration.mqh",
+      "last_modified": "2025-04-22T14:30:00",
+      "last_modified_by": "AI",
+      "status": "in_progress",
+      "category": "code",
+      "description": "Integrazione del Walk Forward Optimizer con OmniEA",
+      "dependencies": ["WalkForwardOptimizer.mqh"]
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/MT5_Projects/OmniEA_UI_Enhancement/Include/ui/panels/RiskPanel_Fixed.mqh",
+      "last_modified": "2025-04-21T10:15:00",
+      "last_modified_by": "AI",
+      "status": "completed",
+      "category": "code",
+      "description": "Pannello di gestione del rischio corretto per OmniEA",
+      "dependencies": []
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs/Test_WFO_Integration.md",
+      "last_modified": "2025-04-20T16:45:00",
+      "last_modified_by": "AI",
+      "status": "active",
+      "category": "documentation",
+      "description": "Documentazione dei test di integrazione WFO",
+      "dependencies": []
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs/Integrazione_WFO_OmniEA.md",
+      "last_modified": "2025-04-19T09:30:00",
+      "last_modified_by": "AI",
+      "status": "active",
+      "category": "documentation",
+      "description": "Documentazione dell'integrazione WFO con OmniEA",
+      "dependencies": []
+    }
+  ],
+  "directories": [
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/docs",
+      "description": "Documentazione del progetto",
+      "categories": ["documentation", "rules", "scripts"]
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/MT5_Projects",
+      "description": "Progetti MQL5",
+      "categories": ["code", "EA", "indicators"]
+    },
+    {
+      "path": "C:/Users/Asus/CascadeProjects/BlueTrendTeam/Web",
+      "description": "File web e HTML",
+      "categories": ["web", "dashboard", "preview"]
+    }
+  ],
+  "ai_sessions": [
+    {
+      "ai": "Cascade",
+      "date": "2025-04-24",
+      "focus": "Risoluzione problema apertura file dashboard",
+      "files_modified": [
+        "BTT_Dashboard.html",
+        "docs/scripts/btt_dashboard_server.ps1",
+        "docs/Riepilogo_Dashboard_Miglioramenti.md",
+        "docs/BBTT_2025-04-24_1800.md",
+        "docs/schema.json"
+      ],
+      "summary_file": "docs/BBTT_2025-04-24_1800.md"
+    },
+    {
+      "ai": "ChatGPT",
+      "date": "2025-04-23",
+      "focus": "Integrazione Walk Forward Optimizer",
+      "files_modified": [
+        "docs/WFO_Integration_Status.md",
+        "MT5_Projects/OmniEA_WFO_Integration/Include/omniea/WFOIntegration.mqh"
+      ],
+      "summary_file": "docs/WFO_Integration_Status.md"
+    }
+  ],
+  "external_paths": {
+    "mql5_directory": "C:/Users/Asus/AppData/Roaming/MetaQuotes/Terminal/C695EA989DD2215C5F14AD2E649A7166/MQL5",
+    "metaeditor": "C:/Program Files/RoboForex MT5 Terminal2/MetaEditor64.exe"
+  },
+  "metadata": {
+    "schema_version": "1.0.0",
+    "created_by": "Cascade",
+    "created_date": "2025-04-24T18:07:00",
+    "compliant_with_rules": ["Regola 16", "Regola 17"]
+  }
+}

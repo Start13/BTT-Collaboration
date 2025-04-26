@@ -173,6 +173,99 @@ try {
                     $response.ContentLength64 = $buffer.Length
                     $response.OutputStream.Write($buffer, 0, $buffer.Length)
                 }
+                "/api/file/highlighted" {
+                    # API per ottenere il contenuto di un file con evidenziazione della sintassi
+                    $response.ContentType = 'text/html; charset=utf-8'
+                    
+                    # Ottieni il percorso del file dalla query string
+                    $filePath = $request.QueryString["path"]
+                    
+                    Write-Host "Richiesta di visualizzazione file: $filePath"
+                    
+                    # Verifica che il percorso sia valido
+                    if ([string]::IsNullOrEmpty($filePath)) {
+                        Write-Host "ERRORE: Percorso file non specificato"
+                        $content = "<div class='error'>Percorso file non specificato.</div>"
+                    }
+                    elseif (!(Test-Path $filePath)) {
+                        Write-Host "ERRORE: File non trovato: $filePath"
+                        
+                        # Prova a costruire il percorso completo se è un percorso relativo
+                        $mql5Path = "C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5"
+                        $alternativePath = Join-Path $mql5Path $filePath
+                        
+                        Write-Host "Tentativo con percorso alternativo: $alternativePath"
+                        
+                        if (Test-Path $alternativePath) {
+                            Write-Host "File trovato al percorso alternativo: $alternativePath"
+                            $filePath = $alternativePath
+                        }
+                        else {
+                            Write-Host "ERRORE: File non trovato neanche al percorso alternativo: $alternativePath"
+                            $content = "<div class='error'>File non trovato.<br>Percorso richiesto: $filePath<br>Percorso alternativo tentato: $alternativePath</div>"
+                        }
+                    }
+                    
+                    if (Test-Path $filePath) {
+                        try {
+                            Write-Host "Lettura del file: $filePath"
+                            
+                            # Leggi il contenuto del file
+                            $rawContent = Get-Content -Path $filePath -Raw -Encoding UTF8
+                            
+                            # Se il file non ha contenuto, restituisci un messaggio
+                            if ([string]::IsNullOrEmpty($rawContent)) {
+                                Write-Host "File vuoto: $filePath"
+                                $content = "<div class='empty-file'>Il file è vuoto.</div>"
+                            }
+                            else {
+                                # Determina il tipo di file basato sull'estensione
+                                $extension = [System.IO.Path]::GetExtension($filePath).ToLower()
+                                $language = ""
+                                
+                                switch ($extension) {
+                                    ".mq5" { $language = "cpp" }
+                                    ".mqh" { $language = "cpp" }
+                                    ".ex5" { $language = "binary" }
+                                    ".txt" { $language = "plaintext" }
+                                    ".md" { $language = "markdown" }
+                                    ".html" { $language = "html" }
+                                    ".js" { $language = "javascript" }
+                                    ".css" { $language = "css" }
+                                    ".json" { $language = "json" }
+                                    ".xml" { $language = "xml" }
+                                    ".cpp" { $language = "cpp" }
+                                    ".c" { $language = "c" }
+                                    ".h" { $language = "cpp" }
+                                    default { $language = "plaintext" }
+                                }
+                                
+                                Write-Host "Tipo di file rilevato: $language"
+                                
+                                # Crea l'HTML con il contenuto e la classe per l'evidenziazione
+                                $escapedContent = [System.Web.HttpUtility]::HtmlEncode($rawContent)
+                                
+                                if ($language -eq "binary") {
+                                    $content = "<div class='binary-file'>File binario - non visualizzabile</div>"
+                                }
+                                else {
+                                    $content = "<pre><code class='language-$language'>$escapedContent</code></pre>"
+                                }
+                                
+                                Write-Host "File elaborato con successo: $filePath"
+                            }
+                        }
+                        catch {
+                            $errorMessage = $_.Exception.Message
+                            Write-Host "ERRORE nella lettura del file: $errorMessage"
+                            $content = "<div class='error'>Errore nella lettura del file: $errorMessage</div>"
+                        }
+                    }
+                    
+                    $buffer = [System.Text.Encoding]::UTF8.GetBytes($content)
+                    $response.ContentLength64 = $buffer.Length
+                    $response.OutputStream.Write($buffer, 0, $buffer.Length)
+                }
                 "/api/file/open" {
                     # API per aprire un file nell'editor predefinito
                     $response.ContentType = 'text/plain'
@@ -180,18 +273,98 @@ try {
                     # Ottieni il percorso del file dalla query string
                     $filePath = $request.QueryString["path"]
                     
-                    if ($filePath -and (Test-Path $filePath)) {
-                        try {
-                            # Apri il file nell'editor predefinito
-                            Start-Process $filePath
-                            $content = "File aperto con successo: $filePath"
+                    # Percorso specifico di MetaEditor64.exe
+                    $metaEditorPath = "C:\Program Files\RoboForex MT5 Terminal2\MetaEditor64.exe"
+                    
+                    Write-Host "Richiesta di apertura file: $filePath"
+                    
+                    # Verifica che il percorso sia valido
+                    if ([string]::IsNullOrEmpty($filePath)) {
+                        Write-Host "ERRORE: Percorso file non specificato"
+                        $content = "Percorso file non specificato."
+                    }
+                    elseif (!(Test-Path $filePath)) {
+                        Write-Host "ERRORE: File non trovato: $filePath"
+                        
+                        # Prova a costruire il percorso completo se è un percorso relativo
+                        $mql5Path = "C:\Users\Asus\AppData\Roaming\MetaQuotes\Terminal\C695EA989DD2215C5F14AD2E649A7166\MQL5"
+                        $alternativePath = Join-Path $mql5Path $filePath
+                        
+                        Write-Host "Tentativo con percorso alternativo: $alternativePath"
+                        
+                        if (Test-Path $alternativePath) {
+                            Write-Host "File trovato al percorso alternativo: $alternativePath"
+                            $filePath = $alternativePath
                         }
-                        catch {
-                            $content = "Errore nell'apertura del file: $_"
+                        else {
+                            Write-Host "ERRORE: File non trovato neanche al percorso alternativo: $alternativePath"
+                            $content = "File non trovato. Percorso richiesto: $filePath. Percorso alternativo tentato: $alternativePath"
                         }
                     }
-                    else {
-                        $content = "File non trovato o percorso non specificato."
+                    
+                    if (Test-Path $filePath) {
+                        try {
+                            # Registra il tentativo di apertura per debug
+                            Write-Host "Tentativo di apertura del file in MetaEditor: $filePath"
+                            
+                            # Verifica che MetaEditor esista
+                            if (Test-Path $metaEditorPath) {
+                                # Avvia MetaEditor con il file specificato
+                                Start-Process -FilePath $metaEditorPath -ArgumentList "`"$filePath`""
+                                
+                                # Verifica se il processo è stato avviato
+                                if ($?) {
+                                    $content = "File aperto con successo in MetaEditor: $filePath"
+                                    Write-Host $content
+                                } else {
+                                    $content = "Impossibile aprire il file in MetaEditor: $filePath"
+                                    Write-Host $content
+                                }
+                            } else {
+                                $content = "MetaEditor non trovato al percorso specificato: $metaEditorPath"
+                                Write-Host "ERRORE: $content"
+                                
+                                # Tentativo alternativo con Invoke-Item
+                                try {
+                                    Invoke-Item -Path $filePath
+                                    $content = "File aperto con l'applicazione predefinita: $filePath"
+                                    Write-Host $content
+                                }
+                                catch {
+                                    $errorMessage = $_.Exception.Message
+                                    $content = "Errore nell'apertura del file con l'applicazione predefinita: $errorMessage"
+                                    Write-Host "ERRORE: $content"
+                                    
+                                    # Tentativo alternativo con Start-Process
+                                    try {
+                                        Start-Process $filePath
+                                        $content = "File aperto con metodo alternativo: $filePath"
+                                        Write-Host $content
+                                    }
+                                    catch {
+                                        $content = "Tutti i tentativi di apertura del file sono falliti: $filePath"
+                                        Write-Host "ERRORE CRITICO: $content"
+                                    }
+                                }
+                            }
+                        }
+                        catch {
+                            $errorMessage = $_.Exception.Message
+                            $content = "Errore nell'apertura del file in MetaEditor: $errorMessage"
+                            Write-Host "ERRORE: $content"
+                            
+                            # Tentativo alternativo con Invoke-Item
+                            try {
+                                Invoke-Item -Path $filePath
+                                $content = "File aperto con l'applicazione predefinita: $filePath"
+                                Write-Host $content
+                            }
+                            catch {
+                                $errorMessage = $_.Exception.Message
+                                $content = "Errore nell'apertura del file con l'applicazione predefinita: $errorMessage"
+                                Write-Host "ERRORE: $content"
+                            }
+                        }
                     }
                     
                     $buffer = [System.Text.Encoding]::UTF8.GetBytes($content)

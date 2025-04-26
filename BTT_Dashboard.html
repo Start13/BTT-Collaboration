@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlueTrendTeam Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -212,6 +214,30 @@
             line-height: 1.5;
             white-space: pre-wrap;
         }
+        /* Stili per i messaggi di errore */
+        .error {
+            color: #e74c3c;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #fceaea;
+            border-radius: 4px;
+            border: 1px solid #e74c3c;
+        }
+        /* Stili per i file vuoti */
+        .empty-file {
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 10px;
+        }
+        /* Stili per i file binari */
+        .binary-file {
+            color: #e67e22;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #fef5e7;
+            border-radius: 4px;
+            border: 1px solid #e67e22;
+        }
     </style>
 </head>
 <body>
@@ -373,11 +399,13 @@
                     
                     const fileLink = document.createElement('a');
                     fileLink.className = 'file-link';
-                    fileLink.href = file.url;
+                    fileLink.href = '#';
                     fileLink.textContent = file.path;
-                    fileLink.setAttribute('target', '_blank');
-                    // Apri direttamente il file senza prevenire il comportamento predefinito
-                    fileLink.onclick = null;
+                    fileLink.onclick = function(e) {
+                        e.preventDefault();
+                        viewFile(file.url, file.path);
+                        return false;
+                    };
                     
                     fileItem.appendChild(fileLink);
                     fileList.appendChild(fileItem);
@@ -482,16 +510,29 @@
         }
         
         // Visualizza il contenuto di un file
-        function viewFile(url) {
+        function viewFile(url, relativePath) {
             // Estrai il percorso del file dall'URL
             const filePath = decodeURIComponent(url.replace('file:///', ''));
             
             // Mostra il loader
             showLoader();
             
-            // Chiama l'API per ottenere il contenuto del file
-            fetch(`/api/file/content?path=${encodeURIComponent(filePath)}`)
-                .then(response => response.text())
+            // Log per debug
+            console.log('Tentativo di visualizzare il file:', filePath);
+            console.log('Percorso relativo:', relativePath);
+            
+            // Costruisci il percorso completo per il server
+            const mql5Path = "C:\\Users\\Asus\\AppData\\Roaming\\MetaQuotes\\Terminal\\C695EA989DD2215C5F14AD2E649A7166\\MQL5";
+            const fullPath = mql5Path + "\\" + relativePath;
+            
+            // Chiama l'API per ottenere il contenuto del file con evidenziazione della sintassi
+            fetch(`/api/file/highlighted?path=${encodeURIComponent(fullPath)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Errore HTTP: ${response.status}`);
+                    }
+                    return response.text();
+                })
                 .then(content => {
                     // Nascondi il loader
                     hideLoader();
@@ -502,21 +543,41 @@
                     const openInEditorBtn = document.getElementById('openInEditorBtn');
                     
                     // Imposta il titolo e il contenuto
-                    fileViewTitle.textContent = 'File: ' + filePath.split('\\').pop();
-                    fileContent.textContent = content;
+                    fileViewTitle.textContent = 'File: ' + relativePath.split('\\').pop();
+                    
+                    // Inserisci il contenuto HTML con l'evidenziazione della sintassi
+                    fileContent.innerHTML = content;
                     
                     // Salva il percorso del file come attributo per il pulsante "Apri nell'Editor"
-                    openInEditorBtn.setAttribute('data-filepath', filePath);
+                    openInEditorBtn.setAttribute('data-filepath', fullPath);
                     
                     // Mostra la sezione di visualizzazione del file
                     fileViewSection.classList.remove('hidden');
+                    
+                    // Evidenzia la sintassi del codice
+                    Prism.highlightAll();
                 })
                 .catch(error => {
                     // Nascondi il loader
                     hideLoader();
                     
                     console.error('Errore nel caricamento del file:', error);
-                    alert('Errore nel caricamento del file. Consulta la console per i dettagli.');
+                    alert('Errore nel caricamento del file: ' + error.message);
+                    
+                    // Mostra comunque la sezione di visualizzazione del file con un messaggio di errore
+                    const fileViewSection = document.getElementById('fileViewSection');
+                    const fileViewTitle = document.getElementById('fileViewTitle');
+                    const fileContent = document.getElementById('fileContent');
+                    
+                    fileViewTitle.textContent = 'Errore: ' + relativePath.split('\\').pop();
+                    fileContent.innerHTML = `<div class="error">
+                        <p>Impossibile caricare il file. Dettagli dell'errore:</p>
+                        <p>${error.message}</p>
+                        <p>Percorso completo: ${fullPath}</p>
+                        <p>Percorso relativo: ${relativePath}</p>
+                    </div>`;
+                    
+                    fileViewSection.classList.remove('hidden');
                 });
         }
         
@@ -526,16 +587,74 @@
             const filePath = openInEditorBtn.getAttribute('data-filepath');
             
             if (filePath) {
-                // Usa il protocollo file per aprire il file nell'editor predefinito
+                // Salva il testo originale del pulsante
+                const originalText = openInEditorBtn.textContent;
+                
+                // Cambia il testo del pulsante per indicare che è in corso l'apertura
+                openInEditorBtn.textContent = 'Apertura in corso...';
+                openInEditorBtn.disabled = true;
+                
+                // Usa il nuovo endpoint API per aprire il file nell'editor predefinito
                 fetch(`/api/file/open?path=${encodeURIComponent(filePath)}`)
                     .then(response => response.text())
                     .then(result => {
-                        console.log('File aperto nell\'editor:', result);
+                        console.log('Risposta del server:', result);
+                        
+                        // Mostra un messaggio di successo
+                        if (result.includes('successo') || result.includes('metodo alternativo')) {
+                            // Ripristina il testo del pulsante con un'icona di successo
+                            openInEditorBtn.textContent = '✓ ' + originalText;
+                            openInEditorBtn.classList.add('btn-success');
+                            openInEditorBtn.classList.remove('btn-primary');
+                            
+                            // Ripristina lo stato originale dopo 3 secondi
+                            setTimeout(() => {
+                                openInEditorBtn.textContent = originalText;
+                                openInEditorBtn.classList.remove('btn-success');
+                                openInEditorBtn.classList.add('btn-primary');
+                                openInEditorBtn.disabled = false;
+                            }, 3000);
+                        } else {
+                            // Mostra un messaggio di errore
+                            openInEditorBtn.textContent = '✗ Errore';
+                            openInEditorBtn.classList.add('btn-danger');
+                            openInEditorBtn.classList.remove('btn-primary');
+                            
+                            // Mostra un messaggio di errore più dettagliato
+                            alert('Errore nell\'apertura del file: ' + result);
+                            
+                            // Ripristina lo stato originale dopo 3 secondi
+                            setTimeout(() => {
+                                openInEditorBtn.textContent = originalText;
+                                openInEditorBtn.classList.remove('btn-danger');
+                                openInEditorBtn.classList.add('btn-primary');
+                                openInEditorBtn.disabled = false;
+                            }, 3000);
+                            
+                            // Tentativo di fallback solo se necessario
+                            if (confirm('Vuoi provare ad aprire il file direttamente nel browser?')) {
+                                window.open('file:///' + filePath, '_blank');
+                            }
+                        }
                     })
                     .catch(error => {
-                        console.error('Errore nell\'apertura del file:', error);
-                        // Fallback: prova ad aprire il file direttamente
-                        window.open('file:///' + filePath, '_blank');
+                        console.error('Errore nella richiesta:', error);
+                        
+                        // Ripristina il testo del pulsante con un'icona di errore
+                        openInEditorBtn.textContent = '✗ Errore';
+                        openInEditorBtn.classList.add('btn-danger');
+                        openInEditorBtn.classList.remove('btn-primary');
+                        
+                        // Mostra un messaggio di errore
+                        alert('Errore nella richiesta di apertura del file. Consulta la console per i dettagli.');
+                        
+                        // Ripristina lo stato originale dopo 3 secondi
+                        setTimeout(() => {
+                            openInEditorBtn.textContent = originalText;
+                            openInEditorBtn.classList.remove('btn-danger');
+                            openInEditorBtn.classList.add('btn-primary');
+                            openInEditorBtn.disabled = false;
+                        }, 3000);
                     });
             }
         }
@@ -546,5 +665,7 @@
             fileViewSection.classList.add('hidden');
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>
