@@ -51,9 +51,6 @@ Quando si passa il lavoro da un'AI all'altra, la nuova AI deve leggere il riepil
 ## 17. Memorizzazione fisica obbligatoria
 TUTTE le informazioni, i dati, le strategie e le decisioni DEVONO essere memorizzate FISICAMENTE in file permanenti (.md, .txt, ecc.) e non solo nella memoria temporanea dell'AI. Questa regola è ASSOLUTA e non negoziabile. La memorizzazione fisica garantisce che le informazioni siano sempre disponibili per tutte le AI che lavorano al progetto, anche in sessioni future.
 
-## 18. Pulizia dei file e cartelle inutili
-Quando vengono creati files o cartelle che successivamente diventano inutili e siamo sicuri che sono inutili, devono essere eliminati per non lasciare files o cartelle che creino confusione ed occupino spazio. Questa regola è fondamentale per mantenere una struttura di progetto pulita e ordinata, evitare confusione durante lo sviluppo, ottimizzare lo spazio di archiviazione e migliorare la leggibilità e la manutenibilità del codice.
-
 ---
 
-*Ultimo aggiornamento: 27 aprile 2025*
+*Ultimo aggiornamento: 24 aprile 2025*

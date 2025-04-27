@@ -25,8 +25,25 @@ except Exception as e:
     EMAIL_PASSWORD = "password_placeholder"
     EMAIL_RECEIVER = "receiver_placeholder@example.com"
 
-# Percorsi
-README_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "BBTT_24_04_2025.md")
+# Trova il file BBTT più recente
+def find_latest_bbtt_file():
+    docs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Docs")
+    bbtt_files = [f for f in os.listdir(docs_dir) if f.startswith("BBTT_") and f.endswith(".md")]
+    
+    if not bbtt_files:
+        # Se non ci sono file BBTT nella cartella Docs, cerca nelle sottocartelle
+        for root, dirs, files in os.walk(docs_dir):
+            bbtt_files.extend([os.path.join(root, f) for f in files if f.startswith("BBTT_") and f.endswith(".md")])
+        
+        if not bbtt_files:
+            # Fallback al file README.md se non ci sono file BBTT
+            return os.path.join(os.path.dirname(os.path.abspath(__file__)), "Docs", "README.md")
+    
+    # Ordina i file per data di modifica (il più recente prima)
+    latest_file = max(bbtt_files, key=lambda f: os.path.getmtime(os.path.join(docs_dir, f)))
+    return os.path.join(docs_dir, latest_file)
+
+README_PATH = find_latest_bbtt_file()
 
 # Messaggio di backup
 BACKUP_MESSAGE = """# BlueTrendTeam - Backup Completato
